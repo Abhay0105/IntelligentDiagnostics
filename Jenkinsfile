@@ -27,8 +27,7 @@ pipeline {
       }
       post {
         always {
-          junit '**/target/playwright-report/*.xml'
-          publishHTML([reportDir: 'target/playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report'])
+          junit '**/target/surefire-reports/*.xml'
         }
       }
     }
@@ -53,7 +52,7 @@ pipeline {
       emailext (
         subject: "❌ Build ${env.JOB_NAME} #${env.BUILD_NUMBER} Failed",
         body: "View console output at ${env.BUILD_URL}",
-        to: 'team@example.com'
+        to: 'abhaybhati@virtuowhiz.com'
       )
     }
   }
