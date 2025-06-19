@@ -1408,5 +1408,4 @@ public class DiagnosticTests extends BaseTest {
             Assertions.fail("Navigation to Predictions failed: " + e.getMessage());
         }
     }
-//Abhay
 }
