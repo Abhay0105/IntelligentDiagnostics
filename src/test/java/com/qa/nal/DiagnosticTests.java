@@ -1359,7 +1359,7 @@ public class DiagnosticTests extends BaseTest {
             log.info("File input hovered");
             page.evaluate("selector => document.querySelector(selector).style.display = 'block'", "input[type='file']");
 
-            Path filePath = Paths.get("C:\\Users\\abhay\\Downloads\\Self Diagnostics test - Sheet1.csv");
+            Path filePath = Paths.get("C:\\Users\\abhay\\Downloads\\alinity_cases.csv");
 
             fileInput.setInputFiles(filePath.toAbsolutePath());
             page.waitForTimeout(1000);
