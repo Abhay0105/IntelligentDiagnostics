@@ -1,6 +1,6 @@
 pipeline {
   agent any
-  tools { jdk 'JDK17'; maven 'Maven3'; nodejs 'Node18' }
+  tools { jdk 'JDK24'; maven 'Maven'; nodejs 'Node22' }
   triggers { githubPush() }
 
   stages {
@@ -35,9 +35,8 @@ pipeline {
 
     stage('Report to Qase') {
       environment {
-        QASE_API_TOKEN = credentials('QASE_API_TOKEN')
-        QASE_PROJECT_CODE = 'YOUR_PROJ'
-        QASE_RUN_ID = "RUN-${env.BUILD_NUMBER}"
+        QASE_API_TOKEN = '73768f37203aedffd6550ff1b4a047b48385b28e0fd842acfcd4d226b371805a'
+        QASE_PROJECT_CODE = 'DIAGNOSTIC'
       }
       steps {
         sh 'mvn test -Pplaywright' // reporter passes automatically to Qase
