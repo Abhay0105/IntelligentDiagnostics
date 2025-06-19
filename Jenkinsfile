@@ -10,20 +10,20 @@ pipeline {
 
     stage('Install Playwright') {
       steps {
-        sh 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"'
+        bat 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"'
       }
     }
 
     stage('Unit Tests') {
       steps {
-        sh 'mvn test -DskipE2E'
+        bat 'mvn test -DskipE2E'
       }
       post { success { junit '**/target/surefire-reports/*.xml' } }
     }
 
     stage('E2E Tests') {
       steps {
-        sh 'mvn test -Pplaywright'
+        bat 'mvn test -Pplaywright'
       }
       post {
         always {
@@ -38,7 +38,7 @@ pipeline {
         QASE_PROJECT_CODE = 'DIAGNOSTIC'
       }
       steps {
-        sh 'mvn test -Pplaywright' // reporter passes automatically to Qase
+        bat 'mvn test -Pplaywright' // reporter passes automatically to Qase
       }
     }
   }
