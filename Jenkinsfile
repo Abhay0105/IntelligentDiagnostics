@@ -42,6 +42,12 @@ pipeline {
       }
     }
 
+    stage('Test') {
+      steps {
+        echo '✅ Jenkinsfile loaded successfully!'
+      }
+    }
+
     stage('Unit Tests') {
       steps {
         bat 'mvn clean test -DskipE2E' // ✅ Clean + skip E2E
