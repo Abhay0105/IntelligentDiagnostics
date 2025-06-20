@@ -1,11 +1,39 @@
 pipeline {
   agent any
-  tools { jdk 'JDK24'; maven 'Maven'; nodejs 'Node22' }
-  triggers { githubPush() }
+
+  triggers {
+    githubPush()
+  }
+
+  tools {
+    jdk 'JDK24' // ✅ You're sticking to Java 24
+    maven 'Maven'
+    nodejs 'Node22'
+  }
+
+  environment {
+    QASE_API_TOKEN = credentials('QASE_API_TOKEN') // 🔐 From Jenkins credentials
+    QASE_PROJECT_CODE = 'DIAGNOSTIC'
+    QASE_RUN_NAME = "Run_${env.BUILD_NUMBER}"
+  }
+
+  options {
+    timestamps() // 📅 Better log tracing
+    skipDefaultCheckout true // ✅ Manual checkout to configure Git credentials
+  }
 
   stages {
-    stage('Checkout') {
-      steps { checkout scm }
+
+    stage('Checkout SCM') {
+      steps {
+        checkout([$class: 'GitSCM',
+          branches: [[name: '*/main']],
+          userRemoteConfigs: [[
+            url: 'https://github.com/Abhay0105/IntelligentDiagnostics.git',
+            credentialsId: 'github-access-token' // 🔐 GitHub PAT saved in Jenkins
+          ]]
+        ])
+      }
     }
 
     stage('Install Playwright') {
@@ -16,14 +44,18 @@ pipeline {
 
     stage('Unit Tests') {
       steps {
-        bat 'mvn test -DskipE2E'
+        bat 'mvn clean test -DskipE2E' // ✅ Clean + skip E2E
       }
-      post { success { junit '**/target/surefire-reports/*.xml' } }
+      post {
+        success {
+          junit '**/target/surefire-reports/*.xml'
+        }
+      }
     }
 
     stage('E2E Tests') {
       steps {
-        bat 'mvn test -Pplaywright'
+        bat 'mvn clean test' // ✅ Full E2E run
       }
       post {
         always {
@@ -33,26 +65,23 @@ pipeline {
     }
 
     stage('Report to Qase') {
-      environment {
-        QASE_API_TOKEN = '73768f37203aedffd6550ff1b4a047b48385b28e0fd842acfcd4d226b371805a'
-        QASE_PROJECT_CODE = 'DIAGNOSTIC'
-      }
       steps {
-        bat 'mvn test -Pplaywright' // reporter passes automatically to Qase
+        echo "✅ Qase reporter uploads results from this test run automatically"
       }
     }
   }
 
   post {
     always {
-      archiveArtifacts artifacts: 'target/**/*.html, target/**/*.zip', allowEmptyArchive: true
-      junit '**/target/**/*.xml'
+      archiveArtifacts artifacts: '**/target/screenshots/*.png, **/target/*.html, **/target/*.zip', allowEmptyArchive: true
+      junit '**/target/surefire-reports/*.xml'
     }
+
     failure {
       emailext (
         subject: "❌ Build ${env.JOB_NAME} #${env.BUILD_NUMBER} Failed",
         body: "View console output at ${env.BUILD_URL}",
-        to: 'abhaypb555@gmail.com'
+        to: 'abhaybhati@virtuowhiz.com'
       )
     }
   }
