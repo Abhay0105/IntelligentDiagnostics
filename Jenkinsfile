@@ -6,35 +6,23 @@ pipeline {
   }
 
   tools {
-    jdk 'JDK24' // ✅ You're sticking to Java 24
+    jdk 'JDK24'
     maven 'Maven'
     nodejs 'Node22'
   }
 
   environment {
-    QASE_API_TOKEN = credentials('QASE_API_TOKEN') // 🔐 From Jenkins credentials
+    QASE_API_TOKEN = credentials('QASE_API_TOKEN')
     QASE_PROJECT_CODE = 'DIAGNOSTIC'
     QASE_RUN_NAME = "Run_${env.BUILD_NUMBER}"
   }
 
   options {
-    timestamps() // 📅 Better log tracing
-    skipDefaultCheckout true // ✅ Manual checkout to configure Git credentials
+    timestamps()
+    // ✅ No need for skipDefaultCheckout — use default behavior
   }
 
   stages {
-
-    stage('Checkout SCM') {
-      steps {
-        checkout([$class: 'GitSCM',
-          branches: [[name: '*/main']],
-          userRemoteConfigs: [[
-            url: 'https://github.com/Abhay0105/IntelligentDiagnostics.git',
-            credentialsId: 'github-access-token' // 🔐 GitHub PAT saved in Jenkins
-          ]]
-        ])
-      }
-    }
 
     stage('Install Playwright') {
       steps {
@@ -50,7 +38,7 @@ pipeline {
 
     stage('Unit Tests') {
       steps {
-        bat 'mvn clean test -DskipE2E' // ✅ Clean + skip E2E
+        bat 'mvn clean test -DskipE2E'
       }
       post {
         success {
@@ -61,7 +49,7 @@ pipeline {
 
     stage('E2E Tests') {
       steps {
-        bat 'mvn clean test' // ✅ Full E2E run
+        bat 'mvn clean test'
       }
       post {
         always {
