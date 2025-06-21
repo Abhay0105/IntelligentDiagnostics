@@ -1,10 +1,6 @@
 pipeline {
   agent any
 
-  triggers {
-    githubPush()
-  }
-
   tools {
     jdk 'JDK24'
     maven 'Maven'
@@ -12,13 +8,17 @@ pipeline {
   }
 
   environment {
-    QASE_API_TOKEN = credentials('QASE_API_TOKEN') // Stored in Jenkins credentials
+    QASE_API_TOKEN = credentials('QASE_API_TOKEN') // Must be defined in Jenkins → Credentials
     QASE_PROJECT_CODE = 'DIAGNOSTIC'
     QASE_RUN_NAME = "Run_${env.BUILD_NUMBER}"
   }
 
   options {
     timestamps()
+  }
+
+  triggers {
+    githubPush()
   }
 
   stages {
@@ -48,7 +48,7 @@ pipeline {
 
     stage('E2E Tests') {
       steps {
-        bat 'mvn clean test'
+        bat 'mvn clean test -Pplaywright'
       }
       post {
         always {
