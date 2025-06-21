@@ -12,14 +12,13 @@ pipeline {
   }
 
   environment {
-    QASE_API_TOKEN = credentials('QASE_API_TOKEN')
+    QASE_API_TOKEN = credentials('QASE_API_TOKEN') // Stored in Jenkins credentials
     QASE_PROJECT_CODE = 'DIAGNOSTIC'
     QASE_RUN_NAME = "Run_${env.BUILD_NUMBER}"
   }
 
   options {
     timestamps()
-    // ✅ No need for skipDefaultCheckout — use default behavior
   }
 
   stages {
@@ -30,7 +29,7 @@ pipeline {
       }
     }
 
-    stage('Test') {
+    stage('Jenkinsfile Loaded') {
       steps {
         echo '✅ Jenkinsfile loaded successfully!'
       }
@@ -60,7 +59,7 @@ pipeline {
 
     stage('Report to Qase') {
       steps {
-        echo "✅ Qase reporter uploads results from this test run automatically"
+        echo "✅ Qase reporter uploads results automatically"
       }
     }
   }
