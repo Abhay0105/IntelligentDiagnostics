@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'windows-agent' }
+  agent any
 
   tools {
     jdk 'JDK24'
