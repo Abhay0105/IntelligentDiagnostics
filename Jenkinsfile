@@ -1,6 +1,6 @@
 pipeline {
   agent any
-  tools { jdk 'JDK17'; maven 'Maven3'; nodejs 'Node18' }
+  tools { jdk 'JDK24'; maven 'Maven'; nodejs 'Node22' }
   triggers { githubPush() }
 
   stages {
