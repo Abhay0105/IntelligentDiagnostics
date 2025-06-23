@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent { label 'windows-agent' }
   tools { jdk 'JDK24'; maven 'Maven'; nodejs 'Node22' }
   triggers { githubPush() }
 
