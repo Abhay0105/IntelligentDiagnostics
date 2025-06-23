@@ -7,40 +7,20 @@ pipeline {
     stage('Checkout') {
       steps { checkout scm }
     }
-
-    stage('Install Playwright') {
-      steps {
-        sh 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"'
-      }
-    }
-
     stage('Unit Tests') {
       steps {
-        sh 'mvn test -DskipE2E'
+        sh 'mvn clean test'
       }
       post { success { junit '**/target/surefire-reports/*.xml' } }
-    }
-
-    stage('E2E Tests') {
-      steps {
-        sh 'mvn test -Pplaywright'
-      }
-      post {
-        always {
-          junit '**/target/playwright-report/*.xml'
-          publishHTML([reportDir: 'target/playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report'])
-        }
-      }
     }
 
     stage('Report to Qase') {
       environment {
         QASE_API_TOKEN = credentials('QASE_API_TOKEN')
-        QASE_PROJECT_CODE = 'YOUR_PROJ'
-        QASE_RUN_ID = "RUN-${env.BUILD_NUMBER}"
+        QASE_PROJECT_CODE = 'DIAGNOSTIC'
       }
       steps {
-        sh 'mvn test -Pplaywright' // reporter passes automatically to Qase
+        sh 'mvn clean test' // reporter passes automatically to Qase
       }
     }
   }
@@ -54,7 +34,7 @@ pipeline {
       emailext (
         subject: "❌ Build ${env.JOB_NAME} #${env.BUILD_NUMBER} Failed",
         body: "View console output at ${env.BUILD_URL}",
-        to: 'team@example.com'
+        to: 'abhaybhati@virtuowhiz.com'
       )
     }
   }
