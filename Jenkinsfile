@@ -4,7 +4,7 @@ pipeline {
   tools {
     jdk 'JDK24'
     maven 'Maven'
-    nodejs 'NodeJS'
+    nodejs 'Node22'
   }
 
   environment {
