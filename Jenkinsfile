@@ -4,10 +4,11 @@ pipeline {
   tools {
     jdk 'JDK24'
     maven 'Maven'
+    nodejs 'NodeJS'
   }
 
   environment {
-    QASE_API_TOKEN = credentials('QASE_API_TOKEN') // Add this in Jenkins credentials
+    QASE_API_TOKEN = credentials('QASE_API_TOKEN') // Add this in Jenkins → Manage Credentials
     QASE_PROJECT_CODE = 'DIAGNOSTIC'
     QASE_RUN_ID = "RUN-${env.BUILD_NUMBER}"
   }
@@ -33,7 +34,7 @@ pipeline {
     }
 
     failure {
-      emailext (
+      emailext(
         subject: "❌ Build ${env.JOB_NAME} #${env.BUILD_NUMBER} Failed",
         body: "View console output at ${env.BUILD_URL}",
         to: 'abhaybhati@virtuowhiz.com'
