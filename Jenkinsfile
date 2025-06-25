@@ -2,13 +2,13 @@ pipeline {
   agent any
 
   tools {
-    jdk 'JDK24'        // Ensure JDK24 is configured in Jenkins > Global Tool Config
-    maven 'Maven'      // Ensure Maven is configured
-    nodejs 'Node22'    // Ensure NodeJS is configured
+    jdk 'JDK24'
+    maven 'Maven'
+    nodejs 'Node22'
   }
 
   environment {
-    QASE_API_TOKEN = credentials('QASE_API_TOKEN')  // Secret token for Qase integration
+    QASE_API_TOKEN = credentials('QASE_API_TOKEN')
     QASE_PROJECT_CODE = 'DIAGNOSTIC'
   }
 
@@ -17,31 +17,19 @@ pipeline {
   }
 
   triggers {
-    githubPush()  // Trigger on GitHub push
+    githubPush()
   }
 
   stages {
-    stage('Install Chromium Only') {
+    stage('Install Playwright') {
       steps {
         bat 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install chromium"'
       }
     }
 
-    stage('Run Tests') {
+    stage('Run Tests & Report to Qase') {
       steps {
         bat 'mvn clean test'
-      }
-    }
-
-    stage('Validate Git Installation') {
-      steps {
-        bat 'git --version'
-      }
-    }
-
-    stage('Check System PATH') {
-      steps {
-        bat 'echo %PATH%'
       }
     }
   }
