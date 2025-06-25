@@ -10,7 +10,6 @@ pipeline {
   environment {
     QASE_API_TOKEN = credentials('QASE_API_TOKEN')   // Must exist in Jenkins credentials
     QASE_PROJECT_CODE = 'DIAGNOSTIC'                 // Your Qase project code
-    QASE_RUN_NAME = "Jenkins Run ${BUILD_NUMBER}"    // Optional but recommended
   }
 
   options {
