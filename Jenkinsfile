@@ -8,7 +8,7 @@ pipeline {
   }
 
   environment {
-    QASE_API_TOKEN = credentials('QASE_API_TOKEN') // Must be defined in Jenkins → Credentials
+    QASE_API_TOKEN = credentials('QASE_API_TOKEN') // Must be defined in Jenkins credentials
     QASE_PROJECT_CODE = 'DIAGNOSTIC'
   }
 
@@ -28,26 +28,16 @@ pipeline {
       }
     }
 
-    stage('Jenkinsfile Loaded') {
+    stage('Run Tests & Upload to Qase') {
       steps {
-        echo '✅ Jenkinsfile loaded successfully!'
+        bat 'mvn clean test'
       }
     }
 
-    stage('Unit Tests') {
+    stage('Report Results') {
       steps {
-        bat 'mvn clean test -DskipE2E'
-      }
-      post {
-        success {
-          junit '**/target/surefire-reports/*.xml'
-        }
-      }
-    }
-
-    stage('Report to Qase') {
-      steps {
-        echo "✅ Qase reporter uploads results automatically"
+        junit '**/target/surefire-reports/*.xml'
+        echo '✅ Qase reporter uploads results automatically'
       }
     }
   }
