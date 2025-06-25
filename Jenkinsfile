@@ -21,10 +21,9 @@ pipeline {
   }
 
   stages {
-
-    stage('Install Playwright') {
+    stage('Install Chromium Only') {
       steps {
-        bat 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"'
+        bat 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install chromium"'
       }
     }
 
@@ -41,9 +40,9 @@ pipeline {
     }
 
     stage('Debug PATH') {
-  steps {
-    bat 'echo %PATH%'
-  }
-}
+      steps {
+        bat 'echo %PATH%'
+      }
+    }
   }
 }
