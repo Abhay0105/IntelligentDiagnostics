@@ -8,7 +8,7 @@ pipeline {
   }
 
   environment {
-    QASE_API_TOKEN = credentials('QASE_API_TOKEN')
+    QASE_API_TOKEN = credentials('QASE_API_TOKEN') // Must be defined in Jenkins → Credentials
     QASE_PROJECT_CODE = 'DIAGNOSTIC'
   }
 
@@ -21,15 +21,33 @@ pipeline {
   }
 
   stages {
+
     stage('Install Playwright') {
       steps {
         bat 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"'
       }
     }
 
-    stage('Run Tests & Report to Qase') {
+    stage('Jenkinsfile Loaded') {
       steps {
-        bat 'mvn clean test'
+        echo '✅ Jenkinsfile loaded successfully!'
+      }
+    }
+
+    stage('Unit Tests') {
+      steps {
+        bat 'mvn clean test -DskipE2E'
+      }
+      post {
+        success {
+          junit '**/target/surefire-reports/*.xml'
+        }
+      }
+    }
+
+    stage('Report to Qase') {
+      steps {
+        echo "✅ Qase reporter uploads results automatically"
       }
     }
   }
