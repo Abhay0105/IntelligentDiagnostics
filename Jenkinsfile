@@ -2,13 +2,13 @@ pipeline {
   agent any
 
   tools {
-    jdk 'JDK24'        // Make sure "JDK24" is correctly configured in Jenkins → Global Tool Configuration
-    maven 'Maven'      // Ensure Maven is configured with name "Maven"
-    nodejs 'Node22'    // Ensure NodeJS is configured with name "Node22"
+    jdk 'JDK24'        // Ensure JDK24 is configured in Jenkins > Global Tool Config
+    maven 'Maven'      // Ensure Maven is configured
+    nodejs 'Node22'    // Ensure NodeJS is configured
   }
 
   environment {
-    QASE_API_TOKEN = credentials('QASE_API_TOKEN')  // Make sure this credential exists in Jenkins
+    QASE_API_TOKEN = credentials('QASE_API_TOKEN')  // Secret token for Qase integration
     QASE_PROJECT_CODE = 'DIAGNOSTIC'
   }
 
@@ -17,7 +17,7 @@ pipeline {
   }
 
   triggers {
-    githubPush()  // Auto-trigger build on GitHub push if webhook is set correctly
+    githubPush()  // Trigger on GitHub push
   }
 
   stages {
@@ -27,19 +27,19 @@ pipeline {
       }
     }
 
-    stage('Run Tests & Report to Qase') {
+    stage('Run Tests') {
       steps {
         bat 'mvn clean test'
       }
     }
 
-    stage('Check Git Version') {
+    stage('Validate Git Installation') {
       steps {
         bat 'git --version'
       }
     }
 
-    stage('Debug PATH') {
+    stage('Check System PATH') {
       steps {
         bat 'echo %PATH%'
       }
