@@ -913,7 +913,7 @@ public class DiagnosticTests extends BaseTest {
     @Test
     @Order(13)
     @QaseId(13)
-    @QaseTitle("Create new Observationin Observation Management")
+    @QaseTitle("Create new Observation in Observation Management")
     public void createNewObsOM() {
         createNewObs();
     }
