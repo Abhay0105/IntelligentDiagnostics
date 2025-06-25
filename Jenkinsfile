@@ -39,5 +39,11 @@ pipeline {
         bat 'git --version'
       }
     }
+
+    stage('Debug PATH') {
+  steps {
+    bat 'echo %PATH%'
+  }
+}
   }
 }
