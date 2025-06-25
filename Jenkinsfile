@@ -23,7 +23,7 @@ pipeline {
   stages {
     stage('Install Playwright') {
       steps {
-        bat 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install chromium"'
+        bat 'mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"'
       }
     }
 
