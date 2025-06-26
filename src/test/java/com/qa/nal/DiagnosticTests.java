@@ -261,8 +261,8 @@ public class DiagnosticTests extends BaseTest {
 
                 page.waitForLoadState(LoadState.NETWORKIDLE);
 
-                page.waitForTimeout(1000);
-
+                page.waitForTimeout(1500);
+                
                 Locator obsLocator = page.locator(".observation-card");
                 int count = obsLocator.count();
 
@@ -286,8 +286,6 @@ public class DiagnosticTests extends BaseTest {
                 }
 
                 if (obsFound) break;
-
-                page.waitForTimeout(2000);
             } catch (Exception e) {
                 log.warn("Exception on attempt {}: {}", attempt, e.getMessage());
             }
@@ -331,7 +329,7 @@ public class DiagnosticTests extends BaseTest {
         try {
             boolean newSolutionCreated = false;
 
-            page.waitForTimeout(4000);
+            page.waitForTimeout(1500);
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -536,15 +534,19 @@ public class DiagnosticTests extends BaseTest {
             page.waitForTimeout(1500);
 
             page.waitForSelector(
-                "div[role='listbox'][aria-label='Options List']",
+                "div[aria-label='Options List']",
                 new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000)
             );
             log.info("Type Ahead listbox found");
 
-            Locator listbox = page.locator("div[role='listbox']");
-            List<Locator> exObsTAList = listbox.locator("div[role='option']").all();
+            Locator listbox = page.locator("div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items");
+            log.info("Listbox :-"+listbox);
+            
+            List<Locator> exObsTAList = listbox.locator("div[role='option'].ng-option").all();
 
             page.waitForTimeout(1500);
+
+            log.info("Observation list size:- "+exObsTAList.size());
 
             if (!exObsTAList.isEmpty() || exObsTAList.size() != 0) {
                 int randomIndex = random.nextInt(exObsTAList.size());
@@ -590,15 +592,22 @@ public class DiagnosticTests extends BaseTest {
             );
             log.info("Type Ahead listbox found");
 
-            Locator listbox = page.locator("div[role='listbox'][aria-label='Options List']");
-            List<Locator> exInfTAList = listbox.locator("div[role='option']").all();
+            Locator listbox = page.locator("div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items");
+            log.info("Listbox :-"+listbox);
+
+            List<Locator> exInfTAList = listbox.locator("div[role='option'].ng-option").all();
             page.waitForTimeout(1500);
 
-            int randomIndex = random.nextInt(exInfTAList.size());
-            log.info("Random index selected: {}", randomIndex);
-            String selectedInference = exInfTAList.get(randomIndex).textContent().trim();
-            exInfTAList.get(randomIndex).click();
-            log.info("Existing Inference Type Ahead option clicked: {}", selectedInference);
+            log.info("Inference list size:- "+exInfTAList.size());
+
+            if(!exInfTAList.isEmpty() || exInfTAList.size() != 0){
+                int randomIndex = random.nextInt(exInfTAList.size());
+                log.info("Random index selected: {}", randomIndex);
+                String selectedInference = exInfTAList.get(randomIndex).textContent().trim();
+                exInfTAList.get(randomIndex).click();
+                log.info("Existing Inference Type Ahead option clicked: {}", selectedInference);
+
+            }
 
             page.waitForSelector(
                 ".loading-screen-wrapper",
@@ -633,14 +642,15 @@ public class DiagnosticTests extends BaseTest {
 
                     log.info("New Solution clicked");
 
-                    newInf();
+                    existingInfTypeAhead();
 
                     saveAndContinue();
                 }
             } else {
-                newObs();
-
                 log.info("Observation card not found");
+                
+                existingObsTypeAhead();
+
                 if (checkInf()) {
                     log.info("Existing Inference found");
 
@@ -650,7 +660,13 @@ public class DiagnosticTests extends BaseTest {
                 } else {
                     log.info("Existing Inference not found");
 
-                    newInf();
+                    page
+                        .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                        .click();
+
+                    log.info("New Solution clicked");
+
+                    existingInfTypeAhead();
 
                     saveAndContinue();
                 }
@@ -766,7 +782,6 @@ public class DiagnosticTests extends BaseTest {
                 log.info("Observation card found");
 
                 existingObsTypeAhead();
-                log.info("Existing Observation Type Ahead option clicked");
 
                 if (checkInf()) {
                     log.info("Existing Inference found");
@@ -777,7 +792,6 @@ public class DiagnosticTests extends BaseTest {
                     log.info("New Solution clicked");
 
                     existingInfTypeAhead();
-                    log.info("Existing Inference Type Ahead option clicked");
 
                     saveAndContinue();
                 } else {
@@ -789,7 +803,6 @@ public class DiagnosticTests extends BaseTest {
                     log.info("New Solution clicked");
 
                     existingInfTypeAhead();
-                    log.info("Existing Inference Type Ahead option clicked");
 
                     saveAndContinue();
                 }
@@ -797,20 +810,17 @@ public class DiagnosticTests extends BaseTest {
                 log.info("Observation card not found");
 
                 existingObsTypeAhead();
-                log.info("Existing Observation Type Ahead option clicked");
 
                 if (checkInf()) {
                     log.info("Existing Inference found");
 
                     existingInfTypeAhead();
-                    log.info("Existing Inference Type Ahead option clicked");
 
                     saveAndContinue();
                 } else {
                     log.info("Existing Inference not found");
 
                     existingInfTypeAhead();
-                    log.info("Existing Inference Type Ahead option clicked");
 
                     saveAndContinue();
                 }
@@ -848,6 +858,8 @@ public class DiagnosticTests extends BaseTest {
                 } else {
                     log.info("Existing Inference not found");
 
+                    existingInfTypeAhead();
+
                     page
                         .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
                         .click();
@@ -858,7 +870,7 @@ public class DiagnosticTests extends BaseTest {
                     saveAndClose();
                 }
             } else {
-                newObs();
+                existingObsTypeAhead();
 
                 log.info("Observation card not found");
                 if (checkInf()) {
@@ -866,9 +878,23 @@ public class DiagnosticTests extends BaseTest {
 
                     existingInfCheckbox();
 
+                    page
+                        .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                        .click();
+                    log.info("New Solution clicked");
+
+                    newInf();
+
                     saveAndClose();
                 } else {
                     log.info("Existing Inference not found");
+
+                    existingInfTypeAhead();
+
+                    page
+                        .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                        .click();
+                    log.info("New Solution clicked");
 
                     newInf();
 
