@@ -539,7 +539,7 @@ public class DiagnosticTests extends BaseTest {
             );
             log.info("Type Ahead listbox found");
 
-            List<Locator> exObsTAList = page.locator("div[role='option'].ng-option").all();
+            List<Locator> exObsTAList = page.locator("div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items div[role='option'].ng-option").all();
             log.info("Obs List:- "+ exObsTAList);
 
             page.waitForTimeout(1500);
@@ -590,9 +590,9 @@ public class DiagnosticTests extends BaseTest {
             );
             log.info("Type Ahead listbox found");
 
-            List<Locator> exInfTAList = page.locator("div[role='option'].ng-option").all();
+            List<Locator> exInfTAList = page.locator("div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items div[role='option'].ng-option").all();
             log.info("Inf List:- "+ exInfTAList);
-            
+
             page.waitForTimeout(1500);
 
             log.info("Inference list size:- "+exInfTAList.size());
