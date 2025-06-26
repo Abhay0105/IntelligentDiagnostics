@@ -307,6 +307,7 @@ public class DiagnosticTests extends BaseTest {
 
             page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX).click();
             page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX).fill("New Observation");
+            // using Excel pending
             log.info("New Observation field filled");
 
             page.waitForSelector(
@@ -381,6 +382,7 @@ public class DiagnosticTests extends BaseTest {
             log.info("Input field clicked");
 
             page.locator("mat-drawer-content").getByRole(AriaRole.COMBOBOX).fill("New Solution");
+            // using excel pending
             log.info("Solution field filled");
 
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create New")).click();
@@ -429,107 +431,96 @@ public class DiagnosticTests extends BaseTest {
         }
     }
 
-    // private void createNewObsAndInf() {
-    // try {
-    // page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("
-    //  Create New")).click();
-    // log.info("Create New button clicked");
+    private void createNewObsAndInf() {
+        try {
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(" Create New")).click();
+            log.info("Create New button clicked");
 
-    // page.waitForSelector("#modalCenter > div > div", new
-    // Page.WaitForSelectorOptions().setTimeout(45000));
-    // log.info("Create New modal opened");
+            page.waitForSelector("#modalCenter > div > div", new Page.WaitForSelectorOptions().setTimeout(45000));
+            log.info("Create New modal opened");
 
-    // //selecting manufacturer
-    // page
-    // .locator("div")
-    // .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer
-    // \\*$")))
-    // .nth(1)
-    // .click();
-    // log.info("Manufacturer field clicked");
+            // selecting manufacturer
+            page
+                    .locator("div")
+                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
+                    .nth(1)
+                    .click();
+            log.info("Manufacturer field clicked");
 
-    // page.waitForTimeout(2000);
+            page.waitForTimeout(2000);
 
-    // List<Locator> manufacturersList =
-    // page.locator("//ng-dropdown-panel//div[@role='option']").all();
+            List<Locator> manufacturersList = page.locator("//ng-dropdown-panel//div[@role='option']").all();
 
-    // Random random = new Random();
-    // int randomIndex = random.nextInt(manufacturersList.size());
-    // log.info("Random index selected: {}", randomIndex);
+            Random random = new Random();
+            int randomIndex = random.nextInt(manufacturersList.size());
+            log.info("Random index selected: {}", randomIndex);
 
-    // String selectedManufacturer =
-    // manufacturersList.get(randomIndex).textContent().trim();
-    // manufacturersList.get(randomIndex).click();
+            String selectedManufacturer = manufacturersList.get(randomIndex).textContent().trim();
+            manufacturersList.get(randomIndex).click();
 
-    // log.info("Manufacturer option clicked: {}", selectedManufacturer);
+            log.info("Manufacturer option clicked: {}", selectedManufacturer);
 
-    // // page.getByRole(AriaRole.OPTION, new
-    // Page.GetByRoleOptions().setName("ALINITY_S")).click();
-    // // log.info("ALINITY-S option clicked");
+            page
+                    .getByLabel("1Please fill out the")
+                    .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
+                    .click();
+            log.info("Next button clicked");
 
-    // page
-    // .getByLabel("1Please fill out the")
-    // .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
-    // .click();
-    // log.info("Next button clicked");
+            // observation
+            page.waitForTimeout(2000);
 
-    // //observation
-    // page.waitForTimeout(2000);
+            page.locator(".new-obsrv-select > .ng-select-container").click();
+            log.info("Text box clicked");
 
-    // page.locator(".new-obsrv-select > .ng-select-container").click();
-    // log.info("Text box clicked");
+            page
+                    .locator("ng-select")
+                    .filter(new Locator.FilterOptions().setHasText("Search/CreateType to search"))
+                    .getByRole(AriaRole.COMBOBOX)
+                    .fill("test observation");
+            // excel using pending
+            log.info("Observation field filled");
 
-    // page
-    // .locator("ng-select")
-    // .filter(new Locator.FilterOptions().setHasText("Search/CreateType to
-    // search"))
-    // .getByRole(AriaRole.COMBOBOX)
-    // .fill("test observation");
-    // log.info("Observation field filled");
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create New").setExact(true)).click();
+            log.info("Create New button clicked");
 
-    // page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create
-    // New").setExact(true)).click();
-    // log.info("Create New button clicked");
+            // inference
+            page
+                    .locator("div")
+                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Search\\/Create$")))
+                    .nth(1)
+                    .click();
+            log.info("Inference field clicked");
 
-    // //inference
-    // page
-    // .locator("div")
-    // .filter(new
-    // Locator.FilterOptions().setHasText(Pattern.compile("^Search\\/Create$")))
-    // .nth(1)
-    // .click();
-    // log.info("Inference field clicked");
+            page
+                    .locator("ng-select")
+                    .filter(new Locator.FilterOptions().setHasText("Search/CreateType to"))
+                    .getByRole(AriaRole.COMBOBOX)
+                    .fill("test inference");
+            // excel using pending
+            log.info("Inference field filled");
 
-    // page
-    // .locator("ng-select")
-    // .filter(new Locator.FilterOptions().setHasText("Search/CreateType to"))
-    // .getByRole(AriaRole.COMBOBOX)
-    // .fill("test inference");
-    // log.info("Inference field filled");
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create New").setExact(true)).click();
+            log.info("Create New button clicked");
 
-    // page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create
-    // New").setExact(true)).click();
-    // log.info("Create New button clicked");
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save")).click();
+            log.info("Save button clicked");
 
-    // page.getByRole(AriaRole.BUTTON, new
-    // Page.GetByRoleOptions().setName("Save")).click();
-    // log.info("Save button clicked");
+            page
+                    .getByLabel("2Observation Details")
+                    .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
+                    .click();
+            log.info("Next button clicked");
 
-    // page
-    // .getByLabel("2Observation Details")
-    // .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
-    // .click();
-    // log.info("Next button clicked");
+            // save obs and inf
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save Observation")).click();
+            log.info("Save Observation button clicked");
 
-    // //save obs and inf
-    // page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save
-    // Observation")).click();
-    // log.info("Save Observation button clicked");
-    // } catch (Exception e) {
-    // log.error("Test Failed: {}", e.getMessage());
-    // Assertions.fail("Test Failed: " + e.getMessage());
-    // }
-    // }
+            page.waitForTimeout(2000);
+        } catch (Exception e) {
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
+        }
+    }
 
     private void existingObsTypeAhead() {
         try {
@@ -648,6 +639,8 @@ public class DiagnosticTests extends BaseTest {
     // create new in inbox
     private void selectManufacturer() {
         try {
+            page.waitForTimeout(2000);
+
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Create New")).click();
             log.info("Create New button clicked");
 
@@ -680,7 +673,6 @@ public class DiagnosticTests extends BaseTest {
                     .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
                     .click();
             log.info("Next button clicked");
-
 
         } catch (Exception e) {
             log.error("Test Failed: {}", e.getMessage());
@@ -748,7 +740,8 @@ public class DiagnosticTests extends BaseTest {
             }
 
         } catch (Exception e) {
-            log.info("Observation Creation Failed: " + e.getMessage());
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
         }
     }
 
@@ -853,7 +846,8 @@ public class DiagnosticTests extends BaseTest {
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save Observation")).click();
             log.info("Save Observation button clicked");
         } catch (Exception e) {
-            log.info("Inference Selection Failed: " + e.getMessage());
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
 
         }
     }
@@ -1054,11 +1048,23 @@ public class DiagnosticTests extends BaseTest {
                 if (checkInf()) {
                     log.info("Existing Inference found");
 
+                    page
+                            .getByRole(AriaRole.HEADING,
+                                    new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                            .click();
+                    log.info("New Solution clicked");
+
                     existingInfTypeAhead();
 
                     saveAndContinue();
                 } else {
                     log.info("Existing Inference not found");
+
+                    page
+                            .getByRole(AriaRole.HEADING,
+                                    new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                            .click();
+                    log.info("New Solution clicked");
 
                     existingInfTypeAhead();
 
@@ -1099,6 +1105,12 @@ public class DiagnosticTests extends BaseTest {
                 } else {
                     log.info("Existing Inference not found");
 
+                    page
+                            .getByRole(AriaRole.HEADING,
+                                    new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                            .click();
+                    log.info("New Solution clicked");
+
                     existingInfTypeAhead();
 
                     page
@@ -1131,6 +1143,12 @@ public class DiagnosticTests extends BaseTest {
                     saveAndClose();
                 } else {
                     log.info("Existing Inference not found");
+
+                    page
+                            .getByRole(AriaRole.HEADING,
+                                    new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                            .click();
+                    log.info("New Solution clicked");
 
                     existingInfTypeAhead();
 
@@ -1183,81 +1201,110 @@ public class DiagnosticTests extends BaseTest {
     @Order(13)
     @QaseId(13)
     @QaseTitle("Create new Observation in Observation Management")
-    public void createNewObsOM() {
-        //select Manufacturer
-        selectManufacturer();
+    public void createNewOM() {
+        try {
+            // create new
+            createNewObsAndInf();
 
-        //select Obs
-        selectObs();
-        
-        //select Inf
-        selectInf();
+        } catch (Exception e) {
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
+        }
     }
 
     @Test
     @Order(14)
     @QaseId(14)
-    @QaseTitle("Edit Observation")
-    public void editObservation() {
+    @QaseTitle("Select Existing in Observation Management")
+    public void selectExOM() {
         try {
-            page.locator(".action-btn").first().click();
-            log.info("Action Button Clicked");
+            // select Manufacturer
+            selectManufacturer();
 
-            page.waitForSelector(
-                    ".loading-screen-wrapper",
-                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            // select Obs
+            selectObs();
 
-            page.waitForLoadState(LoadState.NETWORKIDLE);
+            // select Inf
+            selectInf();
         } catch (Exception e) {
-            log.error("Action Button not found: {}", e.getMessage());
-            Assertions.fail("Action Button not found: " + e.getMessage());
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
         }
     }
 
-    @Test
-    @Order(15)
-    @QaseId(15)
-    @QaseTitle("Child Observation in Observation Management")
-    public void childObservation() {
-        try {
-            // create New Inference
-            page.getByText("Child Observation ", new Page.GetByTextOptions().setExact(true)).click();
+    // @Test
+    // @Order(15)
+    // @QaseId(15)
+    // @QaseTitle("Edit Observation")
+    // public void editObservation() {
+    // try {
+    // page.locator(".action-btn").first().click();
+    // log.info("Action Button Clicked");
 
-            page.locator("input[type=\"text\"]").click();
+    // page.waitForSelector(
+    // ".loading-screen-wrapper",
+    // new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-            page.locator("input[type=\"text\"]").fill("Test");
-            log.info("Inference field filled");
+    // page.waitForLoadState(LoadState.NETWORKIDLE);
+    // } catch (Exception e) {
+    // log.error("Action Button not found: {}", e.getMessage());
+    // Assertions.fail("Action Button not found: " + e.getMessage());
+    // }
+    // }
 
-            page.waitForSelector(
-                    ".loading-screen-wrapper",
-                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+    // @Test
+    // @Order(16)
+    // @QaseId(16)
+    // @QaseTitle("Child Observation in Observation Management")
+    // public void childObservation() {
+    // try {
+    // page.getByText("Child Observation ", new
+    // Page.GetByTextOptions().setExact(true)).click();
 
-            page.waitForSelector("div[role='option'].ng-option");
+    // page.locator("input[type=\"text\"]").click();
 
-            List<Locator> obsList = page.locator("div[role='option'].ng-option").all();
+    // char[] alphabets = "cdehilmnost".toCharArray();
+    // log.info("Alphabets used for Type Ahead: {}", alphabets);
 
-            if (obsList.size() > 0) {
-                log.info("Observations found: {}", obsList.size());
-                Random random = new Random();
-                int randomIndex = random.nextInt(obsList.size());
-                obsList.get(randomIndex).click();
-                log.info("Observation selected at index: {}", randomIndex);
+    // Random random = new Random();
+    // int index = random.nextInt(alphabets.length);
 
-                page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
-                log.info("Yes button clicked");
-            } else {
-                log.info("No observations found to select from.");
-            }
-        } catch (Exception e) {
-            log.error("Create New Child Inference failed: {}", e.getMessage());
-            Assertions.fail("Create New Child Inference failed: " + e.getMessage());
-        }
-    }
+    // char randomChar = alphabets[index];
+    // log.info("Random character generated: {}", randomChar);
+
+    // page.locator("input[type=\"text\"]").fill(""+randomChar);
+    // log.info("Inference field filled");
+
+    // page.waitForSelector(
+    // ".loading-screen-wrapper",
+    // new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+
+    // page.waitForSelector("div[role='option'].ng-option");
+
+    // List<Locator> obsList = page.locator("div[role='option'].ng-option").all();
+
+    // if (obsList.size() > 0) {
+    // log.info("Observations found: {}", obsList.size());
+    // int randomIndex = random.nextInt(obsList.size());
+    // obsList.get(randomIndex).click();
+    // log.info("Observation selected at index: {}", randomIndex);
+
+    // page.getByRole(AriaRole.BUTTON, new
+    // Page.GetByRoleOptions().setName("Yes")).click();
+    // log.info("Yes button clicked");
+    // } else {
+    // log.info("No observations found to select from.");
+    // }
+    // } catch (Exception e) {
+    // log.error("Create New Child Inference failed: {}", e.getMessage());
+    // Assertions.fail("Create New Child Inference failed: " + e.getMessage());
+    // }
+    // }
 
     // Inference Management
     @Test
-    @Order(16)
-    @QaseId(16)
+    @Order(15)
+    @QaseId(15)
     @QaseTitle("Navigate To Inference Management")
     public void navigateToInferenceManagement() {
         try {
@@ -1279,8 +1326,8 @@ public class DiagnosticTests extends BaseTest {
     }
 
     @Test
-    @Order(17)
-    @QaseId(17)
+    @Order(16)
+    @QaseId(16)
     @QaseTitle("Edit Inference")
     public void editInf() {
         try {
@@ -1297,8 +1344,8 @@ public class DiagnosticTests extends BaseTest {
     }
 
     @Test
-    @Order(18)
-    @QaseId(18)
+    @Order(17)
+    @QaseId(17)
     @QaseTitle("Merge Similar Inferences")
     public void mergeSimilarInf() {
         try {
@@ -1334,31 +1381,40 @@ public class DiagnosticTests extends BaseTest {
     }
 
     @Test
-    @Order(19)
-    @QaseId(19)
+    @Order(18)
+    @QaseId(18)
     @QaseTitle("Create New Child Inference")
     public void createNewChildInf() {
         try {
-            // create New Inference
-            page.getByText("Child Inferences", new Page.GetByTextOptions().setExact(true)).click();
+            try {
+                page.waitForSelector(
+                    "div.step div.step-label:has-text(\"Child Inferences\")",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(10000));
 
-            page.locator("input[type=\"text\"]").click();
+                // create New Inference
+                page.getByText("Child Inferences", new Page.GetByTextOptions().setExact(true)).click();
 
-            page.locator("input[type=\"text\"]").fill("Child Inf");
-            log.info("Inference field filled");
+                page.locator("input[type=\"text\"]").click();
 
-            page.getByText("Create New").click();
-            log.info("Create New button clicked");
+                page.locator("input[type=\"text\"]").fill("Child Inf");
+                // using excel pending
+                log.info("Inference field filled");
 
-            page.locator("app-rich-text-editor").getByText("Save").click();
-            log.info("Save button clicked");
+                page.getByText("Create New").click();
+                log.info("Create New button clicked");
 
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
-            log.info("Yes button clicked");
+                page.locator("app-rich-text-editor").getByText("Save").click();
+                log.info("Save button clicked");
 
-            page.waitForSelector(
-                    ".loading-screen-wrapper",
-                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+                page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
+                log.info("Yes button clicked");
+
+                page.waitForSelector(
+                        ".loading-screen-wrapper",
+                        new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            } catch (Exception e) {
+                log.info("Child Inference Tab is not Available!");
+            }
         } catch (Exception e) {
             log.error("Create New Child Inference failed: {}", e.getMessage());
             Assertions.fail("Create New Child Inference failed: " + e.getMessage());
@@ -1366,8 +1422,8 @@ public class DiagnosticTests extends BaseTest {
     }
 
     @Test
-    @Order(20)
-    @QaseId(20)
+    @Order(19)
+    @QaseId(19)
     @QaseTitle("Create New Observation in Inference Management")
     public void createObs() {
         try {
@@ -1377,6 +1433,7 @@ public class DiagnosticTests extends BaseTest {
             page.locator("input[type=\"text\"]").click();
 
             page.locator("input[type=\"text\"]").fill("New Observation");
+            // using excel pending
             log.info("Observation field filled");
 
             page.getByText("Create New").click();
@@ -1393,8 +1450,8 @@ public class DiagnosticTests extends BaseTest {
 
     // Multimedia Management
     @Test
-    @Order(21)
-    @QaseId(21)
+    @Order(20)
+    @QaseId(20)
     @QaseTitle("Navigate To Multimedia Management")
     public void navigateToMultimediaManagement() {
         try {
@@ -1416,8 +1473,8 @@ public class DiagnosticTests extends BaseTest {
     }
 
     @Test
-    @Order(22)
-    @QaseId(22)
+    @Order(21)
+    @QaseId(21)
     @QaseTitle("Create New Multimedia")
     public void createNewMultimedia() {
         try {
@@ -1443,6 +1500,7 @@ public class DiagnosticTests extends BaseTest {
             page
                     .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
                     .fill("Demo Image 1");
+            // using excel pending
 
             page.waitForTimeout(1000);
             page
@@ -1461,8 +1519,8 @@ public class DiagnosticTests extends BaseTest {
     }
 
     @Test
-    @Order(23)
-    @QaseId(23)
+    @Order(22)
+    @QaseId(22)
     @QaseTitle("Edit Multimedia")
     public void editMultimedia() {
         try {
@@ -1495,6 +1553,7 @@ public class DiagnosticTests extends BaseTest {
             page
                     .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
                     .fill("Demo Image 2");
+            // using excel pending
             page.waitForTimeout(1000);
 
             page
@@ -1518,8 +1577,8 @@ public class DiagnosticTests extends BaseTest {
 
     // Inbox
     @Test
-    @Order(24)
-    @QaseId(24)
+    @Order(23)
+    @QaseId(23)
     @QaseTitle("Navigate to Inbox")
     public void navigateToInbox() {
         try {
@@ -1541,8 +1600,8 @@ public class DiagnosticTests extends BaseTest {
     }
 
     @Test
-    @Order(25)
-    @QaseId(25)
+    @Order(24)
+    @QaseId(24)
     @QaseTitle("Merge Observations")
     public void mergeObs() {
         // Merge Observations
@@ -1577,19 +1636,12 @@ public class DiagnosticTests extends BaseTest {
     }
 
     @Test
-    @Order(26)
-    @QaseId(26)
-    @QaseTitle("Create New Observations")
-    public void createNewObsInbox() {
+    @Order(25)
+    @QaseId(25)
+    @QaseTitle("Create New in Inbox")
+    public void createNewInbox() {
         // Create New Observation
-        //select Manufacturer
-        selectManufacturer();
-
-        //select Obs
-        selectObs();
-        
-        //select Inf
-        selectInf();
+        createNewObsAndInf();
 
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("last")).click();
 
@@ -1605,6 +1657,42 @@ public class DiagnosticTests extends BaseTest {
         page.waitForSelector(
                 ".loading-screen-wrapper",
                 new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+    }
+
+    @Test
+    @Order(26)
+    @QaseId(26)
+    @QaseTitle("Select Existing in Inbox")
+    public void selectExInbox() {
+        try {
+            // select Manufacturer
+            selectManufacturer();
+
+            // select Obs
+            selectObs();
+
+            // select Inf
+            selectInf();
+
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("last")).click();
+
+            log.info("Last Clicked");
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("first")).click();
+
+            log.info("First Clicked");
+
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+
+        } catch (Exception e) {
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
+        }
     }
 
     @Test
@@ -1777,12 +1865,14 @@ public class DiagnosticTests extends BaseTest {
         page.locator("input[type=\"text\"]").click();
 
         page.locator("input[type=\"text\"]").fill("test inf");
+        // using excel pending
         log.info("Inference field filled");
 
         page.getByText("Create New").click();
         log.info("Create New button clicked");
 
-        page.locator("app-rich-text-editor").getByText("Save").click();
+        page.locator("button.create-new-btn:has-text(\"Save\")").click();
+
         log.info("Save button clicked");
 
         page.waitForSelector(
@@ -1809,6 +1899,7 @@ public class DiagnosticTests extends BaseTest {
         log.info("Comments field clicked");
 
         page.getByPlaceholder("Comments").fill("Invailid");
+        // using excel pending
         log.info("Comments field filled");
 
         page.getByText("Submit").click();
@@ -1818,6 +1909,7 @@ public class DiagnosticTests extends BaseTest {
                 new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
     }
 
+    //add here those steps which are previously removed from observation management -pending
     @Test
     @Order(33)
     @QaseId(33)
