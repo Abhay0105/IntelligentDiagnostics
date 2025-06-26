@@ -139,10 +139,10 @@ public class DiagnosticTests extends BaseTest {
             log.info("Create New modal opened");
 
             page
-                .locator("div")
-                .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
-                .nth(1)
-                .click();
+                    .locator("div")
+                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
+                    .nth(1)
+                    .click();
 
             log.info("Picklist clicked");
 
@@ -162,9 +162,8 @@ public class DiagnosticTests extends BaseTest {
 
             // getting descriptions from excel sheet
             List<String> descriptionsList = ExcelReader.readDescriptionsFromExcel(
-                "src/test/resources/srDescriptions.xlsx",
-                "devdemo"
-            );
+                    "src/test/resources/srDescriptions.xlsx",
+                    "devdemo");
 
             randomIndex = random.nextInt(descriptionsList.size());
 
@@ -186,9 +185,8 @@ public class DiagnosticTests extends BaseTest {
 
             // Wait until loading screen disappears
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
         } catch (Exception e) {
@@ -255,14 +253,13 @@ public class DiagnosticTests extends BaseTest {
 
                 // Wait for loading screen to disappear
                 page.waitForSelector(
-                    ".loading-screen-wrapper",
-                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN).setTimeout(10000)
-                );
+                        ".loading-screen-wrapper",
+                        new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN).setTimeout(10000));
 
                 page.waitForLoadState(LoadState.NETWORKIDLE);
 
                 page.waitForTimeout(1500);
-                
+
                 Locator obsLocator = page.locator(".observation-card");
                 int count = obsLocator.count();
 
@@ -285,7 +282,8 @@ public class DiagnosticTests extends BaseTest {
                     log.info("No observation cards found.");
                 }
 
-                if (obsFound) break;
+                if (obsFound)
+                    break;
             } catch (Exception e) {
                 log.warn("Exception on attempt {}: {}", attempt, e.getMessage());
             }
@@ -302,9 +300,9 @@ public class DiagnosticTests extends BaseTest {
     private void newObs() {
         try {
             page
-                .locator("mat-card")
-                .filter(new Locator.FilterOptions().setHasText("Are you seeing something else?"))
-                .click();
+                    .locator("mat-card")
+                    .filter(new Locator.FilterOptions().setHasText("Are you seeing something else?"))
+                    .click();
             log.info("Something Else button clicked");
 
             page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX).click();
@@ -312,9 +310,8 @@ public class DiagnosticTests extends BaseTest {
             log.info("New Observation field filled");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create New")).click();
             log.info("Create New button clicked");
@@ -336,9 +333,8 @@ public class DiagnosticTests extends BaseTest {
             List<Locator> solutionList = new ArrayList<Locator>();
             try {
                 page.waitForSelector(
-                    ".resolution",
-                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(10000)
-                );
+                        ".resolution",
+                        new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(10000));
                 log.info("Inference found");
 
                 solutionList = page.locator(".resolution").all();
@@ -378,10 +374,10 @@ public class DiagnosticTests extends BaseTest {
         try {
             log.info("No solution found!");
             page
-                .locator("div")
-                .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Search\\/Create$")))
-                .first()
-                .click();
+                    .locator("div")
+                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Search\\/Create$")))
+                    .first()
+                    .click();
             log.info("Input field clicked");
 
             page.locator("mat-drawer-content").getByRole(AriaRole.COMBOBOX).fill("New Solution");
@@ -391,9 +387,8 @@ public class DiagnosticTests extends BaseTest {
             log.info("Solution created");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
         } catch (Exception e) {
             log.error("New Inference not found: {}", e.getMessage());
             Assertions.fail("New Inference not found: " + e.getMessage());
@@ -406,9 +401,8 @@ public class DiagnosticTests extends BaseTest {
             log.info("Save and Continue button clicked");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
         } catch (Exception e) {
             log.error("Save and Continue button not found: {}", e.getMessage());
             Assertions.fail("Save and Continue button not found: " + e.getMessage());
@@ -421,16 +415,14 @@ public class DiagnosticTests extends BaseTest {
             log.info("Save and Close button clicked");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Copy")).click();
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
         } catch (Exception e) {
             log.error("Save and Close button not found: {}", e.getMessage());
             Assertions.fail("Save and Close button not found: " + e.getMessage());
@@ -446,19 +438,19 @@ public class DiagnosticTests extends BaseTest {
             log.info("Create New modal opened");
 
             page
-                .locator("div")
-                .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
-                .nth(1)
-                .click();
+                    .locator("div")
+                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
+                    .nth(1)
+                    .click();
             log.info("Manufacturer field clicked");
 
             page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("ALINITY_S")).click();
             log.info("ALINITY-S option clicked");
 
             page
-                .getByLabel("1Please fill out the")
-                .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
-                .click();
+                    .getByLabel("1Please fill out the")
+                    .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
+                    .click();
             log.info("Next button clicked");
 
             page.waitForTimeout(2000);
@@ -467,27 +459,27 @@ public class DiagnosticTests extends BaseTest {
             log.info("Text box clicked");
 
             page
-                .locator("ng-select")
-                .filter(new Locator.FilterOptions().setHasText("Search/CreateType to search"))
-                .getByRole(AriaRole.COMBOBOX)
-                .fill("test observation");
+                    .locator("ng-select")
+                    .filter(new Locator.FilterOptions().setHasText("Search/CreateType to search"))
+                    .getByRole(AriaRole.COMBOBOX)
+                    .fill("test observation");
             log.info("Observation field filled");
 
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create New").setExact(true)).click();
             log.info("Create New button clicked");
 
             page
-                .locator("div")
-                .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Search\\/Create$")))
-                .nth(1)
-                .click();
+                    .locator("div")
+                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Search\\/Create$")))
+                    .nth(1)
+                    .click();
             log.info("Inference field clicked");
 
             page
-                .locator("ng-select")
-                .filter(new Locator.FilterOptions().setHasText("Search/CreateType to"))
-                .getByRole(AriaRole.COMBOBOX)
-                .fill("test inference");
+                    .locator("ng-select")
+                    .filter(new Locator.FilterOptions().setHasText("Search/CreateType to"))
+                    .getByRole(AriaRole.COMBOBOX)
+                    .fill("test inference");
             log.info("Inference field filled");
 
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create New").setExact(true)).click();
@@ -497,9 +489,9 @@ public class DiagnosticTests extends BaseTest {
             log.info("Save button clicked");
 
             page
-                .getByLabel("2Observation Details")
-                .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
-                .click();
+                    .getByLabel("2Observation Details")
+                    .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
+                    .click();
             log.info("Next button clicked");
 
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save Observation")).click();
@@ -513,9 +505,9 @@ public class DiagnosticTests extends BaseTest {
     private void existingObsTypeAhead() {
         try {
             page
-                .locator("mat-card")
-                .filter(new Locator.FilterOptions().setHasText("Are you seeing something else?"))
-                .click();
+                    .locator("mat-card")
+                    .filter(new Locator.FilterOptions().setHasText("Are you seeing something else?"))
+                    .click();
             log.info("Something Else button clicked");
 
             page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX).click();
@@ -531,20 +523,25 @@ public class DiagnosticTests extends BaseTest {
 
             page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX).fill("" + randomChar);
             log.info("New Observation field filled");
+
             page.waitForTimeout(1500);
 
             page.waitForSelector(
-                "div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000)
-            );
+                    "div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
             log.info("Type Ahead listbox found");
 
-            List<Locator> exObsTAList = page.locator("div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items div[role='option'].ng-option").all();
-            log.info("Obs List:- "+ exObsTAList);
+            page.waitForSelector(
+                    "div[role='option'].ng-option",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+            log.info("Obs Options are visible");
+
+            List<Locator> exObsTAList = page.locator("div[role='option'].ng-option").all();
+            log.info("Obs List:- " + exObsTAList);
 
             page.waitForTimeout(1500);
 
-            log.info("Observation list size:- "+exObsTAList.size());
+            log.info("Observation list size:- " + exObsTAList.size());
 
             if (!exObsTAList.isEmpty() || exObsTAList.size() != 0) {
                 int randomIndex = random.nextInt(exObsTAList.size());
@@ -564,10 +561,10 @@ public class DiagnosticTests extends BaseTest {
     private void existingInfTypeAhead() {
         try {
             page
-                .locator("div")
-                .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Search\\/Create$")))
-                .first()
-                .click();
+                    .locator("div")
+                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Search\\/Create$")))
+                    .first()
+                    .click();
             log.info("Input field clicked");
 
             char[] alphabets = "cdehilmnost".toCharArray();
@@ -585,19 +582,23 @@ public class DiagnosticTests extends BaseTest {
             page.waitForTimeout(1500);
 
             page.waitForSelector(
-                "div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000)
-            );
+                    "div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
             log.info("Type Ahead listbox found");
 
-            List<Locator> exInfTAList = page.locator("div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items div[role='option'].ng-option").all();
-            log.info("Inf List:- "+ exInfTAList);
+            page.waitForSelector(
+                    "div[role='option'].ng-option",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+            log.info("Inf Options are visible");
+
+            List<Locator> exInfTAList = page.locator("div[role='option'].ng-option").all();
+            log.info("Inf List:- " + exInfTAList);
 
             page.waitForTimeout(1500);
 
-            log.info("Inference list size:- "+exInfTAList.size());
+            log.info("Inference list size:- " + exInfTAList.size());
 
-            if(!exInfTAList.isEmpty() || exInfTAList.size() != 0){
+            if (!exInfTAList.isEmpty() || exInfTAList.size() != 0) {
                 int randomIndex = random.nextInt(exInfTAList.size());
                 log.info("Random index selected: {}", randomIndex);
                 String selectedInference = exInfTAList.get(randomIndex).textContent().trim();
@@ -607,9 +608,8 @@ public class DiagnosticTests extends BaseTest {
             }
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
         } catch (Exception e) {
             log.error("New Inference not found: {}", e.getMessage());
             Assertions.fail("New Inference not found: " + e.getMessage());
@@ -634,8 +634,9 @@ public class DiagnosticTests extends BaseTest {
                     log.info("Existing Inference not found");
 
                     page
-                        .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
-                        .click();
+                            .getByRole(AriaRole.HEADING,
+                                    new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                            .click();
 
                     log.info("New Solution clicked");
 
@@ -645,7 +646,7 @@ public class DiagnosticTests extends BaseTest {
                 }
             } else {
                 log.info("Observation card not found");
-                
+
                 existingObsTypeAhead();
 
                 if (checkInf()) {
@@ -658,8 +659,9 @@ public class DiagnosticTests extends BaseTest {
                     log.info("Existing Inference not found");
 
                     page
-                        .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
-                        .click();
+                            .getByRole(AriaRole.HEADING,
+                                    new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                            .click();
 
                     log.info("New Solution clicked");
 
@@ -687,24 +689,21 @@ public class DiagnosticTests extends BaseTest {
             log.info("Yes button clicked");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
             // Wait for the loading screen to disappear
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
             // Wait for the page to load completely
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
             // Wait for the loading screen to disappear
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
             log.info("Investigation deleted successfully");
 
             // Wait for the page to load completely
@@ -784,8 +783,9 @@ public class DiagnosticTests extends BaseTest {
                     log.info("Existing Inference found");
 
                     page
-                        .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
-                        .click();
+                            .getByRole(AriaRole.HEADING,
+                                    new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                            .click();
                     log.info("New Solution clicked");
 
                     existingInfTypeAhead();
@@ -795,8 +795,9 @@ public class DiagnosticTests extends BaseTest {
                     log.info("Existing Inference not found");
 
                     page
-                        .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
-                        .click();
+                            .getByRole(AriaRole.HEADING,
+                                    new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                            .click();
                     log.info("New Solution clicked");
 
                     existingInfTypeAhead();
@@ -845,8 +846,9 @@ public class DiagnosticTests extends BaseTest {
                     existingInfCheckbox();
 
                     page
-                        .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
-                        .click();
+                            .getByRole(AriaRole.HEADING,
+                                    new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                            .click();
                     log.info("New Solution clicked");
 
                     newInf();
@@ -858,8 +860,9 @@ public class DiagnosticTests extends BaseTest {
                     existingInfTypeAhead();
 
                     page
-                        .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
-                        .click();
+                            .getByRole(AriaRole.HEADING,
+                                    new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                            .click();
                     log.info("New Solution clicked");
 
                     newInf();
@@ -876,8 +879,9 @@ public class DiagnosticTests extends BaseTest {
                     existingInfCheckbox();
 
                     page
-                        .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
-                        .click();
+                            .getByRole(AriaRole.HEADING,
+                                    new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                            .click();
                     log.info("New Solution clicked");
 
                     newInf();
@@ -889,8 +893,9 @@ public class DiagnosticTests extends BaseTest {
                     existingInfTypeAhead();
 
                     page
-                        .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
-                        .click();
+                            .getByRole(AriaRole.HEADING,
+                                    new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                            .click();
                     log.info("New Solution clicked");
 
                     newInf();
@@ -923,9 +928,8 @@ public class DiagnosticTests extends BaseTest {
 
             page.waitForURL(url -> url.contains("observation-mgmt"), new Page.WaitForURLOptions().setTimeout(45000));
             Assertions.assertTrue(
-                page.url().contains("observation-mgmt"),
-                "Not redirected on Observation Management page"
-            );
+                    page.url().contains("observation-mgmt"),
+                    "Not redirected on Observation Management page");
             log.info("Navigated to Observation Management page");
         } catch (Exception e) {
             log.error("Navigation to Observation Management failed: {}", e.getMessage());
@@ -951,9 +955,8 @@ public class DiagnosticTests extends BaseTest {
             log.info("Action Button Clicked");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
         } catch (Exception e) {
@@ -977,9 +980,8 @@ public class DiagnosticTests extends BaseTest {
             log.info("Inference field filled");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
             page.waitForSelector("div[role='option'].ng-option");
 
@@ -1037,9 +1039,8 @@ public class DiagnosticTests extends BaseTest {
             log.info("Action Button Clicked");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
         } catch (Exception e) {
             log.error("Edit Inference Button Click failed: {}", e.getMessage());
             Assertions.fail("Edit Inference Button Click failed: " + e.getMessage());
@@ -1056,9 +1057,8 @@ public class DiagnosticTests extends BaseTest {
             log.info("Similar Inferences clicked");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
             List<Locator> checkboxes;
             try {
@@ -1108,9 +1108,8 @@ public class DiagnosticTests extends BaseTest {
             log.info("Yes button clicked");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
         } catch (Exception e) {
             log.error("Create New Child Inference failed: {}", e.getMessage());
             Assertions.fail("Create New Child Inference failed: " + e.getMessage());
@@ -1135,9 +1134,8 @@ public class DiagnosticTests extends BaseTest {
             log.info("Create New button clicked");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
         } catch (Exception e) {
             log.error("Create New Child Inference failed: {}", e.getMessage());
             Assertions.fail("Create New Child Inference failed: " + e.getMessage());
@@ -1194,15 +1192,16 @@ public class DiagnosticTests extends BaseTest {
 
             page.waitForTimeout(1000);
             page
-                .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
-                .fill("Demo Image 1");
+                    .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
+                    .fill("Demo Image 1");
 
             page.waitForTimeout(1000);
             page
-                .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
-                .press("Tab");
+                    .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
+                    .press("Tab");
 
-            // page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Upload")).click();
+            // page.getByRole(AriaRole.BUTTON, new
+            // Page.GetByRoleOptions().setName("Upload")).click();
             page.locator("button:has-text('Upload')").click();
 
             log.info("File uploaded successfully!");
@@ -1222,9 +1221,8 @@ public class DiagnosticTests extends BaseTest {
             log.info("Edit Button Clicked");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -1246,13 +1244,13 @@ public class DiagnosticTests extends BaseTest {
             page.waitForTimeout(1000);
 
             page
-                .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
-                .fill("Demo Image 2");
+                    .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
+                    .fill("Demo Image 2");
             page.waitForTimeout(1000);
 
             page
-                .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
-                .press("Tab");
+                    .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
+                    .press("Tab");
 
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Update File")).click();
             log.info("File uploaded successfully!");
@@ -1300,11 +1298,10 @@ public class DiagnosticTests extends BaseTest {
     public void mergeObs() {
         // Merge Observations
         page
-            .locator(
-                ".ag-row-odd > div:nth-child(9) > .ag-cell-wrapper > .ag-cell-value > app-icon-renderer > i:nth-child(4)"
-            )
-            .first()
-            .click();
+                .locator(
+                        ".ag-row-odd > div:nth-child(9) > .ag-cell-wrapper > .ag-cell-value > app-icon-renderer > i:nth-child(4)")
+                .first()
+                .click();
 
         try {
             page.waitForSelector("li.result-text");
@@ -1342,18 +1339,16 @@ public class DiagnosticTests extends BaseTest {
 
         log.info("Last Clicked");
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("first")).click();
 
         log.info("First Clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
     }
 
     @Test
@@ -1367,17 +1362,15 @@ public class DiagnosticTests extends BaseTest {
         log.info("Approve Clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
     }
 
     private void selectInference() {
         // Select Inference
         page.waitForSelector(
-            "input[type='checkbox'][aria-label*='toggle row selection']",
-            new Page.WaitForSelectorOptions().setTimeout(15000)
-        );
+                "input[type='checkbox'][aria-label*='toggle row selection']",
+                new Page.WaitForSelectorOptions().setTimeout(15000));
 
         log.info("Inference Found");
 
@@ -1404,9 +1397,8 @@ public class DiagnosticTests extends BaseTest {
         log.info("Bulb icon Clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -1414,26 +1406,23 @@ public class DiagnosticTests extends BaseTest {
         selectInference();
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
         // Approve Inferences
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Approve Inferences")).click();
         log.info("Approve Inferences Clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
         log.info("Yes Clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -1443,9 +1432,8 @@ public class DiagnosticTests extends BaseTest {
         log.info("Close Clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
         page.waitForTimeout(2000);
     }
@@ -1462,9 +1450,8 @@ public class DiagnosticTests extends BaseTest {
         log.info("Bulb icon Clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
         page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -1477,15 +1464,13 @@ public class DiagnosticTests extends BaseTest {
 
         page.waitForTimeout(2000);
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
         // Delete Inferences
         Locator deleteInferenceButton = page.getByRole(
-            AriaRole.BUTTON,
-            new Page.GetByRoleOptions().setName("  Delete Inferences")
-        );
+                AriaRole.BUTTON,
+                new Page.GetByRoleOptions().setName("  Delete Inferences"));
 
         deleteInferenceButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 
@@ -1493,25 +1478,22 @@ public class DiagnosticTests extends BaseTest {
         log.info("Delete Inferences Clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
         log.info("Yes Clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Close")).click();
         log.info("Close Clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
     }
 
     @Test
@@ -1524,9 +1506,8 @@ public class DiagnosticTests extends BaseTest {
         log.info("Action Button Clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
     }
 
     @Test
@@ -1549,9 +1530,8 @@ public class DiagnosticTests extends BaseTest {
         log.info("Save button clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
     }
 
     @Test
@@ -1560,9 +1540,8 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Reject Inference")
     public void rejectInf() {
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
         page.waitForSelector("li a div[title='Reject Inference']");
 
@@ -1579,9 +1558,8 @@ public class DiagnosticTests extends BaseTest {
         page.getByText("Submit").click();
         log.info("Submit button clicked");
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
     }
 
     @Test
@@ -1597,9 +1575,8 @@ public class DiagnosticTests extends BaseTest {
         log.info("Yes Clicked");
 
         page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-        );
+                ".loading-screen-wrapper",
+                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
     }
 
     @Test
@@ -1618,9 +1595,8 @@ public class DiagnosticTests extends BaseTest {
 
             page.waitForURL(url -> url.contains("self-service"), new Page.WaitForURLOptions().setTimeout(45000));
             Assertions.assertTrue(
-                page.url().contains("self-service"),
-                "Not redirected on Self Service Diagnostics page"
-            );
+                    page.url().contains("self-service"),
+                    "Not redirected on Self Service Diagnostics page");
             log.info("Navigated to Self Service Diagnostics page");
         } catch (Exception e) {
             log.error("Navigation to Self Service Diagnostics failed: {}", e.getMessage());
@@ -1638,9 +1614,8 @@ public class DiagnosticTests extends BaseTest {
             log.info("Upload File Button Clicked");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
@@ -1663,17 +1638,15 @@ public class DiagnosticTests extends BaseTest {
             page.waitForTimeout(1500);
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Refresh Status")).click();
             log.info("Refresh Status button clicked");
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-            );
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
             page.waitForLoadState(LoadState.NETWORKIDLE);
         } catch (Exception e) {
             log.error("Upload File in Self Service Diagnostics failed: {}", e.getMessage());
