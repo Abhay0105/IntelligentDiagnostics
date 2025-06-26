@@ -534,15 +534,13 @@ public class DiagnosticTests extends BaseTest {
             page.waitForTimeout(1500);
 
             page.waitForSelector(
-                "div[aria-label='Options List']",
+                "div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items",
                 new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000)
             );
             log.info("Type Ahead listbox found");
 
-            Locator listbox = page.locator("div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items");
-            log.info("Listbox :-"+listbox);
-            
-            List<Locator> exObsTAList = listbox.locator("div[role='option'].ng-option").all();
+            List<Locator> exObsTAList = page.locator("div[role='option'].ng-option").all();
+            log.info("Obs List:- "+ exObsTAList);
 
             page.waitForTimeout(1500);
 
@@ -587,15 +585,14 @@ public class DiagnosticTests extends BaseTest {
             page.waitForTimeout(1500);
 
             page.waitForSelector(
-                "div[role='listbox'][aria-label='Options List']",
+                "div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items",
                 new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000)
             );
             log.info("Type Ahead listbox found");
 
-            Locator listbox = page.locator("div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items");
-            log.info("Listbox :-"+listbox);
-
-            List<Locator> exInfTAList = listbox.locator("div[role='option'].ng-option").all();
+            List<Locator> exInfTAList = page.locator("div[role='option'].ng-option").all();
+            log.info("Inf List:- "+ exInfTAList);
+            
             page.waitForTimeout(1500);
 
             log.info("Inference list size:- "+exInfTAList.size());
