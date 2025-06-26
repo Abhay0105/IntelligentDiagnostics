@@ -429,78 +429,107 @@ public class DiagnosticTests extends BaseTest {
         }
     }
 
-    private void createNewObs() {
-        try {
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Create New")).click();
-            log.info("Create New button clicked");
+    // private void createNewObsAndInf() {
+    // try {
+    // page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("
+    //  Create New")).click();
+    // log.info("Create New button clicked");
 
-            page.waitForSelector("#modalCenter > div > div", new Page.WaitForSelectorOptions().setTimeout(45000));
-            log.info("Create New modal opened");
+    // page.waitForSelector("#modalCenter > div > div", new
+    // Page.WaitForSelectorOptions().setTimeout(45000));
+    // log.info("Create New modal opened");
 
-            page
-                    .locator("div")
-                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
-                    .nth(1)
-                    .click();
-            log.info("Manufacturer field clicked");
+    // //selecting manufacturer
+    // page
+    // .locator("div")
+    // .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer
+    // \\*$")))
+    // .nth(1)
+    // .click();
+    // log.info("Manufacturer field clicked");
 
-            page.getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("ALINITY_S")).click();
-            log.info("ALINITY-S option clicked");
+    // page.waitForTimeout(2000);
 
-            page
-                    .getByLabel("1Please fill out the")
-                    .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
-                    .click();
-            log.info("Next button clicked");
+    // List<Locator> manufacturersList =
+    // page.locator("//ng-dropdown-panel//div[@role='option']").all();
 
-            page.waitForTimeout(2000);
+    // Random random = new Random();
+    // int randomIndex = random.nextInt(manufacturersList.size());
+    // log.info("Random index selected: {}", randomIndex);
 
-            page.locator(".new-obsrv-select > .ng-select-container").click();
-            log.info("Text box clicked");
+    // String selectedManufacturer =
+    // manufacturersList.get(randomIndex).textContent().trim();
+    // manufacturersList.get(randomIndex).click();
 
-            page
-                    .locator("ng-select")
-                    .filter(new Locator.FilterOptions().setHasText("Search/CreateType to search"))
-                    .getByRole(AriaRole.COMBOBOX)
-                    .fill("test observation");
-            log.info("Observation field filled");
+    // log.info("Manufacturer option clicked: {}", selectedManufacturer);
 
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create New").setExact(true)).click();
-            log.info("Create New button clicked");
+    // // page.getByRole(AriaRole.OPTION, new
+    // Page.GetByRoleOptions().setName("ALINITY_S")).click();
+    // // log.info("ALINITY-S option clicked");
 
-            page
-                    .locator("div")
-                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Search\\/Create$")))
-                    .nth(1)
-                    .click();
-            log.info("Inference field clicked");
+    // page
+    // .getByLabel("1Please fill out the")
+    // .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
+    // .click();
+    // log.info("Next button clicked");
 
-            page
-                    .locator("ng-select")
-                    .filter(new Locator.FilterOptions().setHasText("Search/CreateType to"))
-                    .getByRole(AriaRole.COMBOBOX)
-                    .fill("test inference");
-            log.info("Inference field filled");
+    // //observation
+    // page.waitForTimeout(2000);
 
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create New").setExact(true)).click();
-            log.info("Create New button clicked");
+    // page.locator(".new-obsrv-select > .ng-select-container").click();
+    // log.info("Text box clicked");
 
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save")).click();
-            log.info("Save button clicked");
+    // page
+    // .locator("ng-select")
+    // .filter(new Locator.FilterOptions().setHasText("Search/CreateType to
+    // search"))
+    // .getByRole(AriaRole.COMBOBOX)
+    // .fill("test observation");
+    // log.info("Observation field filled");
 
-            page
-                    .getByLabel("2Observation Details")
-                    .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
-                    .click();
-            log.info("Next button clicked");
+    // page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create
+    // New").setExact(true)).click();
+    // log.info("Create New button clicked");
 
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save Observation")).click();
-            log.info("Save Observation button clicked");
-        } catch (Exception e) {
-            log.error("Test Failed: {}", e.getMessage());
-            Assertions.fail("Test Failed: " + e.getMessage());
-        }
-    }
+    // //inference
+    // page
+    // .locator("div")
+    // .filter(new
+    // Locator.FilterOptions().setHasText(Pattern.compile("^Search\\/Create$")))
+    // .nth(1)
+    // .click();
+    // log.info("Inference field clicked");
+
+    // page
+    // .locator("ng-select")
+    // .filter(new Locator.FilterOptions().setHasText("Search/CreateType to"))
+    // .getByRole(AriaRole.COMBOBOX)
+    // .fill("test inference");
+    // log.info("Inference field filled");
+
+    // page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create
+    // New").setExact(true)).click();
+    // log.info("Create New button clicked");
+
+    // page.getByRole(AriaRole.BUTTON, new
+    // Page.GetByRoleOptions().setName("Save")).click();
+    // log.info("Save button clicked");
+
+    // page
+    // .getByLabel("2Observation Details")
+    // .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
+    // .click();
+    // log.info("Next button clicked");
+
+    // //save obs and inf
+    // page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save
+    // Observation")).click();
+    // log.info("Save Observation button clicked");
+    // } catch (Exception e) {
+    // log.error("Test Failed: {}", e.getMessage());
+    // Assertions.fail("Test Failed: " + e.getMessage());
+    // }
+    // }
 
     private void existingObsTypeAhead() {
         try {
@@ -543,7 +572,7 @@ public class DiagnosticTests extends BaseTest {
 
             log.info("Observation list size:- " + exObsTAList.size());
 
-            if (!exObsTAList.isEmpty() || exObsTAList.size() != 0) {
+            if (!exObsTAList.isEmpty() || exObsTAList.size() > 0) {
                 int randomIndex = random.nextInt(exObsTAList.size());
                 log.info("Random index selected: {}", randomIndex);
                 String selectedObservation = exObsTAList.get(randomIndex).textContent().trim();
@@ -613,6 +642,219 @@ public class DiagnosticTests extends BaseTest {
         } catch (Exception e) {
             log.error("New Inference not found: {}", e.getMessage());
             Assertions.fail("New Inference not found: " + e.getMessage());
+        }
+    }
+
+    // create new in inbox
+    private void selectManufacturer() {
+        try {
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Create New")).click();
+            log.info("Create New button clicked");
+
+            page.waitForSelector("#modalCenter > div > div", new Page.WaitForSelectorOptions().setTimeout(45000));
+            log.info("Create New modal opened");
+
+            // selecting manufacturer
+            page
+                    .locator("div")
+                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
+                    .nth(1)
+                    .click();
+            log.info("Manufacturer field clicked");
+
+            page.waitForTimeout(2000);
+
+            List<Locator> manufacturersList = page.locator("//ng-dropdown-panel//div[@role='option']").all();
+
+            Random random = new Random();
+            int randomIndex = random.nextInt(manufacturersList.size());
+            log.info("Random index selected: {}", randomIndex);
+
+            String selectedManufacturer = manufacturersList.get(randomIndex).textContent().trim();
+            manufacturersList.get(randomIndex).click();
+
+            log.info("Manufacturer option clicked: {}", selectedManufacturer);
+
+            page
+                    .getByLabel("1Please fill out the")
+                    .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
+                    .click();
+            log.info("Next button clicked");
+
+
+        } catch (Exception e) {
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
+        }
+    }
+
+    private void selectObs() {
+        try {
+            // observation
+            page.waitForTimeout(2000);
+
+            page.locator(".new-obsrv-select > .ng-select-container").click();
+            log.info("Text box clicked");
+
+            page
+                    .locator("ng-select")
+                    .filter(new Locator.FilterOptions().setHasText("Search/CreateType to search"))
+                    .getByRole(AriaRole.COMBOBOX)
+                    .click();
+
+            char[] alphabets = "abcdefghilmnoprst".toCharArray();
+            log.info("Alphabets used for Type Ahead: {}", alphabets);
+
+            Random random = new Random();
+            int index = random.nextInt(alphabets.length);
+
+            char randomChar = alphabets[index];
+            log.info("Random character generated: {}", randomChar);
+
+            page
+                    .locator("ng-select")
+                    .filter(new Locator.FilterOptions().setHasText("Search/CreateType to search"))
+                    .getByRole(AriaRole.COMBOBOX)
+                    .fill("" + randomChar);
+            log.info("Observation field filled");
+
+            page.waitForTimeout(1500);
+
+            page.waitForSelector(
+                    "div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+            log.info("Type Ahead listbox found");
+
+            page.waitForSelector(
+                    "div[role='option'].ng-option",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+            log.info("Obs Options are visible");
+
+            List<Locator> exObsTAList = page.locator("div[role='option'].ng-option").all();
+            log.info("Obs List:- " + exObsTAList);
+
+            page.waitForTimeout(1500);
+
+            log.info("Observation list size:- " + exObsTAList.size());
+
+            if (!exObsTAList.isEmpty() || exObsTAList.size() != 0) {
+                int randomObsIndex = random.nextInt(exObsTAList.size());
+                log.info("Random index selected: {}", randomObsIndex);
+                String selectedObservation = exObsTAList.get(randomObsIndex).textContent().trim();
+                exObsTAList.get(randomObsIndex).click();
+                log.info("Existing Observation Type Ahead option clicked: {}", selectedObservation);
+
+                page.waitForTimeout(1500);
+            }
+
+        } catch (Exception e) {
+            log.info("Observation Creation Failed: " + e.getMessage());
+        }
+    }
+
+    private void selectInf() {
+        try {
+            // inference
+            // existing
+            Random random = new Random();
+            try {
+                page.waitForSelector(
+                        "ul.result-wrapper",
+                        new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+                log.info("Existing Inferences are visible");
+
+                List<Locator> exInfList = page.locator("ul.result-wrapper li").all();
+                log.info("Inference List Size: " + exInfList.size());
+                log.info("Inference List: " + exInfList);
+
+                if (exInfList.size() > 0) {
+                    int randomExInfIndex = random.nextInt(exInfList.size());
+                    log.info("Random index selected: {}", randomExInfIndex);
+                    String selectedInference = exInfList.get(randomExInfIndex).textContent().trim();
+                    exInfList.get(randomExInfIndex).click();
+                    log.info("Existing Observation Type Ahead option clicked: {}", selectedInference);
+
+                    page.waitForTimeout(1500);
+                }
+
+            } catch (Exception e) {
+                log.info("existing Inferences not found:-" + e.getMessage());
+            }
+
+            // new
+            page
+                    .locator("div")
+                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Search\\/Create$")))
+                    .nth(1)
+                    .click();
+            log.info("Inference field clicked");
+
+            page
+                    .locator("ng-select")
+                    .filter(new Locator.FilterOptions().setHasText("Search/CreateType to"))
+                    .getByRole(AriaRole.COMBOBOX)
+                    .click();
+
+            char[] alphabetsInf = "cdehilmnost".toCharArray();
+            log.info("Alphabets used for Type Ahead: {}", alphabetsInf);
+
+            int indexInf = random.nextInt(alphabetsInf.length);
+
+            char randomCharInf = alphabetsInf[indexInf];
+            log.info("Random character generated: {}", randomCharInf);
+
+            page
+                    .locator("ng-select")
+                    .filter(new Locator.FilterOptions().setHasText("Search/CreateType to"))
+                    .getByRole(AriaRole.COMBOBOX)
+                    .fill("" + randomCharInf);
+            log.info("Inference field filled");
+
+            page.waitForTimeout(1500);
+
+            page.waitForSelector(
+                    "div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+            log.info("Type Ahead listbox found");
+
+            page.waitForSelector(
+                    "div[role='option'].ng-option",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+            log.info("Inf Options are visible");
+
+            List<Locator> exInfTAList = page.locator("div[role='option'].ng-option").all();
+            log.info("Inf List:- " + exInfTAList);
+
+            page.waitForTimeout(1500);
+
+            log.info("Inference list size:- " + exInfTAList.size());
+
+            if (!exInfTAList.isEmpty() || exInfTAList.size() != 0) {
+                int randomInfIndex = random.nextInt(exInfTAList.size());
+                log.info("Random index selected: {}", randomInfIndex);
+                String selectedInference = exInfTAList.get(randomInfIndex).textContent().trim();
+                exInfTAList.get(randomInfIndex).click();
+                log.info("Existing Inference Type Ahead option clicked: {}", selectedInference);
+
+            }
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+
+            page.waitForTimeout(1500);
+
+            page
+                    .getByLabel("2Observation Details")
+                    .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
+                    .click();
+            log.info("Next button clicked");
+
+            // save obs and inf
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Save Observation")).click();
+            log.info("Save Observation button clicked");
+        } catch (Exception e) {
+            log.info("Inference Selection Failed: " + e.getMessage());
+
         }
     }
 
@@ -942,7 +1184,14 @@ public class DiagnosticTests extends BaseTest {
     @QaseId(13)
     @QaseTitle("Create new Observation in Observation Management")
     public void createNewObsOM() {
-        createNewObs();
+        //select Manufacturer
+        selectManufacturer();
+
+        //select Obs
+        selectObs();
+        
+        //select Inf
+        selectInf();
     }
 
     @Test
@@ -1333,7 +1582,14 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Create New Observations")
     public void createNewObsInbox() {
         // Create New Observation
-        createNewObs();
+        //select Manufacturer
+        selectManufacturer();
+
+        //select Obs
+        selectObs();
+        
+        //select Inf
+        selectInf();
 
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("last")).click();
 
