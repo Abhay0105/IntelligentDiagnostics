@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.qa.nal.DiagnosticTests
--------------------------------------------------------------------------------
-Tests run: 35, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 226.236 s - in com.qa.nal.DiagnosticTests

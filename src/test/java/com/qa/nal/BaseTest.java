@@ -19,7 +19,7 @@ public abstract class BaseTest {
         context = browser.newContext();
         page = context.newPage();
 
-        page.setDefaultTimeout(60000);
+        page.setDefaultTimeout(45000);
 
         // auto-accept JS dialogs
         page.onDialog(Dialog::accept);

@@ -44,21 +44,69 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Perform Login")
     public void performLogin() {
         try {
-            page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).click();
-            log.info("Username field clicked");
+            try {
 
-            page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).fill(username);
-            log.info("Username field filled");
+                page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).click();
+                log.info("Username field clicked");
 
-            page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Password")).click();
-            log.info("Password field clicked");
+                page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).fill(username);
+                log.info("Username field filled");
 
-            page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Password")).fill(password);
-            log.info("Password field filled");
+                page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Password")).click();
+                log.info("Password field clicked");
 
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login").setExact(true)).click();
-            log.info("Login button clicked");
+                page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Password")).fill(password);
+                log.info("Password field filled");
 
+                page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login").setExact(true)).click();
+                log.info("Login button clicked");
+            } catch (Exception e) {
+                page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with N7MICROSOFT")).click();
+                page.waitForTimeout(2000);
+                log.info("Login with N7MICROSOFT  button clicked");
+
+                page.waitForSelector(
+                        ".loading-screen-wrapper",
+                        new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+
+                page.waitForURL(url -> url.contains("login.microsoftonline"),
+                        new Page.WaitForURLOptions().setTimeout(15000));
+
+                page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Enter your email, phone, or"))
+                        .click();
+                page.waitForTimeout(750);
+
+                page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Enter your email, phone, or"))
+                        .fill(username);
+                page.waitForTimeout(750);
+
+                page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Next")).click();
+                page.waitForTimeout(750);
+
+                page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions()
+                        .setName(Pattern.compile("^Enter the password for .*")))
+                        .click();
+                page.waitForTimeout(750);
+
+                page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions()
+                        .setName(Pattern.compile("^Enter the password for .*")))
+                        .fill(password);
+                page.waitForTimeout(750);
+
+                page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Sign in")).click();
+                page.waitForTimeout(750);
+
+                page.getByRole(AriaRole.CHECKBOX, new Page.GetByRoleOptions().setName("Don't show this again")).check();
+                page.waitForTimeout(750);
+
+                page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
+                page.waitForTimeout(750);
+
+            }
+
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
             page.waitForURL(url -> url.contains("/app/new-home"));
 
             Assertions.assertTrue(page.url().contains("new-home"), "Login did not navigate to home");
@@ -1388,8 +1436,8 @@ public class DiagnosticTests extends BaseTest {
         try {
             try {
                 page.waitForSelector(
-                    "div.step div.step-label:has-text(\"Child Inferences\")",
-                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(10000));
+                        "div.step div.step-label:has-text(\"Child Inferences\")",
+                        new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(10000));
 
                 // create New Inference
                 page.getByText("Child Inferences", new Page.GetByTextOptions().setExact(true)).click();
@@ -1604,34 +1652,40 @@ public class DiagnosticTests extends BaseTest {
     @QaseId(24)
     @QaseTitle("Merge Observations")
     public void mergeObs() {
-        // Merge Observations
-        page
-                .locator(
-                        ".ag-row-odd > div:nth-child(9) > .ag-cell-wrapper > .ag-cell-value > app-icon-renderer > i:nth-child(4)")
-                .first()
-                .click();
-
         try {
-            page.waitForSelector("li.result-text");
-            List<Locator> allObservationOptions = page.locator("li.result-text").all();
-            log.info("All Observation Options size: {}", allObservationOptions.size());
 
-            Random random = new Random();
-            int randomIndex = random.nextInt(allObservationOptions.size());
-            Locator radio = allObservationOptions.get(randomIndex).locator("input[type='radio']");
+            // Merge Observations
+            page
+                    .locator(
+                            ".ag-row-odd > div:nth-child(9) > .ag-cell-wrapper > .ag-cell-value > app-icon-renderer > i:nth-child(4)")
+                    .first()
+                    .click();
 
-            radio.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+            try {
+                page.waitForSelector("li.result-text");
+                List<Locator> allObservationOptions = page.locator("li.result-text").all();
+                log.info("All Observation Options size: {}", allObservationOptions.size());
 
-            radio.check();
-            log.info("New Observation radio button checked");
+                Random random = new Random();
+                int randomIndex = random.nextInt(allObservationOptions.size());
+                Locator radio = allObservationOptions.get(randomIndex).locator("input[type='radio']");
 
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Merge Into")).click();
-            log.info("Merge Into button clicked");
+                radio.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+
+                radio.check();
+                log.info("New Observation radio button checked");
+
+                page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Merge Into")).click();
+                log.info("Merge Into button clicked");
+            } catch (Exception e) {
+                log.info("New Observation radio button not found!");
+
+                page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
+                log.info("Cancel button clicked");
+            }
         } catch (Exception e) {
-            log.info("New Observation radio button not found!");
-
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
-            log.info("Cancel button clicked");
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
         }
     }
 
@@ -1640,23 +1694,29 @@ public class DiagnosticTests extends BaseTest {
     @QaseId(25)
     @QaseTitle("Create New in Inbox")
     public void createNewInbox() {
-        // Create New Observation
-        createNewObsAndInf();
+        try {
 
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("last")).click();
+            // Create New Observation
+            createNewObsAndInf();
 
-        log.info("Last Clicked");
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("last")).click();
 
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("first")).click();
+            log.info("Last Clicked");
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-        log.info("First Clicked");
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("first")).click();
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            log.info("First Clicked");
+
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+        } catch (Exception e) {
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
+        }
     }
 
     @Test
@@ -1700,14 +1760,20 @@ public class DiagnosticTests extends BaseTest {
     @QaseId(27)
     @QaseTitle("Approve Observations")
     public void approveObs() {
-        // Approve Inferences
-        page.locator(".fa-check").first().click();
+        try {
 
-        log.info("Approve Clicked");
+            // Approve Inferences
+            page.locator(".fa-check").first().click();
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            log.info("Approve Clicked");
+
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+        } catch (Exception e) {
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
+        }
     }
 
     private void selectInference() {
@@ -1735,51 +1801,57 @@ public class DiagnosticTests extends BaseTest {
     @QaseId(28)
     @QaseTitle("Apporve Inferences")
     public void approveInf() {
-        // Bulb Icon Click
-        page.locator("i.fa-lightbulb-o").nth(4).click();
+        try {
 
-        log.info("Bulb icon Clicked");
+            // Bulb Icon Click
+            page.locator("i.fa-lightbulb-o").nth(4).click();
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            log.info("Bulb icon Clicked");
 
-        page.waitForLoadState(LoadState.NETWORKIDLE);
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-        // Select Inference
-        selectInference();
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            // Select Inference
+            selectInference();
 
-        // Approve Inferences
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Approve Inferences")).click();
-        log.info("Approve Inferences Clicked");
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            // Approve Inferences
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Approve Inferences")).click();
+            log.info("Approve Inferences Clicked");
 
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
-        log.info("Yes Clicked");
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
+            log.info("Yes Clicked");
 
-        page.waitForLoadState(LoadState.NETWORKIDLE);
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-        log.info("Inference Approved Successfully");
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Close")).click();
-        log.info("Close Clicked");
+            log.info("Inference Approved Successfully");
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Close")).click();
+            log.info("Close Clicked");
 
-        page.waitForTimeout(2000);
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+
+            page.waitForTimeout(2000);
+        } catch (Exception e) {
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
+        }
     }
 
     @Test
@@ -1787,57 +1859,63 @@ public class DiagnosticTests extends BaseTest {
     @QaseId(29)
     @QaseTitle("Delete Inferences")
     public void deleteInf() {
-        page.waitForTimeout(2000);
-        // Bulb Icon Click
-        page.locator("i.fa-lightbulb-o").nth(4).click();
+        try {
 
-        log.info("Bulb icon Clicked");
+            page.waitForTimeout(2000);
+            // Bulb Icon Click
+            page.locator("i.fa-lightbulb-o").nth(4).click();
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            log.info("Bulb icon Clicked");
 
-        page.waitForLoadState(LoadState.NETWORKIDLE);
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-        page.waitForTimeout(2000);
+            page.waitForLoadState(LoadState.NETWORKIDLE);
 
-        // Select Inference
-        selectInference();
-        // page.locator("input[type='checkbox'][aria-label*='toggle row
-        // selection']").click();
+            page.waitForTimeout(2000);
 
-        page.waitForTimeout(2000);
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            // Select Inference
+            selectInference();
+            // page.locator("input[type='checkbox'][aria-label*='toggle row
+            // selection']").click();
 
-        // Delete Inferences
-        Locator deleteInferenceButton = page.getByRole(
-                AriaRole.BUTTON,
-                new Page.GetByRoleOptions().setName("  Delete Inferences"));
+            page.waitForTimeout(2000);
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-        deleteInferenceButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+            // Delete Inferences
+            Locator deleteInferenceButton = page.getByRole(
+                    AriaRole.BUTTON,
+                    new Page.GetByRoleOptions().setName("  Delete Inferences"));
 
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Delete Inferences")).click();
-        log.info("Delete Inferences Clicked");
+            deleteInferenceButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Delete Inferences")).click();
+            log.info("Delete Inferences Clicked");
 
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
-        log.info("Yes Clicked");
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
+            log.info("Yes Clicked");
 
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Close")).click();
-        log.info("Close Clicked");
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Close")).click();
+            log.info("Close Clicked");
+
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+        } catch (Exception e) {
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
+        }
     }
 
     @Test
@@ -1845,13 +1923,19 @@ public class DiagnosticTests extends BaseTest {
     @QaseId(30)
     @QaseTitle("Edit Observations")
     public void editObs() {
-        page.locator(".action-btn").first().click();
+        try {
 
-        log.info("Action Button Clicked");
+            page.locator(".action-btn").first().click();
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            log.info("Action Button Clicked");
+
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+        } catch (Exception e) {
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
+        }
     }
 
     @Test
@@ -1859,25 +1943,31 @@ public class DiagnosticTests extends BaseTest {
     @QaseId(31)
     @QaseTitle("Create New Inference")
     public void createNewInf() {
-        // create New Inference
-        page.getByText("Inference", new Page.GetByTextOptions().setExact(true)).click();
+        try {
 
-        page.locator("input[type=\"text\"]").click();
+            // create New Inference
+            page.getByText("Inference", new Page.GetByTextOptions().setExact(true)).click();
 
-        page.locator("input[type=\"text\"]").fill("test inf");
-        // using excel pending
-        log.info("Inference field filled");
+            page.locator("input[type=\"text\"]").click();
 
-        page.getByText("Create New").click();
-        log.info("Create New button clicked");
+            page.locator("input[type=\"text\"]").fill("test inf");
+            // using excel pending
+            log.info("Inference field filled");
 
-        page.locator("button.create-new-btn:has-text(\"Save\")").click();
+            page.getByText("Create New").click();
+            log.info("Create New button clicked");
 
-        log.info("Save button clicked");
+            page.locator("button.create-new-btn:has-text(\"Save\")").click();
 
-        page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            log.info("Save button clicked");
+
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+        } catch (Exception e) {
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
+        }
     }
 
     @Test
@@ -1885,46 +1975,59 @@ public class DiagnosticTests extends BaseTest {
     @QaseId(32)
     @QaseTitle("Reject Inference")
     public void rejectInf() {
-        page.waitForSelector(
+        try{
+
+            page.waitForSelector(
                 ".loading-screen-wrapper",
                 new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
-
+                
         page.waitForSelector("li a div[title='Reject Inference']");
-
+        
         page.locator("li a div[title='Reject Inference']").first().click();
 
         log.info("Reject clicked");
-
+        
         page.getByPlaceholder("Comments").click();
         log.info("Comments field clicked");
-
+        
         page.getByPlaceholder("Comments").fill("Invailid");
         // using excel pending
         log.info("Comments field filled");
-
+        
         page.getByText("Submit").click();
         log.info("Submit button clicked");
         page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+            ".loading-screen-wrapper",
+            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+        }catch(Exception e){
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
+        }
     }
 
-    //add here those steps which are previously removed from observation management -pending
+    // add here those steps which are previously removed from observation management
+    // -pending
     @Test
     @Order(33)
     @QaseId(33)
     @QaseTitle("Delete Observations")
     public void deleteObs() {
-        // Delete Observation
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Delete")).click();
-        log.info("Delete Clicked");
+        try{
 
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
-        log.info("Yes Clicked");
-
-        page.waitForSelector(
+            // Delete Observation
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Delete")).click();
+            log.info("Delete Clicked");
+            
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
+            log.info("Yes Clicked");
+            
+            page.waitForSelector(
                 ".loading-screen-wrapper",
                 new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+        }catch(Exception e){
+            log.error("Test Failed: {}", e.getMessage());
+            Assertions.fail("Test Failed: " + e.getMessage());
+        }
     }
 
     @Test
