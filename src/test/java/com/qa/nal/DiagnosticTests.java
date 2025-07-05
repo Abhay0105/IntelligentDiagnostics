@@ -353,8 +353,19 @@ public class DiagnosticTests extends BaseTest {
                     .click();
             log.info("Something Else button clicked");
 
+            // getting Observation Name from excel sheet
+            List<String> observationsList = ExcelReader.readDescriptionsFromExcel(
+                    "src/test/resources/InfObsNames.xlsx",
+                    "Observations");
+            log.info("Observation List size: " + observationsList.size());
+
+            Random random = new Random();
+            int randomIndex = random.nextInt(observationsList.size());
+            String observationName = observationsList.get(randomIndex);
+
             page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX).click();
-            page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX).fill("New Observation");
+            page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX).fill(observationName);
+
             // using Excel pending
             log.info("New Observation field filled");
 
@@ -429,7 +440,17 @@ public class DiagnosticTests extends BaseTest {
                     .click();
             log.info("Input field clicked");
 
-            page.locator("mat-drawer-content").getByRole(AriaRole.COMBOBOX).fill("New Solution");
+            // getting Inference Name from excel sheet
+            List<String> InferencesList = ExcelReader.readDescriptionsFromExcel(
+                    "src/test/resources/InfObsNames.xlsx",
+                    "Inferences");
+            log.info("Observation List size: " + InferencesList.size());
+
+            Random random = new Random();
+            int randomIndex = random.nextInt(InferencesList.size());
+            String inferenceName = InferencesList.get(randomIndex);
+
+            page.locator("mat-drawer-content").getByRole(AriaRole.COMBOBOX).fill(inferenceName);
             // using excel pending
             log.info("Solution field filled");
 
@@ -520,11 +541,20 @@ public class DiagnosticTests extends BaseTest {
             page.locator(".new-obsrv-select > .ng-select-container").click();
             log.info("Text box clicked");
 
+            // getting Observation Name from excel sheet
+            List<String> observationsList = ExcelReader.readDescriptionsFromExcel(
+                    "src/test/resources/InfObsNames.xlsx",
+                    "Observations");
+            log.info("Observation List size: " + observationsList.size());
+
+            int randomIndexobs = random.nextInt(observationsList.size());
+            String observationName = observationsList.get(randomIndexobs);
+
             page
                     .locator("ng-select")
                     .filter(new Locator.FilterOptions().setHasText("Search/CreateType to search"))
                     .getByRole(AriaRole.COMBOBOX)
-                    .fill("test observation");
+                    .fill(observationName);
             // excel using pending
             log.info("Observation field filled");
 
@@ -539,11 +569,20 @@ public class DiagnosticTests extends BaseTest {
                     .click();
             log.info("Inference field clicked");
 
+            // getting Inference Name from excel sheet
+            List<String> InferencesList = ExcelReader.readDescriptionsFromExcel(
+                    "src/test/resources/InfObsNames.xlsx",
+                    "Inferences");
+            log.info("Observation List size: " + InferencesList.size());
+
+            int randomIndexInf = random.nextInt(InferencesList.size());
+            String inferenceName = InferencesList.get(randomIndexInf);
+
             page
                     .locator("ng-select")
                     .filter(new Locator.FilterOptions().setHasText("Search/CreateType to"))
                     .getByRole(AriaRole.COMBOBOX)
-                    .fill("test inference");
+                    .fill(inferenceName);
             // excel using pending
             log.info("Inference field filled");
 
@@ -1444,7 +1483,17 @@ public class DiagnosticTests extends BaseTest {
 
                 page.locator("input[type=\"text\"]").click();
 
-                page.locator("input[type=\"text\"]").fill("Child Inf");
+                // getting Inference Name from excel sheet
+                List<String> InferencesList = ExcelReader.readDescriptionsFromExcel(
+                        "src/test/resources/InfObsNames.xlsx",
+                        "Inferences");
+                log.info("Observation List size: " + InferencesList.size());
+
+                Random random = new Random();
+                int randomIndex = random.nextInt(InferencesList.size());
+                String inferenceName = InferencesList.get(randomIndex);
+
+                page.locator("input[type=\"text\"]").fill(inferenceName);
                 // using excel pending
                 log.info("Inference field filled");
 
@@ -1480,7 +1529,17 @@ public class DiagnosticTests extends BaseTest {
 
             page.locator("input[type=\"text\"]").click();
 
-            page.locator("input[type=\"text\"]").fill("New Observation");
+            // getting Observation Name from excel sheet
+            List<String> observationsList = ExcelReader.readDescriptionsFromExcel(
+                    "src/test/resources/InfObsNames.xlsx",
+                    "Observations");
+            log.info("Observation List size: " + observationsList.size());
+
+            Random random = new Random();
+            int randomIndex = random.nextInt(observationsList.size());
+            String observationName = observationsList.get(randomIndex);
+
+            page.locator("input[type=\"text\"]").fill(observationName);
             // using excel pending
             log.info("Observation field filled");
 
@@ -1553,7 +1612,7 @@ public class DiagnosticTests extends BaseTest {
             page.waitForTimeout(1000);
             page
                     .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
-                    .press("Tab");
+                    .press("Enter");
 
             // page.getByRole(AriaRole.BUTTON, new
             // Page.GetByRoleOptions().setName("Upload")).click();
@@ -1950,7 +2009,17 @@ public class DiagnosticTests extends BaseTest {
 
             page.locator("input[type=\"text\"]").click();
 
-            page.locator("input[type=\"text\"]").fill("test inf");
+            // getting Inference Name from excel sheet
+            List<String> InferencesList = ExcelReader.readDescriptionsFromExcel(
+                    "src/test/resources/InfObsNames.xlsx",
+                    "Inferences");
+            log.info("Observation List size: " + InferencesList.size());
+
+            Random random = new Random();
+            int randomIndex = random.nextInt(InferencesList.size());
+            String inferenceName = InferencesList.get(randomIndex);
+
+            page.locator("input[type=\"text\"]").fill(inferenceName);
             // using excel pending
             log.info("Inference field filled");
 
@@ -1975,31 +2044,31 @@ public class DiagnosticTests extends BaseTest {
     @QaseId(32)
     @QaseTitle("Reject Inference")
     public void rejectInf() {
-        try{
+        try {
 
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
-                
-        page.waitForSelector("li a div[title='Reject Inference']");
-        
-        page.locator("li a div[title='Reject Inference']").first().click();
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-        log.info("Reject clicked");
-        
-        page.getByPlaceholder("Comments").click();
-        log.info("Comments field clicked");
-        
-        page.getByPlaceholder("Comments").fill("Invailid");
-        // using excel pending
-        log.info("Comments field filled");
-        
-        page.getByText("Submit").click();
-        log.info("Submit button clicked");
-        page.waitForSelector(
-            ".loading-screen-wrapper",
-            new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
-        }catch(Exception e){
+            page.waitForSelector("li a div[title='Reject Inference']");
+
+            page.locator("li a div[title='Reject Inference']").first().click();
+
+            log.info("Reject clicked");
+
+            page.getByPlaceholder("Comments").click();
+            log.info("Comments field clicked");
+
+            page.getByPlaceholder("Comments").fill("Dummy Feedback!");
+            // using excel pending
+            log.info("Comments field filled");
+
+            page.getByText("Submit").click();
+            log.info("Submit button clicked");
+            page.waitForSelector(
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+        } catch (Exception e) {
             log.error("Test Failed: {}", e.getMessage());
             Assertions.fail("Test Failed: " + e.getMessage());
         }
@@ -2012,19 +2081,19 @@ public class DiagnosticTests extends BaseTest {
     @QaseId(33)
     @QaseTitle("Delete Observations")
     public void deleteObs() {
-        try{
+        try {
 
             // Delete Observation
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Delete")).click();
             log.info("Delete Clicked");
-            
+
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
             log.info("Yes Clicked");
-            
+
             page.waitForSelector(
-                ".loading-screen-wrapper",
-                new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
-        }catch(Exception e){
+                    ".loading-screen-wrapper",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+        } catch (Exception e) {
             log.error("Test Failed: {}", e.getMessage());
             Assertions.fail("Test Failed: " + e.getMessage());
         }
