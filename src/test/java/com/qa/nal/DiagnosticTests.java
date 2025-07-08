@@ -18,9 +18,19 @@ public class DiagnosticTests extends BaseTest {
     private static final Logger log = LoggerFactory.getLogger(DiagnosticTests.class);
 
     Dotenv dotenv = Dotenv.load();
-    private final String username = dotenv.get("APP_USERNAME");
-    private final String password = dotenv.get("PASSWORD");
-    private final String loginUrl = dotenv.get("DEVDEMO_URL");
+    private final String username = dotenv.get("USERNAME_BSC");
+    private final String password = dotenv.get("PASSWORD_BSC");
+    private final String loginUrl = dotenv.get("BSC_DEV");
+    private final String environment = "bsc-dev";
+
+    private Locator findFirstVisibleLocator(List<Locator> locators) {
+        for (Locator locator : locators) {
+            if (locator.isVisible()) {
+                return locator;
+            }
+        }
+        return null;
+    }
 
     @Test
     @Order(1)
@@ -165,6 +175,8 @@ public class DiagnosticTests extends BaseTest {
         }
     }
 
+    static boolean referenceDataClicked = false;
+
     // Intelligent Diagnostics
     @Test
     @Order(4)
@@ -186,7 +198,8 @@ public class DiagnosticTests extends BaseTest {
                 log.info("Intelligent Diagnostics clicked");
             } else {
                 page.locator("a").filter(new Locator.FilterOptions().setHasText("Reference Data")).click();
-                log.info("Reference clicked");
+                referenceDataClicked = true;
+                log.info("Reference Data clicked");
             }
         } catch (Exception e) {
             log.error("Navigation to Intelligent Diagnostics failed: {}", e.getMessage());
@@ -201,8 +214,13 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Navigate to Service Request")
     public void navigateToServiceRequest() {
         try {
-            page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(" Service Request")).click();
-            log.info("Service Request clicked");
+            if (!referenceDataClicked) {
+                page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(" Service Request")).click();
+                log.info("Service Request clicked from Intelligent Diagnostics");
+            } else {
+                page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(" Service Request")).click();
+                log.info("Service Request clicked from Reference Data");
+            }
 
             page.waitForURL(url -> url.contains("caseobject"));
             Assertions.assertTrue(page.url().contains("caseobject"), "Service Request page did not load as expected");
@@ -224,110 +242,131 @@ public class DiagnosticTests extends BaseTest {
             log.info("Create New button clicked");
 
             page.waitForSelector("#modalCenter > div > div", new Page.WaitForSelectorOptions().setTimeout(45000));
+            page.waitForTimeout(3500);
             log.info("Create New modal opened");
 
-            page.waitForTimeout(3500);
+            // --- Picklist section ---
+            List<Locator> picklistCandidates = Arrays.asList(
+                    page
+                            .locator("div")
+                            .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Product Line \\*$")))
+                            .nth(1),
+                    page
+                            .locator("div")
+                            .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^MODEL \\*$")))
+                            .nth(1),
+                    page
+                            .locator("div")
+                            .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
+                            .nth(1));
 
-            Locator manufacturer = page
-                    .locator("div")
-                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
-                    .nth(1);
+            Locator visibleModel = findFirstVisibleLocator(picklistCandidates);
+            Assertions.assertNotNull(visibleModel, "No visible picklist found");
+            log.info("Visible picklist found");
 
-            Locator model = page
-                    .locator("div")
-                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^MODEL \\*$")))
-                    .nth(1);
-
-            Locator productLine = page
-                    .locator("div")
-                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Product Line \\*$")))
-                    .nth(1);
-
-            if (manufacturer.isVisible()) {
-                manufacturer.click();
-                log.info("Manufacturer field clicked");
-            } else if (model.isVisible()) {
-                model.click();
-                log.info("Model field clicked");
-            } else if (productLine.isVisible()) {
-                productLine.click();
-                log.info("Product Line field clicked");
-            } else {
-                log.info("Manufacturer, Model, and Product Line fields are not visible");
-            }
-
+            visibleModel.click();
             log.info("Picklist clicked");
 
-            page.waitForTimeout(2000);
+            String searchValue = switch (environment) {
+                case "accuray-dev" -> "CYBER";
+                case "ni-dev" -> "DAQ";
+                case "swisslog-dev" -> "BLOW";
+                case "keysight-dev" -> "E444";
+                case "terumo-dev" -> "REVEOS";
+                case "dev6" -> "pc cor";
+                case "626-dev" -> "SYMPH";
+                case "ciena-poc" -> "BLUE";
+                case "crane1-dev" -> "Gorb";
+                case "bsc-dev" -> "Farapulse";
+                default -> null; // Default value for other environments
+            };
 
-            List<Locator> manufacturersList = page.locator("//ng-dropdown-panel//div[@role='option']").all();
-
-            Random random = new Random();
-            int randomIndex = random.nextInt(manufacturersList.size());
-            log.info("Random index selected: {}", randomIndex);
-            String selectedManufacturer = manufacturersList.get(randomIndex).textContent().trim();
-            manufacturersList.get(randomIndex).click();
-
-            log.info("Manufacturer option clicked: {}", selectedManufacturer);
-
-            Locator description = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Description"));
-
-            Locator whatIsTheIssue = page.getByRole(
-                    AriaRole.TEXTBOX,
-                    new Page.GetByRoleOptions().setName("What Is The Issue? *"));
-
-            // getting descriptions from excel sheet
-            List<String> descriptionsList = ExcelReader.readDescriptionsFromExcel(
-                    "src/test/resources/srDescriptions.xlsx",
-                    "devdemo");
-            log.info("Descriptions List size: " + descriptionsList.size());
-
-            randomIndex = random.nextInt(descriptionsList.size());
-
-            if (randomIndex >= 0 && randomIndex < descriptionsList.size()) {
-                log.info("Random index selected for description: {}", randomIndex);
-
-                randomIndex = 0; // Fallback to first element if out of bounds
-
-                if (description.isVisible()) {
-                    description.fill(descriptionsList.get(randomIndex));
-                    log.info("Description field filled");
-
-                    description.press("Tab");
-
-                } else if (whatIsTheIssue.isVisible()) {
-                    whatIsTheIssue.fill(descriptionsList.get(randomIndex));
-                    log.info("What Is The Issue field filled");
-
-                    whatIsTheIssue.press("Tab");
-
-                } else {
-                    log.info("Description, Description2, and What Is The Issue fields are not visible");
-                }
-                page.waitForTimeout(2000);
+            if (searchValue != null) {
+                visibleModel.locator("div.ng-input input[type='text']").fill(searchValue);
+                log.info("Picklist field filled with: {}", searchValue);
             } else {
-                log.warn("Random index is out of bounds");
+                visibleModel.locator("div.ng-input input[type='text']").click();
             }
 
-            // Click Start Diagnosis button
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Start Diagnosis")).click();
-            log.info("Start Diagnosis button clicked");
+            page.waitForTimeout(1500);
 
-            // Wait for navigation
+            page.waitForSelector(
+                    "//ng-dropdown-panel//div[@role='option']",
+                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+                    
+            List<Locator> options = page.locator("//ng-dropdown-panel//div[@role='option']").all();
+            log.info("Options found: {}", options.size());
+
+            if (options.size() > 0) {
+                int randomIndex = 0;
+
+                if (options.size() > 1) {
+                    Random random = new Random();
+                    randomIndex = random.nextInt(options.size());
+                }
+                randomIndex = new Random().nextInt(options.size());
+                log.info("Option selected: " + options.get(randomIndex).textContent().trim());
+
+                options.get(randomIndex).click();
+            } else {
+                log.error("No options found in the picklist");
+                Assertions.fail("No options found in the picklist");
+            }
+
+            // --- Description field handling ---
+            List<Locator> allPossibleDescriptions = Arrays.asList(
+                    page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Description")),
+                    page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("What Is The Issue? *")),
+                    page.getByRole(AriaRole.TEXTBOX));
+
+            Locator visibleDescription = findFirstVisibleLocator(allPossibleDescriptions);
+
+            Assertions.assertNotNull(visibleDescription, "No visible description field found");
+            log.info("Visible description field found");
+
+            List<String> descriptions = ExcelReader.readDescriptionsFromExcel(
+                    "src/test/resources/srDescriptions.xlsx",
+                    "devdemo");
+            log.info("Descriptions List size: {}", descriptions.size());
+
+            int randomIndex = new Random().nextInt(descriptions.size());
+
+            if (randomIndex >= 0 && randomIndex < descriptions.size()) {
+                log.info("Random index selected for description: {}", randomIndex);
+                visibleDescription.fill(descriptions.get(randomIndex));
+                log.info("Description field filled with: {}", descriptions.get(randomIndex));
+            } else {
+                log.error("Random index out of bounds: {}", randomIndex);
+                Assertions.fail("Random index out of bounds for descriptions");
+            }
+
+            visibleDescription.press("Tab");
+
+            // type field handling
+            Locator typeField = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("TYPE"));
+
+            if (typeField.isVisible()) {
+                typeField.fill("OBS"); // or use dynamic content
+                typeField.press("Tab");
+                log.info("Filled Type field");
+            } else {
+                log.info("No Type field found (optional)");
+            }
+
+            // --- Finalize and Submit ---
+            page.waitForTimeout(2000);
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Start Diagnosis")).click();
             page.waitForURL(url -> url.contains("n7-predictions"), new Page.WaitForURLOptions().setTimeout(15000));
-            log.info("Navigated to predictions page");
 
             Assertions.assertTrue(page.url().contains("n7-predictions"), "Predictions page did not load as expected");
-            log.info("Predictions page loaded successfully");
-
-            // Wait until loading screen disappears
             page.waitForSelector(
                     ".loading-screen-wrapper",
                     new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
-
             page.waitForLoadState(LoadState.NETWORKIDLE);
+
+            log.info("SR created and navigated to predictions page");
         } catch (Exception e) {
-            log.error("Error occurred: {}", e.getMessage());
+            log.error("Test Failed: {}", e.getMessage());
             Assertions.fail("Test Failed: " + e.getMessage());
         }
     }
@@ -452,7 +491,9 @@ public class DiagnosticTests extends BaseTest {
             int randomIndex = random.nextInt(observationsList.size());
             String observationName = observationsList.get(randomIndex);
 
-            Locator obsInput = page.locator("ng-select").filter(new Locator.FilterOptions().setHasText("Search/Create"))
+            Locator obsInput = page
+                    .locator("ng-select")
+                    .filter(new Locator.FilterOptions().setHasText("Search/Create"))
                     .locator("input[type='text']");
 
             Locator obsInputmat = page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX);
@@ -463,14 +504,12 @@ public class DiagnosticTests extends BaseTest {
 
                 obsInput.fill(observationName);
                 log.info("New Observation field filled");
-
             } else if (obsInputmat.isVisible()) {
                 obsInputmat.click();
                 log.info("Input field clicked");
 
                 obsInputmat.fill(observationName);
                 log.info("New Observation field filled");
-
             } else {
                 log.error("Observation input field not found");
                 Assertions.fail("Observation input field not found");
@@ -531,7 +570,25 @@ public class DiagnosticTests extends BaseTest {
 
     private void existingInfCheckbox() {
         try {
-            page.locator("mat-card-header.list-item").locator("i.fa-square").first().click();
+            List<Locator> infCheckBoxes = page.locator("mat-card-header.list-item").locator("i.fa-square").all();
+            int checkBoxCount = infCheckBoxes.size();
+
+            if (checkBoxCount == 0) {
+                log.info("No checkboxes found, creating new Inference");
+                newInf();
+                return;
+            }
+
+            int randomIndex = 0;
+
+            if (checkBoxCount > 1) {
+                Random random = new Random();
+                randomIndex = random.nextInt(checkBoxCount);
+            }
+
+            log.info("Random index selected for checkbox: {}", randomIndex);
+
+            infCheckBoxes.get(randomIndex).click();
             log.info("Checkbox clicked");
         } catch (Exception e) {
             log.error("Checkbox not Clicked: {}", e.getMessage());
@@ -726,7 +783,9 @@ public class DiagnosticTests extends BaseTest {
                     .click();
             log.info("Something Else button clicked");
 
-            Locator obsInput = page.locator("ng-select").filter(new Locator.FilterOptions().setHasText("Search/Create"))
+            Locator obsInput = page
+                    .locator("ng-select")
+                    .filter(new Locator.FilterOptions().setHasText("Search/Create"))
                     .locator("input[type='text']");
 
             Locator obsInputmat = page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX);
@@ -746,14 +805,12 @@ public class DiagnosticTests extends BaseTest {
 
                 obsInput.fill("" + randomChar);
                 log.info("New Observation field filled");
-
             } else if (obsInputmat.isVisible()) {
                 obsInputmat.click();
                 log.info("Input field clicked");
 
                 obsInputmat.fill("" + randomChar);
                 log.info("New Observation field filled");
-
             } else {
                 log.error("Observation input field not found");
                 Assertions.fail("Observation input field not found");
@@ -1836,9 +1893,10 @@ public class DiagnosticTests extends BaseTest {
     public void mergeObs() {
         try {
             // Merge Observations
-            // page.locator(".ag-row-odd > div:nth-child(9) > .ag-cell-wrapper > .ag-cell-value > app-icon-renderer > i:nth-child(4)").first().click();
+            // page.locator(".ag-row-odd > div:nth-child(9) > .ag-cell-wrapper >
+            // .ag-cell-value > app-icon-renderer > i:nth-child(4)").first().click();
 
-             page.locator("i.fa-code-fork").first().click();
+            page.locator("i.fa-code-fork").first().click();
             log.info("Merge Observations button clicked");
 
             try {
