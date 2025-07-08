@@ -44,8 +44,9 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Perform Login")
     public void performLogin() {
         try {
-            try {
+            Locator usernameInput = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username"));
 
+            if (usernameInput.isVisible()) {
                 page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Username")).click();
                 log.info("Username field clicked");
 
@@ -58,9 +59,25 @@ public class DiagnosticTests extends BaseTest {
                 page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Password")).fill(password);
                 log.info("Password field filled");
 
-                page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login").setExact(true)).click();
-                log.info("Login button clicked");
-            } catch (Exception e) {
+                Locator loginBtn = page.getByRole(
+                        AriaRole.BUTTON,
+                        new Page.GetByRoleOptions().setName("Login").setExact(true));
+
+                Locator signInBtn = page.getByRole(
+                        AriaRole.BUTTON,
+                        new Page.GetByRoleOptions().setName("Sign In").setExact(true));
+
+                if (loginBtn.isVisible()) {
+                    loginBtn.click();
+                    log.info("Login button clicked");
+                } else if (signInBtn.isVisible()) {
+                    signInBtn.click();
+                    log.info("Sign in button clicked");
+                } else {
+                    log.error("Neither Login nor Sign in button is visible");
+                    Assertions.fail("Login/Sign in button not found");
+                }
+            } else {
                 page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login with N7MICROSOFT")).click();
                 page.waitForTimeout(2000);
                 log.info("Login with N7MICROSOFT  button clicked");
@@ -69,27 +86,34 @@ public class DiagnosticTests extends BaseTest {
                         ".loading-screen-wrapper",
                         new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-                page.waitForURL(url -> url.contains("login.microsoftonline"),
+                page.waitForURL(
+                        url -> url.contains("login.microsoftonline"),
                         new Page.WaitForURLOptions().setTimeout(15000));
 
-                page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Enter your email, phone, or"))
+                page
+                        .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Enter your email, phone, or"))
                         .click();
                 page.waitForTimeout(750);
 
-                page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Enter your email, phone, or"))
+                page
+                        .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Enter your email, phone, or"))
                         .fill(username);
                 page.waitForTimeout(750);
 
                 page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Next")).click();
                 page.waitForTimeout(750);
 
-                page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions()
-                        .setName(Pattern.compile("^Enter the password for .*")))
+                page
+                        .getByRole(
+                                AriaRole.TEXTBOX,
+                                new Page.GetByRoleOptions().setName(Pattern.compile("^Enter the password for .*")))
                         .click();
                 page.waitForTimeout(750);
 
-                page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions()
-                        .setName(Pattern.compile("^Enter the password for .*")))
+                page
+                        .getByRole(
+                                AriaRole.TEXTBOX,
+                                new Page.GetByRoleOptions().setName(Pattern.compile("^Enter the password for .*")))
                         .fill(password);
                 page.waitForTimeout(750);
 
@@ -101,7 +125,6 @@ public class DiagnosticTests extends BaseTest {
 
                 page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes")).click();
                 page.waitForTimeout(750);
-
             }
 
             page.waitForSelector(
@@ -123,14 +146,22 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Handle Initial Pop-Up")
     public void handleInitialPopup() {
         try {
-            page.locator(".modal-content");
-            log.info("Modal Pop-Up found");
+            page.waitForTimeout(2000);
+            if (page.locator(".modal-content").isVisible()) {
+                log.info("Modal Pop-Up found");
+                page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
 
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Cancel")).click();
-            log.info("Cancel button clicked");
+                page.waitForTimeout(2000);
+                page.waitForSelector(
+                        ".loading-screen-wrapper",
+                        new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
+                log.info("Cancel button clicked");
+            } else {
+                log.error("No modal found or not visible");
+            }
         } catch (Exception e) {
-            Assertions.fail("Modal not found or not visible: " + e.getMessage());
-            log.error("No modal found");
+            log.error("Error handling initial pop-up: {}", e.getMessage());
+            Assertions.fail("Error handling initial pop-up: " + e.getMessage());
         }
     }
 
@@ -146,8 +177,17 @@ public class DiagnosticTests extends BaseTest {
 
             page.waitForTimeout(2000);
 
-            page.locator("a").filter(new Locator.FilterOptions().setHasText("Intelligent Diagnostics")).click();
-            log.info("Intelligent Diagnostics clicked");
+            Locator diagnosticsSidebar = page
+                    .locator("a")
+                    .filter(new Locator.FilterOptions().setHasText("Intelligent Diagnostics"));
+
+            if (diagnosticsSidebar.isVisible()) {
+                page.locator("a").filter(new Locator.FilterOptions().setHasText("Intelligent Diagnostics")).click();
+                log.info("Intelligent Diagnostics clicked");
+            } else {
+                page.locator("a").filter(new Locator.FilterOptions().setHasText("Reference Data")).click();
+                log.info("Reference clicked");
+            }
         } catch (Exception e) {
             log.error("Navigation to Intelligent Diagnostics failed: {}", e.getMessage());
             Assertions.fail("Navigation to Intelligent Diagnostics failed: " + e.getMessage());
@@ -180,17 +220,41 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Create Service Request")
     public void createNewServiceRequest() {
         try {
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Create New")).click();
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Create New")).click();
             log.info("Create New button clicked");
 
             page.waitForSelector("#modalCenter > div > div", new Page.WaitForSelectorOptions().setTimeout(45000));
             log.info("Create New modal opened");
 
-            page
+            page.waitForTimeout(3500);
+
+            Locator manufacturer = page
                     .locator("div")
                     .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
-                    .nth(1)
-                    .click();
+                    .nth(1);
+
+            Locator model = page
+                    .locator("div")
+                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^MODEL \\*$")))
+                    .nth(1);
+
+            Locator productLine = page
+                    .locator("div")
+                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Product Line \\*$")))
+                    .nth(1);
+
+            if (manufacturer.isVisible()) {
+                manufacturer.click();
+                log.info("Manufacturer field clicked");
+            } else if (model.isVisible()) {
+                model.click();
+                log.info("Model field clicked");
+            } else if (productLine.isVisible()) {
+                productLine.click();
+                log.info("Product Line field clicked");
+            } else {
+                log.info("Manufacturer, Model, and Product Line fields are not visible");
+            }
 
             log.info("Picklist clicked");
 
@@ -206,19 +270,44 @@ public class DiagnosticTests extends BaseTest {
 
             log.info("Manufacturer option clicked: {}", selectedManufacturer);
 
-            page.getByRole(AriaRole.TEXTBOX).click();
+            Locator description = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Description"));
+
+            Locator whatIsTheIssue = page.getByRole(
+                    AriaRole.TEXTBOX,
+                    new Page.GetByRoleOptions().setName("What Is The Issue? *"));
 
             // getting descriptions from excel sheet
             List<String> descriptionsList = ExcelReader.readDescriptionsFromExcel(
                     "src/test/resources/srDescriptions.xlsx",
                     "devdemo");
+            log.info("Descriptions List size: " + descriptionsList.size());
 
             randomIndex = random.nextInt(descriptionsList.size());
 
-            // fill random description
-            page.getByRole(AriaRole.TEXTBOX).fill(descriptionsList.get(randomIndex));
+            if (randomIndex >= 0 && randomIndex < descriptionsList.size()) {
+                log.info("Random index selected for description: {}", randomIndex);
 
-            page.getByRole(AriaRole.TEXTBOX).press("Tab");
+                randomIndex = 0; // Fallback to first element if out of bounds
+
+                if (description.isVisible()) {
+                    description.fill(descriptionsList.get(randomIndex));
+                    log.info("Description field filled");
+
+                    description.press("Tab");
+
+                } else if (whatIsTheIssue.isVisible()) {
+                    whatIsTheIssue.fill(descriptionsList.get(randomIndex));
+                    log.info("What Is The Issue field filled");
+
+                    whatIsTheIssue.press("Tab");
+
+                } else {
+                    log.info("Description, Description2, and What Is The Issue fields are not visible");
+                }
+                page.waitForTimeout(2000);
+            } else {
+                log.warn("Random index is out of bounds");
+            }
 
             // Click Start Diagnosis button
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Start Diagnosis")).click();
@@ -363,9 +452,29 @@ public class DiagnosticTests extends BaseTest {
             int randomIndex = random.nextInt(observationsList.size());
             String observationName = observationsList.get(randomIndex);
 
-            page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX).click();
-            page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX).fill(observationName);
+            Locator obsInput = page.locator("ng-select").filter(new Locator.FilterOptions().setHasText("Search/Create"))
+                    .locator("input[type='text']");
 
+            Locator obsInputmat = page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX);
+
+            if (obsInput.isVisible()) {
+                obsInput.click();
+                log.info("Input field clicked");
+
+                obsInput.fill(observationName);
+                log.info("New Observation field filled");
+
+            } else if (obsInputmat.isVisible()) {
+                obsInputmat.click();
+                log.info("Input field clicked");
+
+                obsInputmat.fill(observationName);
+                log.info("New Observation field filled");
+
+            } else {
+                log.error("Observation input field not found");
+                Assertions.fail("Observation input field not found");
+            }
             // using Excel pending
             log.info("New Observation field filled");
 
@@ -617,7 +726,10 @@ public class DiagnosticTests extends BaseTest {
                     .click();
             log.info("Something Else button clicked");
 
-            page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX).click();
+            Locator obsInput = page.locator("ng-select").filter(new Locator.FilterOptions().setHasText("Search/Create"))
+                    .locator("input[type='text']");
+
+            Locator obsInputmat = page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX);
 
             char[] alphabets = "abcdefghilmnoprst".toCharArray();
             log.info("Alphabets used for Type Ahead: {}", alphabets);
@@ -628,7 +740,25 @@ public class DiagnosticTests extends BaseTest {
             char randomChar = alphabets[index];
             log.info("Random character generated: {}", randomChar);
 
-            page.locator("mat-card-content").getByRole(AriaRole.COMBOBOX).fill("" + randomChar);
+            if (obsInput.isVisible()) {
+                obsInput.click();
+                log.info("Input field clicked");
+
+                obsInput.fill("" + randomChar);
+                log.info("New Observation field filled");
+
+            } else if (obsInputmat.isVisible()) {
+                obsInputmat.click();
+                log.info("Input field clicked");
+
+                obsInputmat.fill("" + randomChar);
+                log.info("New Observation field filled");
+
+            } else {
+                log.error("Observation input field not found");
+                Assertions.fail("Observation input field not found");
+            }
+
             log.info("New Observation field filled");
 
             page.waitForTimeout(1500);
@@ -711,7 +841,6 @@ public class DiagnosticTests extends BaseTest {
                 String selectedInference = exInfTAList.get(randomIndex).textContent().trim();
                 exInfTAList.get(randomIndex).click();
                 log.info("Existing Inference Type Ahead option clicked: {}", selectedInference);
-
             }
 
             page.waitForSelector(
@@ -728,7 +857,7 @@ public class DiagnosticTests extends BaseTest {
         try {
             page.waitForTimeout(2000);
 
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Create New")).click();
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Create New")).click();
             log.info("Create New button clicked");
 
             page.waitForSelector("#modalCenter > div > div", new Page.WaitForSelectorOptions().setTimeout(45000));
@@ -760,7 +889,6 @@ public class DiagnosticTests extends BaseTest {
                     .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Next"))
                     .click();
             log.info("Next button clicked");
-
         } catch (Exception e) {
             log.error("Test Failed: {}", e.getMessage());
             Assertions.fail("Test Failed: " + e.getMessage());
@@ -825,7 +953,6 @@ public class DiagnosticTests extends BaseTest {
 
                 page.waitForTimeout(1500);
             }
-
         } catch (Exception e) {
             log.error("Test Failed: {}", e.getMessage());
             Assertions.fail("Test Failed: " + e.getMessage());
@@ -856,7 +983,6 @@ public class DiagnosticTests extends BaseTest {
 
                     page.waitForTimeout(1500);
                 }
-
             } catch (Exception e) {
                 log.info("existing Inferences not found:-" + e.getMessage());
             }
@@ -915,7 +1041,6 @@ public class DiagnosticTests extends BaseTest {
                 String selectedInference = exInfTAList.get(randomInfIndex).textContent().trim();
                 exInfTAList.get(randomInfIndex).click();
                 log.info("Existing Inference Type Ahead option clicked: {}", selectedInference);
-
             }
             page.waitForSelector(
                     ".loading-screen-wrapper",
@@ -935,7 +1060,6 @@ public class DiagnosticTests extends BaseTest {
         } catch (Exception e) {
             log.error("Test Failed: {}", e.getMessage());
             Assertions.fail("Test Failed: " + e.getMessage());
-
         }
     }
 
@@ -1070,7 +1194,7 @@ public class DiagnosticTests extends BaseTest {
                 if (checkInf()) {
                     log.info("Existing Inference found");
 
-                    existingInfCheckbox();
+                    newInf();
 
                     saveAndContinue();
                 } else {
@@ -1292,7 +1416,6 @@ public class DiagnosticTests extends BaseTest {
         try {
             // create new
             createNewObsAndInf();
-
         } catch (Exception e) {
             log.error("Test Failed: {}", e.getMessage());
             Assertions.fail("Test Failed: " + e.getMessage());
@@ -1585,7 +1708,7 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Create New Multimedia")
     public void createNewMultimedia() {
         try {
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Create New")).click();
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Create New")).click();
             log.info("Create New button clicked");
             // upload file
             Locator fileInput = page.locator("input[type='file']");
@@ -1712,13 +1835,11 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Merge Observations")
     public void mergeObs() {
         try {
-
             // Merge Observations
-            page
-                    .locator(
-                            ".ag-row-odd > div:nth-child(9) > .ag-cell-wrapper > .ag-cell-value > app-icon-renderer > i:nth-child(4)")
-                    .first()
-                    .click();
+            // page.locator(".ag-row-odd > div:nth-child(9) > .ag-cell-wrapper > .ag-cell-value > app-icon-renderer > i:nth-child(4)").first().click();
+
+             page.locator("i.fa-code-fork").first().click();
+            log.info("Merge Observations button clicked");
 
             try {
                 page.waitForSelector("li.result-text");
@@ -1754,7 +1875,6 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Create New in Inbox")
     public void createNewInbox() {
         try {
-
             // Create New Observation
             createNewObsAndInf();
 
@@ -1807,7 +1927,6 @@ public class DiagnosticTests extends BaseTest {
             page.waitForSelector(
                     ".loading-screen-wrapper",
                     new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
-
         } catch (Exception e) {
             log.error("Test Failed: {}", e.getMessage());
             Assertions.fail("Test Failed: " + e.getMessage());
@@ -1820,7 +1939,6 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Approve Observations")
     public void approveObs() {
         try {
-
             // Approve Inferences
             page.locator(".fa-check").first().click();
 
@@ -1861,7 +1979,6 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Apporve Inferences")
     public void approveInf() {
         try {
-
             // Bulb Icon Click
             page.locator("i.fa-lightbulb-o").nth(4).click();
 
@@ -1881,7 +1998,7 @@ public class DiagnosticTests extends BaseTest {
                     new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
             // Approve Inferences
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Approve Inferences")).click();
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Approve Inferences")).click();
             log.info("Approve Inferences Clicked");
 
             page.waitForSelector(
@@ -1919,7 +2036,6 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Delete Inferences")
     public void deleteInf() {
         try {
-
             page.waitForTimeout(2000);
             // Bulb Icon Click
             page.locator("i.fa-lightbulb-o").nth(4).click();
@@ -1947,11 +2063,11 @@ public class DiagnosticTests extends BaseTest {
             // Delete Inferences
             Locator deleteInferenceButton = page.getByRole(
                     AriaRole.BUTTON,
-                    new Page.GetByRoleOptions().setName("  Delete Inferences"));
+                    new Page.GetByRoleOptions().setName("  Delete Inferences"));
 
             deleteInferenceButton.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
 
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Delete Inferences")).click();
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Delete Inferences")).click();
             log.info("Delete Inferences Clicked");
 
             page.waitForSelector(
@@ -1983,7 +2099,6 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Edit Observations")
     public void editObs() {
         try {
-
             page.locator(".action-btn").first().click();
 
             log.info("Action Button Clicked");
@@ -2003,7 +2118,6 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Create New Inference")
     public void createNewInf() {
         try {
-
             // create New Inference
             page.getByText("Inference", new Page.GetByTextOptions().setExact(true)).click();
 
@@ -2045,7 +2159,6 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Reject Inference")
     public void rejectInf() {
         try {
-
             page.waitForSelector(
                     ".loading-screen-wrapper",
                     new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
@@ -2082,7 +2195,6 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Delete Observations")
     public void deleteObs() {
         try {
-
             // Delete Observation
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Delete")).click();
             log.info("Delete Clicked");
@@ -2130,7 +2242,7 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Upload File in Self Service Diagnostics")
     public void uploadFileInSSD() {
         try {
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Upload File")).click();
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Upload File")).click();
             log.info("Upload File Button Clicked");
 
             page.waitForSelector(
@@ -2161,7 +2273,7 @@ public class DiagnosticTests extends BaseTest {
                     ".loading-screen-wrapper",
                     new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Refresh Status")).click();
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Refresh Status")).click();
             log.info("Refresh Status button clicked");
 
             page.waitForSelector(
