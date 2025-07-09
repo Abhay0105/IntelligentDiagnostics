@@ -18,10 +18,10 @@ public class DiagnosticTests extends BaseTest {
     private static final Logger log = LoggerFactory.getLogger(DiagnosticTests.class);
 
     Dotenv dotenv = Dotenv.load();
-    private final String username = dotenv.get("USERNAME_BSC");
-    private final String password = dotenv.get("PASSWORD_BSC");
-    private final String loginUrl = dotenv.get("BSC_DEV");
-    private final String environment = "bsc-dev";
+    private final String username = dotenv.get("APP_USERNAME");
+    private final String password = dotenv.get("PASSWORD");
+    private final String loginUrl = dotenv.get("DEVDEMO_URL");
+    private final String environment = "dev-demo";
 
     private Locator findFirstVisibleLocator(List<Locator> locators) {
         for (Locator locator : locators) {
@@ -245,47 +245,57 @@ public class DiagnosticTests extends BaseTest {
             page.waitForTimeout(3500);
             log.info("Create New modal opened");
 
-            // --- Picklist section ---
-            List<Locator> picklistCandidates = Arrays.asList(
-                    page
-                            .locator("div")
-                            .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Product Line \\*$")))
-                            .nth(1),
-                    page
-                            .locator("div")
-                            .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^MODEL \\*$")))
-                            .nth(1),
-                    page
-                            .locator("div")
-                            .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
-                            .nth(1));
+            // --- Picklist input selection with fallback ---
+            Locator visibleModel = null;
 
-            Locator visibleModel = findFirstVisibleLocator(picklistCandidates);
-            Assertions.assertNotNull(visibleModel, "No visible picklist found");
-            log.info("Visible picklist found");
+            // First try ng-select input (excluding English/Language)
+            List<Locator> ngInputs = page.locator("ng-select input[type='text']").all();
+            for (Locator input : ngInputs) {
+                if (input.isVisible()) {
+                    String context = input.locator("xpath=ancestor::ng-select").textContent().trim();
+                    if (!context.contains("English") && !context.contains("Language")) {
+                        visibleModel = input;
+                        break;
+                    }
+                }
+            }
 
+            // Fallback: try textarea[type='text'] if ng-select input is not found
+            if (visibleModel == null) {
+                Locator fallbackTextarea = page
+                        .locator("//div[contains(@class, 'form-group')]//textarea[@type='text']");
+                if (fallbackTextarea.isVisible()) {
+                    visibleModel = fallbackTextarea;
+                    log.info("Fallback: textarea[type='text'] used for picklist");
+                }
+            }
+
+            Assertions.assertNotNull(visibleModel, "No valid picklist input found");
             visibleModel.click();
-            log.info("Picklist clicked");
+            log.info("Picklist input clicked");
 
             String searchValue = switch (environment) {
                 case "accuray-dev" -> "CYBER";
                 case "ni-dev" -> "DAQ";
                 case "swisslog-dev" -> "BLOW";
-                case "keysight-dev" -> "E444";
+                case "keysight-dev" -> "N9042B";
                 case "terumo-dev" -> "REVEOS";
                 case "dev6" -> "pc cor";
                 case "626-dev" -> "SYMPH";
                 case "ciena-poc" -> "BLUE";
                 case "crane1-dev" -> "Gorb";
                 case "bsc-dev" -> "Farapulse";
-                default -> null; // Default value for other environments
+                case "tke-dev" -> "TKE:TAC32H";
+                case "medtronic-dev" -> "O-Arm";
+                case "burroughs-dev" -> "Burroughs:ATM";
+                default -> null;
             };
 
             if (searchValue != null) {
-                visibleModel.locator("div.ng-input input[type='text']").fill(searchValue);
+                visibleModel.fill(searchValue);
                 log.info("Picklist field filled with: {}", searchValue);
             } else {
-                visibleModel.locator("div.ng-input input[type='text']").click();
+                visibleModel.click();
             }
 
             page.waitForTimeout(1500);
@@ -293,21 +303,15 @@ public class DiagnosticTests extends BaseTest {
             page.waitForSelector(
                     "//ng-dropdown-panel//div[@role='option']",
                     new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
-                    
+
             List<Locator> options = page.locator("//ng-dropdown-panel//div[@role='option']").all();
             log.info("Options found: {}", options.size());
 
-            if (options.size() > 0) {
-                int randomIndex = 0;
-
-                if (options.size() > 1) {
-                    Random random = new Random();
-                    randomIndex = random.nextInt(options.size());
-                }
-                randomIndex = new Random().nextInt(options.size());
-                log.info("Option selected: " + options.get(randomIndex).textContent().trim());
-
+            if (!options.isEmpty()) {
+                int randomIndex = new Random().nextInt(options.size());
+                String selectedText = options.get(randomIndex).textContent().trim();
                 options.get(randomIndex).click();
+                log.info("Option selected: {}", selectedText);
             } else {
                 log.error("No options found in the picklist");
                 Assertions.fail("No options found in the picklist");
@@ -320,33 +324,24 @@ public class DiagnosticTests extends BaseTest {
                     page.getByRole(AriaRole.TEXTBOX));
 
             Locator visibleDescription = findFirstVisibleLocator(allPossibleDescriptions);
-
             Assertions.assertNotNull(visibleDescription, "No visible description field found");
             log.info("Visible description field found");
 
             List<String> descriptions = ExcelReader.readDescriptionsFromExcel(
-                    "src/test/resources/srDescriptions.xlsx",
-                    "devdemo");
+                    "src/test/resources/srDescriptions.xlsx", "devdemo");
             log.info("Descriptions List size: {}", descriptions.size());
 
             int randomIndex = new Random().nextInt(descriptions.size());
-
-            if (randomIndex >= 0 && randomIndex < descriptions.size()) {
-                log.info("Random index selected for description: {}", randomIndex);
-                visibleDescription.fill(descriptions.get(randomIndex));
-                log.info("Description field filled with: {}", descriptions.get(randomIndex));
-            } else {
-                log.error("Random index out of bounds: {}", randomIndex);
-                Assertions.fail("Random index out of bounds for descriptions");
-            }
-
+            String selectedDescription = descriptions.get(randomIndex);
+            visibleDescription.fill(selectedDescription);
             visibleDescription.press("Tab");
+            log.info("Description field filled with: {}", selectedDescription);
 
-            // type field handling
+            // --- Type field (optional) ---
             Locator typeField = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("TYPE"));
 
             if (typeField.isVisible()) {
-                typeField.fill("OBS"); // or use dynamic content
+                typeField.fill("OBS");
                 typeField.press("Tab");
                 log.info("Filled Type field");
             } else {
@@ -357,14 +352,14 @@ public class DiagnosticTests extends BaseTest {
             page.waitForTimeout(2000);
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Start Diagnosis")).click();
             page.waitForURL(url -> url.contains("n7-predictions"), new Page.WaitForURLOptions().setTimeout(15000));
-
             Assertions.assertTrue(page.url().contains("n7-predictions"), "Predictions page did not load as expected");
+
             page.waitForSelector(
                     ".loading-screen-wrapper",
                     new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
             page.waitForLoadState(LoadState.NETWORKIDLE);
-
             log.info("SR created and navigated to predictions page");
+
         } catch (Exception e) {
             log.error("Test Failed: {}", e.getMessage());
             Assertions.fail("Test Failed: " + e.getMessage());
@@ -1653,11 +1648,11 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Create New Child Inference")
     public void createNewChildInf() {
         try {
-            try {
-                page.waitForSelector(
-                        "div.step div.step-label:has-text(\"Child Inferences\")",
-                        new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(10000));
+            page.waitForTimeout(2000);
 
+            Locator childInfTab = page.locator("div.step div.step-label:has-text(\"Child Inferences\")");
+
+            if (childInfTab.isVisible()) {
                 // create New Inference
                 page.getByText("Child Inferences", new Page.GetByTextOptions().setExact(true)).click();
 
@@ -1689,7 +1684,7 @@ public class DiagnosticTests extends BaseTest {
                 page.waitForSelector(
                         ".loading-screen-wrapper",
                         new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
-            } catch (Exception e) {
+            } else {
                 log.info("Child Inference Tab is not Available!");
             }
         } catch (Exception e) {
