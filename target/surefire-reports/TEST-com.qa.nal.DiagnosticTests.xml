@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.qa.nal.DiagnosticTests" time="331.849" tests="36" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="24"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="QASE_CREATE_MISSING_CASES" value="true"/>
+    <property name="java.class.path" value="C:\IntelligentDiagnosticsProject_C1\diagnostics\target\test-classes;C:\IntelligentDiagnosticsProject_C1\diagnostics\target\classes;C:\Users\abhay\.m2\repository\org\junit\jupiter\junit-jupiter\5.11.2\junit-jupiter-5.11.2.jar;C:\Users\abhay\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.11.2\junit-jupiter-api-5.11.2.jar;C:\Users\abhay\.m2\repository\org\junit\platform\junit-platform-commons\1.11.2\junit-platform-commons-1.11.2.jar;C:\Users\abhay\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\abhay\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.11.2\junit-jupiter-params-5.11.2.jar;C:\Users\abhay\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.11.2\junit-jupiter-engine-5.11.2.jar;C:\Users\abhay\.m2\repository\org\junit\platform\junit-platform-engine\1.11.2\junit-platform-engine-1.11.2.jar;C:\Users\abhay\.m2\repository\io\qase\qase-junit5-reporter\4.0.0\qase-junit5-reporter-4.0.0.jar;C:\Users\abhay\.m2\repository\io\qase\qase-java-commons\4.0.0\qase-java-commons-4.0.0.jar;C:\Users\abhay\.m2\repository\io\qase\qase-api-client\4.0.0\qase-api-client-4.0.0.jar;C:\Users\abhay\.m2\repository\com\squareup\okhttp3\okhttp\4.12.0\okhttp-4.12.0.jar;C:\Users\abhay\.m2\repository\com\squareup\okio\okio\3.6.0\okio-3.6.0.jar;C:\Users\abhay\.m2\repository\com\squareup\okio\okio-jvm\3.6.0\okio-jvm-3.6.0.jar;C:\Users\abhay\.m2\repository\org\apache\commons\commons-lang3\3.13.0\commons-lang3-3.13.0.jar;C:\Users\abhay\.m2\repository\org\apache\httpcomponents\httpmime\4.3.1\httpmime-4.3.1.jar;C:\Users\abhay\.m2\repository\org\apache\httpcomponents\httpclient\4.3.1\httpclient-4.3.1.jar;C:\Users\abhay\.m2\repository\org\apache\httpcomponents\httpcore\4.3\httpcore-4.3.jar;C:\Users\abhay\.m2\repository\commons-logging\commons-logging\1.1.3\commons-logging-1.1.3.jar;C:\Users\abhay\.m2\repository\org\aspectj\aspectjrt\1.8.9\aspectjrt-1.8.9.jar;C:\Users\abhay\.m2\repository\org\json\json\20231013\json-20231013.jar;C:\Users\abhay\.m2\repository\org\junit\platform\junit-platform-launcher\1.6.2\junit-platform-launcher-1.6.2.jar;C:\Users\abhay\.m2\repository\org\projectlombok\lombok\1.18.34\lombok-1.18.34.jar;C:\Users\abhay\.m2\repository\ch\qos\logback\logback-core\1.2.13\logback-core-1.2.13.jar;C:\Users\abhay\.m2\repository\ch\qos\logback\logback-classic\1.2.13\logback-classic-1.2.13.jar;C:\Users\abhay\.m2\repository\org\slf4j\slf4j-api\1.7.32\slf4j-api-1.7.32.jar;C:\Users\abhay\.m2\repository\io\qase\qase-junit5\3.2.1\qase-junit5-3.2.1.jar;C:\Users\abhay\.m2\repository\io\qase\qase-api\3.2.1\qase-api-3.2.1.jar;C:\Users\abhay\.m2\repository\org\openapitools\jackson-databind-nullable\0.2.4\jackson-databind-nullable-0.2.4.jar;C:\Users\abhay\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.14.0-rc2\jackson-databind-2.14.0-rc2.jar;C:\Users\abhay\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.14.0-rc2\jackson-annotations-2.14.0-rc2.jar;C:\Users\abhay\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.14.0-rc2\jackson-core-2.14.0-rc2.jar;C:\Users\abhay\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\abhay\.m2\repository\javax\annotation\javax.annotation-api\1.3.2\javax.annotation-api-1.3.2.jar;C:\Users\abhay\.m2\repository\io\swagger\swagger-annotations\1.6.8\swagger-annotations-1.6.8.jar;C:\Users\abhay\.m2\repository\io\gsonfire\gson-fire\1.8.5\gson-fire-1.8.5.jar;C:\Users\abhay\.m2\repository\com\squareup\okhttp3\logging-interceptor\4.10.0\logging-interceptor-4.10.0.jar;C:\Users\abhay\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-jdk8\1.6.10\kotlin-stdlib-jdk8-1.6.10.jar;C:\Users\abhay\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib\1.6.10\kotlin-stdlib-1.6.10.jar;C:\Users\abhay\.m2\repository\org\jetbrains\annotations\13.0\annotations-13.0.jar;C:\Users\abhay\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-common\1.6.10\kotlin-stdlib-common-1.6.10.jar;C:\Users\abhay\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-jdk7\1.6.10\kotlin-stdlib-jdk7-1.6.10.jar;C:\Users\abhay\.m2\repository\org\aeonbits\owner\owner-java8\1.0.12\owner-java8-1.0.12.jar;C:\Users\abhay\.m2\repository\org\aeonbits\owner\owner\1.0.12\owner-1.0.12.jar;C:\Users\abhay\.m2\repository\com\konghq\unirest-java\3.4.00\unirest-java-3.4.00.jar;C:\Users\abhay\.m2\repository\org\apache\httpcomponents\httpcore-nio\4.4.11\httpcore-nio-4.4.11.jar;C:\Users\abhay\.m2\repository\org\apache\httpcomponents\httpasyncclient\4.1.4\httpasyncclient-4.1.4.jar;C:\Users\abhay\.m2\repository\com\google\inject\guice\5.1.0\guice-5.1.0.jar;C:\Users\abhay\.m2\repository\javax\inject\javax.inject\1\javax.inject-1.jar;C:\Users\abhay\.m2\repository\aopalliance\aopalliance\1.0\aopalliance-1.0.jar;C:\Users\abhay\.m2\repository\com\google\guava\guava\30.1-jre\guava-30.1-jre.jar;C:\Users\abhay\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\abhay\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\abhay\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar;C:\Users\abhay\.m2\repository\com\google\j2objc\j2objc-annotations\1.3\j2objc-annotations-1.3.jar;C:\Users\abhay\.m2\repository\javax\ws\rs\jsr311-api\1.1.1\jsr311-api-1.1.1.jar;C:\Users\abhay\.m2\repository\javax\ws\rs\javax.ws.rs-api\2.1.1\javax.ws.rs-api-2.1.1.jar;C:\Users\abhay\.m2\repository\com\microsoft\playwright\playwright\1.52.0\playwright-1.52.0.jar;C:\Users\abhay\.m2\repository\com\google\code\gson\gson\2.12.1\gson-2.12.1.jar;C:\Users\abhay\.m2\repository\com\google\errorprone\error_prone_annotations\2.36.0\error_prone_annotations-2.36.0.jar;C:\Users\abhay\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\abhay\.m2\repository\com\microsoft\playwright\driver\1.52.0\driver-1.52.0.jar;C:\Users\abhay\.m2\repository\com\microsoft\playwright\driver-bundle\1.52.0\driver-bundle-1.52.0.jar;C:\Users\abhay\.m2\repository\io\github\cdimascio\dotenv-java\3.0.0\dotenv-java-3.0.0.jar;C:\Users\abhay\.m2\repository\org\slf4j\slf4j-simple\2.0.12\slf4j-simple-2.0.12.jar;C:\Users\abhay\.m2\repository\org\apache\poi\poi\5.2.5\poi-5.2.5.jar;C:\Users\abhay\.m2\repository\commons-codec\commons-codec\1.16.0\commons-codec-1.16.0.jar;C:\Users\abhay\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\abhay\.m2\repository\org\apache\commons\commons-math3\3.6.1\commons-math3-3.6.1.jar;C:\Users\abhay\.m2\repository\commons-io\commons-io\2.15.0\commons-io-2.15.0.jar;C:\Users\abhay\.m2\repository\com\zaxxer\SparseBitSet\1.3\SparseBitSet-1.3.jar;C:\Users\abhay\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\abhay\.m2\repository\org\apache\poi\poi-ooxml\5.2.5\poi-ooxml-5.2.5.jar;C:\Users\abhay\.m2\repository\org\apache\poi\poi-ooxml-lite\5.2.5\poi-ooxml-lite-5.2.5.jar;C:\Users\abhay\.m2\repository\org\apache\xmlbeans\xmlbeans\5.2.0\xmlbeans-5.2.0.jar;C:\Users\abhay\.m2\repository\org\apache\commons\commons-compress\1.25.0\commons-compress-1.25.0.jar;C:\Users\abhay\.m2\repository\com\github\virtuald\curvesapi\1.08\curvesapi-1.08.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="Asia/Calcutta"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="24"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="IN"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-24\bin"/>
+    <property name="QASE_ENVIRONMENT" value="poc-13"/>
+    <property name="sun.java.command" value="C:\Users\abhay\AppData\Local\Temp\surefire18154033676747568698\surefirebooter7078659558918785649.jar C:\Users\abhay\AppData\Local\Temp\surefire18154033676747568698 2025-07-11T19-02-28_431-jvmRun1 surefire2745120026198569199tmp surefire_06408768966890429538tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="C:\IntelligentDiagnosticsProject_C1\diagnostics\target\test-classes;C:\IntelligentDiagnosticsProject_C1\diagnostics\target\classes;C:\Users\abhay\.m2\repository\org\junit\jupiter\junit-jupiter\5.11.2\junit-jupiter-5.11.2.jar;C:\Users\abhay\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.11.2\junit-jupiter-api-5.11.2.jar;C:\Users\abhay\.m2\repository\org\junit\platform\junit-platform-commons\1.11.2\junit-platform-commons-1.11.2.jar;C:\Users\abhay\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\abhay\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.11.2\junit-jupiter-params-5.11.2.jar;C:\Users\abhay\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.11.2\junit-jupiter-engine-5.11.2.jar;C:\Users\abhay\.m2\repository\org\junit\platform\junit-platform-engine\1.11.2\junit-platform-engine-1.11.2.jar;C:\Users\abhay\.m2\repository\io\qase\qase-junit5-reporter\4.0.0\qase-junit5-reporter-4.0.0.jar;C:\Users\abhay\.m2\repository\io\qase\qase-java-commons\4.0.0\qase-java-commons-4.0.0.jar;C:\Users\abhay\.m2\repository\io\qase\qase-api-client\4.0.0\qase-api-client-4.0.0.jar;C:\Users\abhay\.m2\repository\com\squareup\okhttp3\okhttp\4.12.0\okhttp-4.12.0.jar;C:\Users\abhay\.m2\repository\com\squareup\okio\okio\3.6.0\okio-3.6.0.jar;C:\Users\abhay\.m2\repository\com\squareup\okio\okio-jvm\3.6.0\okio-jvm-3.6.0.jar;C:\Users\abhay\.m2\repository\org\apache\commons\commons-lang3\3.13.0\commons-lang3-3.13.0.jar;C:\Users\abhay\.m2\repository\org\apache\httpcomponents\httpmime\4.3.1\httpmime-4.3.1.jar;C:\Users\abhay\.m2\repository\org\apache\httpcomponents\httpclient\4.3.1\httpclient-4.3.1.jar;C:\Users\abhay\.m2\repository\org\apache\httpcomponents\httpcore\4.3\httpcore-4.3.jar;C:\Users\abhay\.m2\repository\commons-logging\commons-logging\1.1.3\commons-logging-1.1.3.jar;C:\Users\abhay\.m2\repository\org\aspectj\aspectjrt\1.8.9\aspectjrt-1.8.9.jar;C:\Users\abhay\.m2\repository\org\json\json\20231013\json-20231013.jar;C:\Users\abhay\.m2\repository\org\junit\platform\junit-platform-launcher\1.6.2\junit-platform-launcher-1.6.2.jar;C:\Users\abhay\.m2\repository\org\projectlombok\lombok\1.18.34\lombok-1.18.34.jar;C:\Users\abhay\.m2\repository\ch\qos\logback\logback-core\1.2.13\logback-core-1.2.13.jar;C:\Users\abhay\.m2\repository\ch\qos\logback\logback-classic\1.2.13\logback-classic-1.2.13.jar;C:\Users\abhay\.m2\repository\org\slf4j\slf4j-api\1.7.32\slf4j-api-1.7.32.jar;C:\Users\abhay\.m2\repository\io\qase\qase-junit5\3.2.1\qase-junit5-3.2.1.jar;C:\Users\abhay\.m2\repository\io\qase\qase-api\3.2.1\qase-api-3.2.1.jar;C:\Users\abhay\.m2\repository\org\openapitools\jackson-databind-nullable\0.2.4\jackson-databind-nullable-0.2.4.jar;C:\Users\abhay\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.14.0-rc2\jackson-databind-2.14.0-rc2.jar;C:\Users\abhay\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.14.0-rc2\jackson-annotations-2.14.0-rc2.jar;C:\Users\abhay\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.14.0-rc2\jackson-core-2.14.0-rc2.jar;C:\Users\abhay\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\abhay\.m2\repository\javax\annotation\javax.annotation-api\1.3.2\javax.annotation-api-1.3.2.jar;C:\Users\abhay\.m2\repository\io\swagger\swagger-annotations\1.6.8\swagger-annotations-1.6.8.jar;C:\Users\abhay\.m2\repository\io\gsonfire\gson-fire\1.8.5\gson-fire-1.8.5.jar;C:\Users\abhay\.m2\repository\com\squareup\okhttp3\logging-interceptor\4.10.0\logging-interceptor-4.10.0.jar;C:\Users\abhay\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-jdk8\1.6.10\kotlin-stdlib-jdk8-1.6.10.jar;C:\Users\abhay\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib\1.6.10\kotlin-stdlib-1.6.10.jar;C:\Users\abhay\.m2\repository\org\jetbrains\annotations\13.0\annotations-13.0.jar;C:\Users\abhay\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-common\1.6.10\kotlin-stdlib-common-1.6.10.jar;C:\Users\abhay\.m2\repository\org\jetbrains\kotlin\kotlin-stdlib-jdk7\1.6.10\kotlin-stdlib-jdk7-1.6.10.jar;C:\Users\abhay\.m2\repository\org\aeonbits\owner\owner-java8\1.0.12\owner-java8-1.0.12.jar;C:\Users\abhay\.m2\repository\org\aeonbits\owner\owner\1.0.12\owner-1.0.12.jar;C:\Users\abhay\.m2\repository\com\konghq\unirest-java\3.4.00\unirest-java-3.4.00.jar;C:\Users\abhay\.m2\repository\org\apache\httpcomponents\httpcore-nio\4.4.11\httpcore-nio-4.4.11.jar;C:\Users\abhay\.m2\repository\org\apache\httpcomponents\httpasyncclient\4.1.4\httpasyncclient-4.1.4.jar;C:\Users\abhay\.m2\repository\com\google\inject\guice\5.1.0\guice-5.1.0.jar;C:\Users\abhay\.m2\repository\javax\inject\javax.inject\1\javax.inject-1.jar;C:\Users\abhay\.m2\repository\aopalliance\aopalliance\1.0\aopalliance-1.0.jar;C:\Users\abhay\.m2\repository\com\google\guava\guava\30.1-jre\guava-30.1-jre.jar;C:\Users\abhay\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\abhay\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\abhay\.m2\repository\org\checkerframework\checker-qual\3.5.0\checker-qual-3.5.0.jar;C:\Users\abhay\.m2\repository\com\google\j2objc\j2objc-annotations\1.3\j2objc-annotations-1.3.jar;C:\Users\abhay\.m2\repository\javax\ws\rs\jsr311-api\1.1.1\jsr311-api-1.1.1.jar;C:\Users\abhay\.m2\repository\javax\ws\rs\javax.ws.rs-api\2.1.1\javax.ws.rs-api-2.1.1.jar;C:\Users\abhay\.m2\repository\com\microsoft\playwright\playwright\1.52.0\playwright-1.52.0.jar;C:\Users\abhay\.m2\repository\com\google\code\gson\gson\2.12.1\gson-2.12.1.jar;C:\Users\abhay\.m2\repository\com\google\errorprone\error_prone_annotations\2.36.0\error_prone_annotations-2.36.0.jar;C:\Users\abhay\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\abhay\.m2\repository\com\microsoft\playwright\driver\1.52.0\driver-1.52.0.jar;C:\Users\abhay\.m2\repository\com\microsoft\playwright\driver-bundle\1.52.0\driver-bundle-1.52.0.jar;C:\Users\abhay\.m2\repository\io\github\cdimascio\dotenv-java\3.0.0\dotenv-java-3.0.0.jar;C:\Users\abhay\.m2\repository\org\slf4j\slf4j-simple\2.0.12\slf4j-simple-2.0.12.jar;C:\Users\abhay\.m2\repository\org\apache\poi\poi\5.2.5\poi-5.2.5.jar;C:\Users\abhay\.m2\repository\commons-codec\commons-codec\1.16.0\commons-codec-1.16.0.jar;C:\Users\abhay\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\abhay\.m2\repository\org\apache\commons\commons-math3\3.6.1\commons-math3-3.6.1.jar;C:\Users\abhay\.m2\repository\commons-io\commons-io\2.15.0\commons-io-2.15.0.jar;C:\Users\abhay\.m2\repository\com\zaxxer\SparseBitSet\1.3\SparseBitSet-1.3.jar;C:\Users\abhay\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\abhay\.m2\repository\org\apache\poi\poi-ooxml\5.2.5\poi-ooxml-5.2.5.jar;C:\Users\abhay\.m2\repository\org\apache\poi\poi-ooxml-lite\5.2.5\poi-ooxml-lite-5.2.5.jar;C:\Users\abhay\.m2\repository\org\apache\xmlbeans\xmlbeans\5.2.0\xmlbeans-5.2.0.jar;C:\Users\abhay\.m2\repository\org\apache\commons\commons-compress\1.25.0\commons-compress-1.25.0.jar;C:\Users\abhay\.m2\repository\com\github\virtuald\curvesapi\1.08\curvesapi-1.08.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\abhay"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-03-18"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-24"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="C:\IntelligentDiagnosticsProject_C1\diagnostics"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="QASE_DEBUG" value="true"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="QASE_CLIENT_REPORTER_NAME" value="JUnit 5"/>
+    <property name="QASE_TESTOPS_API_TOKEN" value="73768f37203aedffd6550ff1b4a047b48385b28e0fd842acfcd4d226b371805a"/>
+    <property name="surefire.real.class.path" value="C:\Users\abhay\AppData\Local\Temp\surefire18154033676747568698\surefirebooter7078659558918785649.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="QASE_TESTOPS_PROJECT" value="DIAGNOSTIC"/>
+    <property name="java.runtime.version" value="24+36-3646"/>
+    <property name="user.name" value="abhay"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\abhay\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\abhay\AppData\Local\Temp\"/>
+    <property name="java.version" value="24"/>
+    <property name="user.dir" value="C:\IntelligentDiagnosticsProject_C1\diagnostics"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-24\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\java8path;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python312\Scripts\;C:\Python312\;C:\Program Files\Eclipse Adoptium\jre-17.0.13.11-hotspot\bin;C:\Program Files\Eclipse Adoptium\jdk-17.0.13.11-hotspot\bin;C:\Program Files\Common Files\Oracle\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Program Files\Java\jdk-24\bin;C:\Program Files\Maven\apache-maven-3.9.9\bin;C:\Program Files\Maven\apache-maven-3.9.9\bin;C:\Program Files\Java\jdk-24\bin;C:\Program Files\Git\cmd;C:\Users\abhay\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2023.2.4\bin;;C:\Program Files\sf\bin;C:\Program Files\Eclipse Adoptium\jdk-17.0.13.11-hotspot\bin;C:\Users\abhay\AppData\Roaming\npm;C:\Users\abhay\AppData\Local\Programs\Microsoft VS Code\bin;c:\Users\abhay\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="24+36-3646"/>
+    <property name="QASE_MODE" value="testops"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="68.0"/>
+  </properties>
+  <testcase name="navigateToLoginPage" classname="com.qa.nal.DiagnosticTests" time="5.915">
+    <system-out><![CDATA[19:02:30.709 [main] INFO  i.q.commons.reporters.CoreReporter - Starting test run
+19:02:32.402 [main] INFO  i.q.c.reporters.TestopsReporter - Test run 61 started
+19:02:43.694 [main] INFO  io.qase.api.QaseClient - Qase project code - INTSEARCH
+19:02:43.694 [main] INFO  io.qase.api.QaseClient - Required parameters 'QASE_RUN_ID' or 'QASE_RUN_NAME' aren't specified
+19:02:49.595 [main] INFO  com.qa.nal.DiagnosticTests - Navigating to login page: https://n7poc-13.neuron7.ai
+19:02:49.606 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"41af13c6-cb51-41cb-8d28-0ab1a6dfae5a","title":"Navigate to Login Page","signature":"com:qa:nal::diagnostictests.java::diagnostictests::navigatetologinpage::1","testopsId":1,"execution":{"startTime":1752240763723,"status":"PASSED","endTime":1752240769606,"duration":5883},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="performLogin" classname="com.qa.nal.DiagnosticTests" time="1.921">
+    <system-out><![CDATA[19:02:50.011 [main] INFO  com.qa.nal.DiagnosticTests - Username field clicked
+19:02:50.105 [main] INFO  com.qa.nal.DiagnosticTests - Username field filled
+19:02:50.214 [main] INFO  com.qa.nal.DiagnosticTests - Password field clicked
+19:02:50.293 [main] INFO  com.qa.nal.DiagnosticTests - Password field filled
+19:02:50.433 [main] INFO  com.qa.nal.DiagnosticTests - Login button clicked
+19:02:51.514 [main] INFO  com.qa.nal.DiagnosticTests - Login successful, navigated to home page
+19:02:51.517 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"44d00581-a30e-4e7d-90a3-d5f685677ea3","title":"Perform Login","signature":"com:qa:nal::diagnostictests.java::diagnostictests::performlogin::2","testopsId":2,"execution":{"startTime":1752240769618,"status":"PASSED","endTime":1752240771517,"duration":1899},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="handleInitialPopup" classname="com.qa.nal.DiagnosticTests" time="5.373">
+    <system-out><![CDATA[19:02:53.689 [main] INFO  com.qa.nal.DiagnosticTests - Modal Pop-Up found
+19:02:56.907 [main] INFO  com.qa.nal.DiagnosticTests - Cancel button clicked
+19:02:56.910 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"b581aeca-e0fe-4b77-a664-3fa7df299d94","title":"Handle Initial Pop-Up","signature":"com:qa:nal::diagnostictests.java::diagnostictests::handleinitialpopup::3","testopsId":3,"execution":{"startTime":1752240771592,"status":"PASSED","endTime":1752240776910,"duration":5318},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="navigateToIntelligentDiagnostics" classname="com.qa.nal.DiagnosticTests" time="2.292">
+    <system-out><![CDATA[19:02:57.069 [main] INFO  com.qa.nal.DiagnosticTests - Sidebar hovered
+19:02:59.205 [main] INFO  com.qa.nal.DiagnosticTests - Intelligent Diagnostics clicked
+19:02:59.207 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"f4541ac1-9a4d-4477-a472-755cd4abb00f","title":"Navigate to Intelligent Diagnostics","signature":"com:qa:nal::diagnostictests.java::diagnostictests::navigatetointelligentdiagnostics::4","testopsId":4,"execution":{"startTime":1752240776919,"status":"PASSED","endTime":1752240779205,"duration":2286},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="navigateToServiceRequest" classname="com.qa.nal.DiagnosticTests" time="0.712">
+    <system-out><![CDATA[19:02:59.362 [main] INFO  com.qa.nal.DiagnosticTests - Service Request clicked from Intelligent Diagnostics
+19:02:59.917 [main] INFO  com.qa.nal.DiagnosticTests - Service Request page loaded successfully
+19:02:59.917 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"3867887f-449f-45c6-99ff-dc435193df20","title":"Navigate to Service Request","signature":"com:qa:nal::diagnostictests.java::diagnostictests::navigatetoservicerequest::5","testopsId":5,"execution":{"startTime":1752240779214,"status":"PASSED","endTime":1752240779917,"duration":703},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="createNewServiceRequest" classname="com.qa.nal.DiagnosticTests" time="15.33">
+    <system-out><![CDATA[19:03:00.339 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:03:03.878 [main] INFO  com.qa.nal.DiagnosticTests - Create New modal opened
+19:03:04.077 [main] INFO  com.qa.nal.DiagnosticTests - Picklist input clicked
+19:03:05.794 [main] INFO  com.qa.nal.DiagnosticTests - Options found: 3
+19:03:05.911 [main] INFO  com.qa.nal.DiagnosticTests - Option selected: EXL S1 MSS
+19:03:05.959 [main] INFO  com.qa.nal.DiagnosticTests - Visible description field found
+descriptions loaded from Excel: [test, issue, working, failure]
+19:03:08.114 [main] INFO  com.qa.nal.DiagnosticTests - Descriptions List size: 4
+19:03:08.343 [main] INFO  com.qa.nal.DiagnosticTests - Description field filled with: failure
+19:03:08.353 [main] INFO  com.qa.nal.DiagnosticTests - No Type field found (optional)
+19:03:15.252 [main] INFO  com.qa.nal.DiagnosticTests - SR created and navigated to predictions page
+19:03:15.253 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"b8c4d8d2-54fd-4456-a812-7cfe19f2c97b","title":"Create Service Request","signature":"com:qa:nal::diagnostictests.java::diagnostictests::createnewservicerequest::6","testopsId":6,"execution":{"startTime":1752240779929,"status":"PASSED","endTime":1752240795253,"duration":15324},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+    <system-err><![CDATA[ERROR StatusLogger Log4j2 could not find a logging implementation. Please add log4j-core to the classpath. Using SimpleLogger to log to the console...
+]]></system-err>
+  </testcase>
+  <testcase name="exObsExInf" classname="com.qa.nal.DiagnosticTests" time="24.375">
+    <system-out><![CDATA[19:03:15.259 [main] INFO  com.qa.nal.DiagnosticTests - Attempt 1 to check for observation cards
+19:03:16.781 [main] INFO  com.qa.nal.DiagnosticTests - Observation card count: 1
+19:03:16.793 [main] INFO  com.qa.nal.DiagnosticTests - Observation[0]: Are you seeing something else?
+19:03:16.793 [main] INFO  com.qa.nal.DiagnosticTests - Attempt 2 to check for observation cards
+19:03:19.672 [main] INFO  com.qa.nal.DiagnosticTests - Observation card count: 1
+19:03:19.681 [main] INFO  com.qa.nal.DiagnosticTests - Observation[0]: Are you seeing something else?
+19:03:19.681 [main] INFO  com.qa.nal.DiagnosticTests - Attempt 3 to check for observation cards
+19:03:21.211 [main] INFO  com.qa.nal.DiagnosticTests - Observation card count: 6
+19:03:21.220 [main] INFO  com.qa.nal.DiagnosticTests - Observation[0]: Hardware failure  1/5
+19:03:21.220 [main] INFO  com.qa.nal.DiagnosticTests - Valid observation found: Hardware failure  1/5
+19:03:21.220 [main] INFO  com.qa.nal.DiagnosticTests - Observation card found
+19:03:32.748 [main] ERROR com.qa.nal.DiagnosticTests - No Inference found: Error {
+  message='Timeout 10000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 10000ms exceeded.
+    at ProgressController.run (C:\Users\abhay\AppData\Local\Temp\playwright-java-16415313715933750605\package\lib\server\progress.js:76:26)
+    at Frame.waitForSelector (C:\Users\abhay\AppData\Local\Temp\playwright-java-16415313715933750605\package\lib\server\frames.js:647:23)
+    at FrameDispatcher.waitForSelector (C:\Users\abhay\AppData\Local\Temp\playwright-java-16415313715933750605\package\lib\server\dispatchers\frameDispatcher.js:82:116)
+    at FrameDispatcher._handleCommand (C:\Users\abhay\AppData\Local\Temp\playwright-java-16415313715933750605\package\lib\server\dispatchers\dispatcher.js:94:40)
+    at DispatcherConnection.dispatch (C:\Users\abhay\AppData\Local\Temp\playwright-java-16415313715933750605\package\lib\server\dispatchers\dispatcher.js:307:39)
+}
+Call log:
+-   - waiting for locator(".resolution") to be visible
+
+19:03:32.749 [main] INFO  com.qa.nal.DiagnosticTests - No solution found!
+19:03:32.749 [main] INFO  com.qa.nal.DiagnosticTests - Existing Inference not found
+19:03:32.882 [main] INFO  com.qa.nal.DiagnosticTests - New Solution clicked
+19:03:32.990 [main] INFO  com.qa.nal.DiagnosticTests - Input field clicked
+19:03:32.990 [main] INFO  com.qa.nal.DiagnosticTests - Alphabets used for Type Ahead: [c, d, e, h, i, l, m, n, o, s, t]
+19:03:32.991 [main] INFO  com.qa.nal.DiagnosticTests - Random character generated: e
+19:03:33.068 [main] INFO  com.qa.nal.DiagnosticTests - Solution field filled
+19:03:34.601 [main] INFO  com.qa.nal.DiagnosticTests - Type Ahead listbox found
+19:03:35.458 [main] INFO  com.qa.nal.DiagnosticTests - Inf Options are visible
+19:03:35.465 [main] INFO  com.qa.nal.DiagnosticTests - Inf List:- [Locator@div[role='option'].ng-option >> nth=0, Locator@div[role='option'].ng-option >> nth=1, Locator@div[role='option'].ng-option >> nth=2, Locator@div[role='option'].ng-option >> nth=3, Locator@div[role='option'].ng-option >> nth=4, Locator@div[role='option'].ng-option >> nth=5, Locator@div[role='option'].ng-option >> nth=6, Locator@div[role='option'].ng-option >> nth=7, Locator@div[role='option'].ng-option >> nth=8, Locator@div[role='option'].ng-option >> nth=9]
+19:03:36.980 [main] INFO  com.qa.nal.DiagnosticTests - Inference list size:- 10
+19:03:36.980 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 2
+19:03:37.103 [main] INFO  com.qa.nal.DiagnosticTests - Existing Inference Type Ahead option clicked: Downloaded Parameters And Events For Mss And All Three Modules
+19:03:39.619 [main] INFO  com.qa.nal.DiagnosticTests - Save and Continue button clicked
+19:03:39.628 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"51340339-9f38-432a-9557-8ab82f3cc28f","title":"Existing Observation and Existing Inference","signature":"com:qa:nal::diagnostictests.java::diagnostictests::exobsexinf::7","testopsId":7,"execution":{"startTime":1752240795259,"status":"PASSED","endTime":1752240819628,"duration":24369},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="deleteInvestigation" classname="com.qa.nal.DiagnosticTests" time="5.755">
+    <system-out><![CDATA[19:03:44.802 [main] INFO  com.qa.nal.DiagnosticTests - Delete button clicked
+19:03:45.186 [main] INFO  com.qa.nal.DiagnosticTests - Yes button clicked
+19:03:45.221 [main] INFO  com.qa.nal.DiagnosticTests - Investigation deleted successfully
+19:03:45.386 [main] INFO  com.qa.nal.DiagnosticTests - Expand button clicked
+19:03:45.387 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"cc38442b-6697-4f32-900e-dcb6e3ddd25a","title":"Delete Investigation","signature":"com:qa:nal::diagnostictests.java::diagnostictests::deleteinvestigation::8","testopsId":8,"execution":{"startTime":1752240819656,"status":"PASSED","endTime":1752240825387,"duration":5731},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="newObsNewInf" classname="com.qa.nal.DiagnosticTests" time="27.568">
+    <system-out><![CDATA[19:03:45.394 [main] INFO  com.qa.nal.DiagnosticTests - Attempt 1 to check for observation cards
+19:03:46.914 [main] INFO  com.qa.nal.DiagnosticTests - Observation card count: 1
+19:03:46.931 [main] INFO  com.qa.nal.DiagnosticTests - Observation[0]: Are you seeing something else?
+19:03:46.932 [main] INFO  com.qa.nal.DiagnosticTests - Attempt 2 to check for observation cards
+19:03:48.458 [main] INFO  com.qa.nal.DiagnosticTests - Observation card count: 1
+19:03:48.469 [main] INFO  com.qa.nal.DiagnosticTests - Observation[0]: Are you seeing something else?
+19:03:48.470 [main] INFO  com.qa.nal.DiagnosticTests - Attempt 3 to check for observation cards
+19:03:50.840 [main] INFO  com.qa.nal.DiagnosticTests - Observation card count: 6
+19:03:50.848 [main] INFO  com.qa.nal.DiagnosticTests - Observation[0]: Hardware failure  1/5
+19:03:50.848 [main] INFO  com.qa.nal.DiagnosticTests - Valid observation found: Hardware failure  1/5
+19:03:50.848 [main] INFO  com.qa.nal.DiagnosticTests - Observation card found
+19:03:50.976 [main] INFO  com.qa.nal.DiagnosticTests - Something Else button clicked
+descriptions loaded from Excel: [System Shutdown Unexpectedly, Hardware failure, Software error., System Freeze, Network Outage]
+19:03:51.079 [main] INFO  com.qa.nal.DiagnosticTests - Observation List size: 5
+19:03:51.193 [main] INFO  com.qa.nal.DiagnosticTests - Input field clicked
+19:03:51.272 [main] INFO  com.qa.nal.DiagnosticTests - New Observation field filled
+19:03:51.273 [main] INFO  com.qa.nal.DiagnosticTests - New Observation field filled
+19:03:52.267 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:04:03.809 [main] ERROR com.qa.nal.DiagnosticTests - No Inference found: Error {
+  message='Timeout 10000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 10000ms exceeded.
+    at ProgressController.run (C:\Users\abhay\AppData\Local\Temp\playwright-java-16415313715933750605\package\lib\server\progress.js:76:26)
+    at Frame.waitForSelector (C:\Users\abhay\AppData\Local\Temp\playwright-java-16415313715933750605\package\lib\server\frames.js:647:23)
+    at FrameDispatcher.waitForSelector (C:\Users\abhay\AppData\Local\Temp\playwright-java-16415313715933750605\package\lib\server\dispatchers\frameDispatcher.js:82:116)
+    at FrameDispatcher._handleCommand (C:\Users\abhay\AppData\Local\Temp\playwright-java-16415313715933750605\package\lib\server\dispatchers\dispatcher.js:94:40)
+    at DispatcherConnection.dispatch (C:\Users\abhay\AppData\Local\Temp\playwright-java-16415313715933750605\package\lib\server\dispatchers\dispatcher.js:307:39)
+}
+Call log:
+-   - waiting for locator(".resolution") to be visible
+
+19:04:03.810 [main] INFO  com.qa.nal.DiagnosticTests - No solution found!
+19:04:03.810 [main] INFO  com.qa.nal.DiagnosticTests - Existing Inference not found
+19:04:03.810 [main] INFO  com.qa.nal.DiagnosticTests - No solution found!
+19:04:03.919 [main] INFO  com.qa.nal.DiagnosticTests - Input field clicked
+descriptions loaded from Excel: [Restart Customer Network, Run Patient Sample, Setup Host, Clean All Modules, Reset Optic Cable]
+19:04:04.030 [main] INFO  com.qa.nal.DiagnosticTests - Observation List size: 5
+19:04:04.105 [main] INFO  com.qa.nal.DiagnosticTests - Solution field filled
+19:04:05.072 [main] INFO  com.qa.nal.DiagnosticTests - Solution created
+19:04:07.177 [main] INFO  com.qa.nal.DiagnosticTests - Save and Continue button clicked
+19:04:12.285 [main] INFO  com.qa.nal.DiagnosticTests - Delete button clicked
+19:04:12.753 [main] INFO  com.qa.nal.DiagnosticTests - Yes button clicked
+19:04:12.782 [main] INFO  com.qa.nal.DiagnosticTests - Investigation deleted successfully
+19:04:12.954 [main] INFO  com.qa.nal.DiagnosticTests - Expand button clicked
+19:04:12.956 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"df1dc6ab-2245-4055-8bf4-ccd5a3cf0e54","title":"New Observation and New Inference","signature":"com:qa:nal::diagnostictests.java::diagnostictests::newobsnewinf::9","testopsId":9,"execution":{"startTime":1752240825393,"status":"PASSED","endTime":1752240852956,"duration":27563},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="exObsExInfTA" classname="com.qa.nal.DiagnosticTests" time="23.511">
+    <system-out><![CDATA[19:04:12.969 [main] INFO  com.qa.nal.DiagnosticTests - Attempt 1 to check for observation cards
+19:04:14.506 [main] INFO  com.qa.nal.DiagnosticTests - Observation card count: 1
+19:04:14.511 [main] INFO  com.qa.nal.DiagnosticTests - Observation[0]: Are you seeing something else?
+19:04:14.514 [main] INFO  com.qa.nal.DiagnosticTests - Attempt 2 to check for observation cards
+19:04:16.036 [main] INFO  com.qa.nal.DiagnosticTests - Observation card count: 1
+19:04:16.043 [main] INFO  com.qa.nal.DiagnosticTests - Observation[0]: Are you seeing something else?
+19:04:16.043 [main] INFO  com.qa.nal.DiagnosticTests - Attempt 3 to check for observation cards
+19:04:18.432 [main] INFO  com.qa.nal.DiagnosticTests - Observation card count: 6
+19:04:18.438 [main] INFO  com.qa.nal.DiagnosticTests - Observation[0]: Hardware failure  1/5
+19:04:18.439 [main] INFO  com.qa.nal.DiagnosticTests - Valid observation found: Hardware failure  1/5
+19:04:18.439 [main] INFO  com.qa.nal.DiagnosticTests - Observation card found
+19:04:18.567 [main] INFO  com.qa.nal.DiagnosticTests - Something Else button clicked
+19:04:18.569 [main] INFO  com.qa.nal.DiagnosticTests - Alphabets used for Type Ahead: [a, b, c, d, e, f, g, h, i, l, m, n, o, p, r, s, t]
+19:04:18.569 [main] INFO  com.qa.nal.DiagnosticTests - Random character generated: a
+19:04:18.676 [main] INFO  com.qa.nal.DiagnosticTests - Input field clicked
+19:04:18.755 [main] INFO  com.qa.nal.DiagnosticTests - New Observation field filled
+19:04:18.756 [main] INFO  com.qa.nal.DiagnosticTests - New Observation field filled
+19:04:20.285 [main] INFO  com.qa.nal.DiagnosticTests - Type Ahead listbox found
+19:04:20.517 [main] INFO  com.qa.nal.DiagnosticTests - Obs Options are visible
+19:04:20.522 [main] INFO  com.qa.nal.DiagnosticTests - Obs List:- [Locator@div[role='option'].ng-option >> nth=0, Locator@div[role='option'].ng-option >> nth=1, Locator@div[role='option'].ng-option >> nth=2, Locator@div[role='option'].ng-option >> nth=3, Locator@div[role='option'].ng-option >> nth=4, Locator@div[role='option'].ng-option >> nth=5, Locator@div[role='option'].ng-option >> nth=6, Locator@div[role='option'].ng-option >> nth=7, Locator@div[role='option'].ng-option >> nth=8, Locator@div[role='option'].ng-option >> nth=9]
+19:04:22.034 [main] INFO  com.qa.nal.DiagnosticTests - Observation list size:- 10
+19:04:22.034 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 0
+19:04:22.158 [main] INFO  com.qa.nal.DiagnosticTests - Existing Observation Type Ahead option clicked: Loose Connection On Bypass Ct, Phase 1
+19:04:25.192 [main] INFO  com.qa.nal.DiagnosticTests - Inference found
+19:04:25.197 [main] INFO  com.qa.nal.DiagnosticTests - Solutions size: 4
+19:04:25.198 [main] INFO  com.qa.nal.DiagnosticTests - Solutions found: 4
+19:04:25.198 [main] INFO  com.qa.nal.DiagnosticTests - Existing Inference found
+19:04:25.327 [main] INFO  com.qa.nal.DiagnosticTests - New Solution clicked
+19:04:25.436 [main] INFO  com.qa.nal.DiagnosticTests - Input field clicked
+19:04:25.437 [main] INFO  com.qa.nal.DiagnosticTests - Alphabets used for Type Ahead: [c, d, e, h, i, l, m, n, o, s, t]
+19:04:25.437 [main] INFO  com.qa.nal.DiagnosticTests - Random character generated: d
+19:04:25.514 [main] INFO  com.qa.nal.DiagnosticTests - Solution field filled
+19:04:27.039 [main] INFO  com.qa.nal.DiagnosticTests - Type Ahead listbox found
+19:04:27.055 [main] INFO  com.qa.nal.DiagnosticTests - Inf Options are visible
+19:04:27.060 [main] INFO  com.qa.nal.DiagnosticTests - Inf List:- [Locator@div[role='option'].ng-option >> nth=0, Locator@div[role='option'].ng-option >> nth=1, Locator@div[role='option'].ng-option >> nth=2, Locator@div[role='option'].ng-option >> nth=3, Locator@div[role='option'].ng-option >> nth=4, Locator@div[role='option'].ng-option >> nth=5, Locator@div[role='option'].ng-option >> nth=6, Locator@div[role='option'].ng-option >> nth=7, Locator@div[role='option'].ng-option >> nth=8, Locator@div[role='option'].ng-option >> nth=9]
+19:04:28.567 [main] INFO  com.qa.nal.DiagnosticTests - Inference list size:- 10
+19:04:28.568 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 8
+19:04:28.690 [main] INFO  com.qa.nal.DiagnosticTests - Existing Inference Type Ahead option clicked: Replaced Associated Fan Capacitors
+19:04:31.225 [main] INFO  com.qa.nal.DiagnosticTests - Save and Continue button clicked
+19:04:35.814 [main] INFO  com.qa.nal.DiagnosticTests - Delete button clicked
+19:04:36.283 [main] INFO  com.qa.nal.DiagnosticTests - Yes button clicked
+19:04:36.314 [main] INFO  com.qa.nal.DiagnosticTests - Investigation deleted successfully
+19:04:36.468 [main] INFO  com.qa.nal.DiagnosticTests - Expand button clicked
+19:04:36.470 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"8b7f3747-2501-432d-8aab-bc2c069d8075","title":"Existing Observation and existing Inference(Type Ahead)","signature":"com:qa:nal::diagnostictests.java::diagnostictests::exobsexinfta::10","testopsId":10,"execution":{"startTime":1752240852969,"status":"PASSED","endTime":1752240876470,"duration":23501},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="exObsNewInfExInf" classname="com.qa.nal.DiagnosticTests" time="8.703">
+    <system-out><![CDATA[19:04:36.477 [main] INFO  com.qa.nal.DiagnosticTests - Attempt 1 to check for observation cards
+19:04:38.024 [main] INFO  com.qa.nal.DiagnosticTests - Observation card count: 1
+19:04:38.030 [main] INFO  com.qa.nal.DiagnosticTests - Observation[0]: Are you seeing something else?
+19:04:38.030 [main] INFO  com.qa.nal.DiagnosticTests - Attempt 2 to check for observation cards
+19:04:39.557 [main] INFO  com.qa.nal.DiagnosticTests - Observation card count: 1
+19:04:39.563 [main] INFO  com.qa.nal.DiagnosticTests - Observation[0]: Are you seeing something else?
+19:04:39.564 [main] INFO  com.qa.nal.DiagnosticTests - Attempt 3 to check for observation cards
+19:04:41.094 [main] INFO  com.qa.nal.DiagnosticTests - Observation card count: 6
+19:04:41.100 [main] INFO  com.qa.nal.DiagnosticTests - Observation[0]: Hardware failure  1/5
+19:04:41.100 [main] INFO  com.qa.nal.DiagnosticTests - Valid observation found: Hardware failure  1/5
+19:04:41.100 [main] INFO  com.qa.nal.DiagnosticTests - Observation card found
+19:04:42.631 [main] INFO  com.qa.nal.DiagnosticTests - Inference found
+19:04:42.635 [main] INFO  com.qa.nal.DiagnosticTests - Solutions size: 1
+19:04:42.635 [main] INFO  com.qa.nal.DiagnosticTests - Solutions found: 1
+19:04:42.636 [main] INFO  com.qa.nal.DiagnosticTests - Existing Inference found
+19:04:42.638 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected for checkbox: 0
+19:04:42.740 [main] INFO  com.qa.nal.DiagnosticTests - Checkbox clicked
+19:04:42.849 [main] INFO  com.qa.nal.DiagnosticTests - New Solution clicked
+19:04:42.850 [main] INFO  com.qa.nal.DiagnosticTests - No solution found!
+19:04:42.957 [main] INFO  com.qa.nal.DiagnosticTests - Input field clicked
+descriptions loaded from Excel: [Restart Customer Network, Run Patient Sample, Setup Host, Clean All Modules, Reset Optic Cable]
+19:04:43.034 [main] INFO  com.qa.nal.DiagnosticTests - Observation List size: 5
+19:04:43.114 [main] INFO  com.qa.nal.DiagnosticTests - Solution field filled
+19:04:45.026 [main] INFO  com.qa.nal.DiagnosticTests - Solution created
+19:04:45.149 [main] INFO  com.qa.nal.DiagnosticTests - Save and Close button clicked
+19:04:45.166 [main] INFO  com.qa.nal.DiagnosticTests - not found copy button
+19:04:45.175 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"3e7d65d8-ed55-4cdd-bd5f-2f56c9164fdd","title":"Existing Observation and New Inference","signature":"com:qa:nal::diagnostictests.java::diagnostictests::exobsnewinfexinf::11","testopsId":11,"execution":{"startTime":1752240876477,"status":"PASSED","endTime":1752240885175,"duration":8698},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="navigateToObsManagement" classname="com.qa.nal.DiagnosticTests" time="26.856">
+    <system-out><![CDATA[19:04:47.199 [main] ERROR com.qa.nal.DiagnosticTests - No modal found or not visible
+19:04:47.333 [main] INFO  com.qa.nal.DiagnosticTests - Sidebar hovered
+19:05:10.484 [main] INFO  com.qa.nal.DiagnosticTests - Observation Management clicked
+19:05:12.018 [main] INFO  com.qa.nal.DiagnosticTests - Navigated to Observation Management page
+19:05:12.019 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"144941aa-e693-4520-a78f-e7325b2f3493","title":"Navigate to Observation Management","signature":"com:qa:nal::diagnostictests.java::diagnostictests::navigatetoobsmanagement::12","testopsId":12,"execution":{"startTime":1752240885182,"status":"PASSED","endTime":1752240912019,"duration":26837},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="createNewOM" classname="com.qa.nal.DiagnosticTests" time="13.367">
+    <system-out><![CDATA[19:05:12.417 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:05:12.437 [main] INFO  com.qa.nal.DiagnosticTests - Create New modal opened
+19:05:14.972 [main] INFO  com.qa.nal.DiagnosticTests - Model field clicked
+19:05:16.990 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 1
+19:05:17.125 [main] INFO  com.qa.nal.DiagnosticTests - Model option clicked: EXL S1 MM
+19:05:17.281 [main] INFO  com.qa.nal.DiagnosticTests - Next button clicked
+19:05:19.416 [main] INFO  com.qa.nal.DiagnosticTests - Text box clicked
+descriptions loaded from Excel: [System Shutdown Unexpectedly, Hardware failure, Software error., System Freeze, Network Outage]
+19:05:19.489 [main] INFO  com.qa.nal.DiagnosticTests - Observation List size: 5
+19:05:19.573 [main] INFO  com.qa.nal.DiagnosticTests - Observation field filled
+19:05:20.630 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:05:20.800 [main] INFO  com.qa.nal.DiagnosticTests - Inference field clicked
+descriptions loaded from Excel: [Restart Customer Network, Run Patient Sample, Setup Host, Clean All Modules, Reset Optic Cable]
+19:05:20.873 [main] INFO  com.qa.nal.DiagnosticTests - Observation List size: 5
+19:05:20.956 [main] INFO  com.qa.nal.DiagnosticTests - Inference field filled
+19:05:22.047 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:05:22.173 [main] INFO  com.qa.nal.DiagnosticTests - Save button clicked
+19:05:22.360 [main] INFO  com.qa.nal.DiagnosticTests - Next button clicked
+19:05:23.393 [main] INFO  com.qa.nal.DiagnosticTests - Save Observation button clicked
+19:05:25.400 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"b1c36da8-5002-4d37-bea7-a7c460d598f4","title":"Create new Observation in Observation Management","signature":"com:qa:nal::diagnostictests.java::diagnostictests::createnewom::13","testopsId":13,"execution":{"startTime":1752240912041,"status":"PASSED","endTime":1752240925400,"duration":13359},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="selectExOM" classname="com.qa.nal.DiagnosticTests" time="24.852">
+    <system-out><![CDATA[19:05:27.658 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:05:27.800 [main] INFO  com.qa.nal.DiagnosticTests - Create New modal opened
+19:05:30.955 [main] INFO  com.qa.nal.DiagnosticTests - Model dropdown clicked successfully
+19:05:32.974 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 2
+19:05:33.080 [main] INFO  com.qa.nal.DiagnosticTests - Model option clicked: EXL S1 MSS
+19:05:33.221 [main] INFO  com.qa.nal.DiagnosticTests - Next button clicked
+19:05:35.368 [main] INFO  com.qa.nal.DiagnosticTests - Text box clicked
+19:05:35.477 [main] INFO  com.qa.nal.DiagnosticTests - Alphabets used for Type Ahead: [a, b, c, d, e, f, g, h, i, l, m, n, o, p, r, s, t]
+19:05:35.478 [main] INFO  com.qa.nal.DiagnosticTests - Random character generated: b
+19:05:35.555 [main] INFO  com.qa.nal.DiagnosticTests - Observation field filled
+19:05:37.079 [main] INFO  com.qa.nal.DiagnosticTests - Type Ahead listbox found
+19:05:38.479 [main] INFO  com.qa.nal.DiagnosticTests - Obs Options are visible
+19:05:38.486 [main] INFO  com.qa.nal.DiagnosticTests - Obs List:- [Locator@div[role='option'].ng-option >> nth=0, Locator@div[role='option'].ng-option >> nth=1, Locator@div[role='option'].ng-option >> nth=2, Locator@div[role='option'].ng-option >> nth=3, Locator@div[role='option'].ng-option >> nth=4, Locator@div[role='option'].ng-option >> nth=5, Locator@div[role='option'].ng-option >> nth=6, Locator@div[role='option'].ng-option >> nth=7]
+19:05:39.992 [main] INFO  com.qa.nal.DiagnosticTests - Observation list size:- 8
+19:05:39.992 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 3
+19:05:40.116 [main] INFO  com.qa.nal.DiagnosticTests - Existing Observation Type Ahead option clicked: Gmhi Would Not Boot Up
+19:05:41.644 [main] INFO  com.qa.nal.DiagnosticTests - Existing Inferences are visible
+19:05:41.651 [main] INFO  com.qa.nal.DiagnosticTests - Inference List Size: 1
+19:05:41.651 [main] INFO  com.qa.nal.DiagnosticTests - Inference List: [Locator@ul.result-wrapper li >> nth=0]
+19:05:41.651 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 0
+19:05:42.201 [main] INFO  com.qa.nal.DiagnosticTests - Existing Observation Type Ahead option clicked: Gmhi Would Not Boot Up
+19:05:43.835 [main] INFO  com.qa.nal.DiagnosticTests - Inference field clicked
+19:05:43.945 [main] INFO  com.qa.nal.DiagnosticTests - Alphabets used for Type Ahead: [c, d, e, h, i, l, m, n, o, s, t]
+19:05:43.945 [main] INFO  com.qa.nal.DiagnosticTests - Random character generated: o
+19:05:44.022 [main] INFO  com.qa.nal.DiagnosticTests - Inference field filled
+19:05:45.545 [main] INFO  com.qa.nal.DiagnosticTests - Type Ahead listbox found
+19:05:45.913 [main] INFO  com.qa.nal.DiagnosticTests - Inf Options are visible
+19:05:45.919 [main] INFO  com.qa.nal.DiagnosticTests - Inf List:- [Locator@div[role='option'].ng-option >> nth=0, Locator@div[role='option'].ng-option >> nth=1, Locator@div[role='option'].ng-option >> nth=2, Locator@div[role='option'].ng-option >> nth=3, Locator@div[role='option'].ng-option >> nth=4, Locator@div[role='option'].ng-option >> nth=5, Locator@div[role='option'].ng-option >> nth=6, Locator@div[role='option'].ng-option >> nth=7, Locator@div[role='option'].ng-option >> nth=8, Locator@div[role='option'].ng-option >> nth=9]
+19:05:47.430 [main] INFO  com.qa.nal.DiagnosticTests - Inference list size:- 10
+19:05:47.431 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 4
+19:05:47.555 [main] INFO  com.qa.nal.DiagnosticTests - Existing Inference Type Ahead option clicked: Replace Sd Card In Ups Module B2
+19:05:49.221 [main] INFO  com.qa.nal.DiagnosticTests - Next button clicked
+19:05:50.254 [main] INFO  com.qa.nal.DiagnosticTests - Save Observation button clicked
+19:05:50.254 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"6ae86f7c-5e0a-4a87-938a-cfe4352b87ea","title":"Select Existing in Observation Management","signature":"com:qa:nal::diagnostictests.java::diagnostictests::selectexom::14","testopsId":14,"execution":{"startTime":1752240925411,"status":"PASSED","endTime":1752240950254,"duration":24843},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="navigateToInferenceManagement" classname="com.qa.nal.DiagnosticTests" time="5.18">
+    <system-out><![CDATA[19:05:52.429 [main] INFO  com.qa.nal.DiagnosticTests - Sidebar hovered
+19:05:54.591 [main] INFO  com.qa.nal.DiagnosticTests - Inference Management clicked
+19:05:55.431 [main] INFO  com.qa.nal.DiagnosticTests - Navigated to Inference Management page
+19:05:55.432 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"f635b881-62c4-46f3-86b0-ee3ee4c7ecb6","title":"Navigate To Inference Management","signature":"com:qa:nal::diagnostictests.java::diagnostictests::navigatetoinferencemanagement::15","testopsId":15,"execution":{"startTime":1752240950278,"status":"PASSED","endTime":1752240955432,"duration":5154},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="editInf" classname="com.qa.nal.DiagnosticTests" time="1.752">
+    <system-out><![CDATA[19:05:57.199 [main] INFO  com.qa.nal.DiagnosticTests - Action Button Clicked
+19:05:57.207 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"d749c6cc-fd15-41ab-a331-615b6d4d94c9","title":"Edit Inference","signature":"com:qa:nal::diagnostictests.java::diagnostictests::editinf::16","testopsId":16,"execution":{"startTime":1752240955461,"status":"PASSED","endTime":1752240957207,"duration":1746},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="mergeSimilarInf" classname="com.qa.nal.DiagnosticTests" time="3.885">
+    <system-out><![CDATA[19:06:00.932 [main] INFO  com.qa.nal.DiagnosticTests - Similar Inferences clicked
+19:06:00.958 [main] INFO  com.qa.nal.DiagnosticTests - Similar Inferences List size: 8
+19:06:01.102 [main] INFO  com.qa.nal.DiagnosticTests - Checked random Similar Inference checkbox at index: 3
+19:06:01.103 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"db45fdbf-fad5-42a4-a8d8-78e10d55692e","title":"Merge Similar Inferences","signature":"com:qa:nal::diagnostictests.java::diagnostictests::mergesimilarinf::17","testopsId":17,"execution":{"startTime":1752240957226,"status":"PASSED","endTime":1752240961103,"duration":3877},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="createNewChildInf" classname="com.qa.nal.DiagnosticTests" time="3.16">
+    <system-out><![CDATA[descriptions loaded from Excel: [Restart Customer Network, Run Patient Sample, Setup Host, Clean All Modules, Reset Optic Cable]
+19:06:03.483 [main] INFO  com.qa.nal.DiagnosticTests - Observation List size: 5
+19:06:03.564 [main] INFO  com.qa.nal.DiagnosticTests - Inference field filled
+19:06:03.718 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:06:03.862 [main] INFO  com.qa.nal.DiagnosticTests - Save button clicked
+19:06:04.248 [main] INFO  com.qa.nal.DiagnosticTests - Yes button clicked
+19:06:04.257 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"08b2a775-d648-41bc-968d-6de794e0e7ce","title":"Create New Child Inference","signature":"com:qa:nal::diagnostictests.java::diagnostictests::createnewchildinf::18","testopsId":18,"execution":{"startTime":1752240961109,"status":"PASSED","endTime":1752240964257,"duration":3148},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="createObs" classname="com.qa.nal.DiagnosticTests" time="3.06">
+    <system-out><![CDATA[descriptions loaded from Excel: [System Shutdown Unexpectedly, Hardware failure, Software error., System Freeze, Network Outage]
+19:06:04.749 [main] INFO  com.qa.nal.DiagnosticTests - Observation List size: 5
+19:06:04.821 [main] INFO  com.qa.nal.DiagnosticTests - Observation field filled
+19:06:07.309 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:06:07.320 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"bc9d4ced-7bde-4cd1-98a9-88dfcab7e088","title":"Create New Observation in Inference Management","signature":"com:qa:nal::diagnostictests.java::diagnostictests::createobs::19","testopsId":19,"execution":{"startTime":1752240964269,"status":"PASSED","endTime":1752240967320,"duration":3051},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="navigateToMultimediaManagement" classname="com.qa.nal.DiagnosticTests" time="3.495">
+    <system-out><![CDATA[19:06:07.479 [main] INFO  com.qa.nal.DiagnosticTests - Sidebar hovered
+19:06:09.658 [main] INFO  com.qa.nal.DiagnosticTests - Multimedia Management clicked
+19:06:10.795 [main] INFO  com.qa.nal.DiagnosticTests - Navigated to Multimedia Management page
+19:06:10.796 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"b0edea78-2327-4bbf-b0e0-eeab66b9613e","title":"Navigate To Multimedia Management","signature":"com:qa:nal::diagnostictests.java::diagnostictests::navigatetomultimediamanagement::20","testopsId":20,"execution":{"startTime":1752240967331,"status":"PASSED","endTime":1752240970796,"duration":3465},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="createNewMultimedia" classname="com.qa.nal.DiagnosticTests" time="5.734">
+    <system-out><![CDATA[19:06:11.041 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:06:12.956 [main] INFO  com.qa.nal.DiagnosticTests - File input hovered
+19:06:16.554 [main] INFO  com.qa.nal.DiagnosticTests - File uploaded successfully!
+19:06:16.555 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"2367ea09-06aa-4c02-8482-0fe7676fea9b","title":"Create New Multimedia","signature":"com:qa:nal::diagnostictests.java::diagnostictests::createnewmultimedia::21","testopsId":21,"execution":{"startTime":1752240970826,"status":"PASSED","endTime":1752240976555,"duration":5729},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="editMultimedia" classname="com.qa.nal.DiagnosticTests" time="17.369">
+    <system-out><![CDATA[19:06:21.720 [main] INFO  com.qa.nal.DiagnosticTests - Edit Button Clicked
+19:06:22.676 [main] INFO  com.qa.nal.DiagnosticTests - File input hovered
+19:06:26.744 [main] INFO  com.qa.nal.DiagnosticTests - File uploaded successfully!
+19:06:31.910 [main] INFO  com.qa.nal.DiagnosticTests - Delete button clicked
+19:06:33.927 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"68f31b7f-a1ec-4935-a08a-95b0b20a738b","title":"Edit Multimedia","signature":"com:qa:nal::diagnostictests.java::diagnostictests::editmultimedia::22","testopsId":22,"execution":{"startTime":1752240976563,"status":"PASSED","endTime":1752240993927,"duration":17364},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="navigateToInbox" classname="com.qa.nal.DiagnosticTests" time="2.54">
+    <system-out><![CDATA[19:06:34.225 [main] INFO  com.qa.nal.DiagnosticTests - Sidebar hovered
+19:06:36.466 [main] INFO  com.qa.nal.DiagnosticTests - Inbox clicked
+19:06:36.469 [main] INFO  com.qa.nal.DiagnosticTests - Navigated to Inbox page
+19:06:36.469 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"496d1cc8-343d-457e-918f-3c9915436254","title":"Navigate to Inbox","signature":"com:qa:nal::diagnostictests.java::diagnostictests::navigatetoinbox::23","testopsId":23,"execution":{"startTime":1752240993933,"status":"PASSED","endTime":1752240996469,"duration":2536},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="mergeObs" classname="com.qa.nal.DiagnosticTests" time="4.161">
+    <system-out><![CDATA[19:06:38.497 [main] INFO  com.qa.nal.DiagnosticTests - Merge Observations button clicked
+19:06:40.391 [main] INFO  com.qa.nal.DiagnosticTests - All Observation Options size: 10
+19:06:40.508 [main] INFO  com.qa.nal.DiagnosticTests - New Observation radio button checked
+19:06:40.632 [main] INFO  com.qa.nal.DiagnosticTests - Merge Into button clicked
+19:06:40.633 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"841176c4-69a8-40b2-a8c7-d77015c5fe48","title":"Merge Observations","signature":"com:qa:nal::diagnostictests.java::diagnostictests::mergeobs::24","testopsId":24,"execution":{"startTime":1752240996476,"status":"PASSED","endTime":1752241000633,"duration":4157},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="createNewInbox" classname="com.qa.nal.DiagnosticTests" time="15.278">
+    <system-out><![CDATA[19:06:42.844 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:06:42.866 [main] INFO  com.qa.nal.DiagnosticTests - Create New modal opened
+19:06:45.369 [main] INFO  com.qa.nal.DiagnosticTests - Model field clicked
+19:06:47.385 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 1
+19:06:47.487 [main] INFO  com.qa.nal.DiagnosticTests - Model option clicked: EXL S1 MM
+19:06:47.610 [main] INFO  com.qa.nal.DiagnosticTests - Next button clicked
+19:06:49.742 [main] INFO  com.qa.nal.DiagnosticTests - Text box clicked
+descriptions loaded from Excel: [System Shutdown Unexpectedly, Hardware failure, Software error., System Freeze, Network Outage]
+19:06:49.805 [main] INFO  com.qa.nal.DiagnosticTests - Observation List size: 5
+19:06:49.885 [main] INFO  com.qa.nal.DiagnosticTests - Observation field filled
+19:06:50.899 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:06:51.057 [main] INFO  com.qa.nal.DiagnosticTests - Inference field clicked
+descriptions loaded from Excel: [Restart Customer Network, Run Patient Sample, Setup Host, Clean All Modules, Reset Optic Cable]
+19:06:51.135 [main] INFO  com.qa.nal.DiagnosticTests - Observation List size: 5
+19:06:51.227 [main] INFO  com.qa.nal.DiagnosticTests - Inference field filled
+19:06:52.319 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:06:52.443 [main] INFO  com.qa.nal.DiagnosticTests - Save button clicked
+19:06:52.567 [main] INFO  com.qa.nal.DiagnosticTests - Next button clicked
+19:06:53.581 [main] INFO  com.qa.nal.DiagnosticTests - Save Observation button clicked
+19:06:55.748 [main] INFO  com.qa.nal.DiagnosticTests - Last Clicked
+19:06:55.903 [main] INFO  com.qa.nal.DiagnosticTests - First Clicked
+19:06:55.914 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"b0d1364a-8470-4ebe-b040-2c1f51315b6e","title":"Create New in Inbox","signature":"com:qa:nal::diagnostictests.java::diagnostictests::createnewinbox::25","testopsId":25,"execution":{"startTime":1752241000640,"status":"PASSED","endTime":1752241015914,"duration":15274},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="selectExInbox" classname="com.qa.nal.DiagnosticTests" time="26.315">
+    <system-out><![CDATA[19:06:58.134 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:06:58.307 [main] INFO  com.qa.nal.DiagnosticTests - Create New modal opened
+19:07:01.442 [main] INFO  com.qa.nal.DiagnosticTests - Model dropdown clicked successfully
+19:07:03.456 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 0
+19:07:03.590 [main] INFO  com.qa.nal.DiagnosticTests - Model option clicked: EXL S1
+19:07:03.732 [main] INFO  com.qa.nal.DiagnosticTests - Next button clicked
+19:07:05.880 [main] INFO  com.qa.nal.DiagnosticTests - Text box clicked
+19:07:05.990 [main] INFO  com.qa.nal.DiagnosticTests - Alphabets used for Type Ahead: [a, b, c, d, e, f, g, h, i, l, m, n, o, p, r, s, t]
+19:07:05.990 [main] INFO  com.qa.nal.DiagnosticTests - Random character generated: i
+19:07:06.065 [main] INFO  com.qa.nal.DiagnosticTests - Observation field filled
+19:07:07.587 [main] INFO  com.qa.nal.DiagnosticTests - Type Ahead listbox found
+19:07:08.424 [main] INFO  com.qa.nal.DiagnosticTests - Obs Options are visible
+19:07:08.428 [main] INFO  com.qa.nal.DiagnosticTests - Obs List:- [Locator@div[role='option'].ng-option >> nth=0, Locator@div[role='option'].ng-option >> nth=1, Locator@div[role='option'].ng-option >> nth=2, Locator@div[role='option'].ng-option >> nth=3, Locator@div[role='option'].ng-option >> nth=4, Locator@div[role='option'].ng-option >> nth=5, Locator@div[role='option'].ng-option >> nth=6, Locator@div[role='option'].ng-option >> nth=7, Locator@div[role='option'].ng-option >> nth=8, Locator@div[role='option'].ng-option >> nth=9]
+19:07:09.938 [main] INFO  com.qa.nal.DiagnosticTests - Observation list size:- 10
+19:07:09.938 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 5
+19:07:10.063 [main] INFO  com.qa.nal.DiagnosticTests - Existing Observation Type Ahead option clicked: Input Distortion
+19:07:11.595 [main] INFO  com.qa.nal.DiagnosticTests - Existing Inferences are visible
+19:07:11.601 [main] INFO  com.qa.nal.DiagnosticTests - Inference List Size: 1
+19:07:11.601 [main] INFO  com.qa.nal.DiagnosticTests - Inference List: [Locator@ul.result-wrapper li >> nth=0]
+19:07:11.601 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 0
+19:07:12.137 [main] INFO  com.qa.nal.DiagnosticTests - Existing Observation Type Ahead option clicked: Input Distortion
+19:07:13.796 [main] INFO  com.qa.nal.DiagnosticTests - Inference field clicked
+19:07:13.904 [main] INFO  com.qa.nal.DiagnosticTests - Alphabets used for Type Ahead: [c, d, e, h, i, l, m, n, o, s, t]
+19:07:13.904 [main] INFO  com.qa.nal.DiagnosticTests - Random character generated: h
+19:07:13.982 [main] INFO  com.qa.nal.DiagnosticTests - Inference field filled
+19:07:15.507 [main] INFO  com.qa.nal.DiagnosticTests - Type Ahead listbox found
+19:07:15.522 [main] INFO  com.qa.nal.DiagnosticTests - Inf Options are visible
+19:07:15.527 [main] INFO  com.qa.nal.DiagnosticTests - Inf List:- [Locator@div[role='option'].ng-option >> nth=0, Locator@div[role='option'].ng-option >> nth=1, Locator@div[role='option'].ng-option >> nth=2, Locator@div[role='option'].ng-option >> nth=3, Locator@div[role='option'].ng-option >> nth=4, Locator@div[role='option'].ng-option >> nth=5, Locator@div[role='option'].ng-option >> nth=6, Locator@div[role='option'].ng-option >> nth=7, Locator@div[role='option'].ng-option >> nth=8, Locator@div[role='option'].ng-option >> nth=9]
+19:07:17.033 [main] INFO  com.qa.nal.DiagnosticTests - Inference list size:- 10
+19:07:17.034 [main] INFO  com.qa.nal.DiagnosticTests - Random index selected: 4
+19:07:17.157 [main] INFO  com.qa.nal.DiagnosticTests - Existing Inference Type Ahead option clicked: Replaced Strings F & H
+19:07:18.839 [main] INFO  com.qa.nal.DiagnosticTests - Next button clicked
+19:07:19.867 [main] INFO  com.qa.nal.DiagnosticTests - Save Observation button clicked
+19:07:22.081 [main] INFO  com.qa.nal.DiagnosticTests - Last Clicked
+19:07:22.219 [main] INFO  com.qa.nal.DiagnosticTests - First Clicked
+19:07:22.228 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"484a20d4-debe-4049-85d2-10149bf1441c","title":"Select Existing in Inbox","signature":"com:qa:nal::diagnostictests.java::diagnostictests::selectexinbox::26","testopsId":26,"execution":{"startTime":1752241015919,"status":"PASSED","endTime":1752241042228,"duration":26309},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="approveObs" classname="com.qa.nal.DiagnosticTests" time="2.563">
+    <system-out><![CDATA[19:07:24.785 [main] INFO  com.qa.nal.DiagnosticTests - Approve Clicked
+19:07:24.795 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"a70c4f7d-de61-4183-af0d-68e7980faba1","title":"Approve Observations","signature":"com:qa:nal::diagnostictests.java::diagnostictests::approveobs::27","testopsId":27,"execution":{"startTime":1752241042235,"status":"PASSED","endTime":1752241044793,"duration":2558},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="approveInf" classname="com.qa.nal.DiagnosticTests" time="7.626">
+    <system-out><![CDATA[19:07:25.003 [main] INFO  com.qa.nal.DiagnosticTests - Bulb icon Clicked
+19:07:26.899 [main] INFO  com.qa.nal.DiagnosticTests - Inference Found
+19:07:26.904 [main] INFO  com.qa.nal.DiagnosticTests - Inference List size: 1
+19:07:27.993 [main] INFO  com.qa.nal.DiagnosticTests - Inference Selected.
+19:07:28.181 [main] INFO  com.qa.nal.DiagnosticTests - Approve Inferences Clicked
+19:07:28.602 [main] INFO  com.qa.nal.DiagnosticTests - Yes Clicked
+19:07:28.619 [main] INFO  com.qa.nal.DiagnosticTests - Inference Approved Successfully
+19:07:30.393 [main] INFO  com.qa.nal.DiagnosticTests - Close Clicked
+19:07:32.417 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"a8949555-2a25-431b-9b6b-1492fe6d67f4","title":"Apporve Inferences","signature":"com:qa:nal::diagnostictests.java::diagnostictests::approveinf::28","testopsId":28,"execution":{"startTime":1752241044798,"status":"PASSED","endTime":1752241052417,"duration":7619},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="deleteInf" classname="com.qa.nal.DiagnosticTests" time="7.27">
+    <system-out><![CDATA[19:07:34.665 [main] INFO  com.qa.nal.DiagnosticTests - Bulb icon Clicked
+19:07:36.702 [main] INFO  com.qa.nal.DiagnosticTests - Inference Found
+19:07:36.707 [main] INFO  com.qa.nal.DiagnosticTests - Inference List size: 1
+19:07:36.844 [main] INFO  com.qa.nal.DiagnosticTests - Inference Selected.
+19:07:39.062 [main] INFO  com.qa.nal.DiagnosticTests - Delete Inferences Clicked
+19:07:39.436 [main] INFO  com.qa.nal.DiagnosticTests - Yes Clicked
+19:07:39.685 [main] INFO  com.qa.nal.DiagnosticTests - Close Clicked
+19:07:39.694 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"805ff99a-a0f6-455f-967f-785ecd702127","title":"Delete Inferences","signature":"com:qa:nal::diagnostictests.java::diagnostictests::deleteinf::29","testopsId":29,"execution":{"startTime":1752241052445,"status":"PASSED","endTime":1752241059694,"duration":7249},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="editObs" classname="com.qa.nal.DiagnosticTests" time="0.241">
+    <system-out><![CDATA[19:07:39.934 [main] INFO  com.qa.nal.DiagnosticTests - Action Button Clicked
+19:07:39.941 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"4f6735a4-03c6-487b-8a56-fdf0075f8dec","title":"Edit Observations","signature":"com:qa:nal::diagnostictests.java::diagnostictests::editobs::30","testopsId":30,"execution":{"startTime":1752241059703,"status":"PASSED","endTime":1752241059941,"duration":238},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="createNewInf" classname="com.qa.nal.DiagnosticTests" time="4.382">
+    <system-out><![CDATA[descriptions loaded from Excel: [Restart Customer Network, Run Patient Sample, Setup Host, Clean All Modules, Reset Optic Cable]
+19:07:43.958 [main] INFO  com.qa.nal.DiagnosticTests - Observation List size: 5
+19:07:44.049 [main] INFO  com.qa.nal.DiagnosticTests - Inference field filled
+19:07:44.173 [main] INFO  com.qa.nal.DiagnosticTests - Create New button clicked
+19:07:44.312 [main] INFO  com.qa.nal.DiagnosticTests - Save button clicked
+19:07:44.323 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"5f9c6bff-7de0-4857-a2e2-be3d88aef587","title":"Create New Inference","signature":"com:qa:nal::diagnostictests.java::diagnostictests::createnewinf::31","testopsId":31,"execution":{"startTime":1752241059945,"status":"PASSED","endTime":1752241064323,"duration":4378},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="rejectInf" classname="com.qa.nal.DiagnosticTests" time="0.547">
+    <system-out><![CDATA[19:07:44.533 [main] INFO  com.qa.nal.DiagnosticTests - Reject clicked
+19:07:44.641 [main] INFO  com.qa.nal.DiagnosticTests - Comments field clicked
+19:07:44.718 [main] INFO  com.qa.nal.DiagnosticTests - Comments field filled
+19:07:44.859 [main] INFO  com.qa.nal.DiagnosticTests - Submit button clicked
+19:07:44.873 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"662d5a19-a904-4a6e-9fed-a55793c1a809","title":"Reject Inference","signature":"com:qa:nal::diagnostictests.java::diagnostictests::rejectinf::32","testopsId":32,"execution":{"startTime":1752241064331,"status":"PASSED","endTime":1752241064873,"duration":542},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="deleteObs" classname="com.qa.nal.DiagnosticTests" time="4.394">
+    <system-out><![CDATA[19:07:48.741 [main] INFO  com.qa.nal.DiagnosticTests - Delete Clicked
+19:07:49.254 [main] INFO  com.qa.nal.DiagnosticTests - Yes Clicked
+19:07:49.267 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"c3a9904a-77f9-4746-a29b-62e15a52ea23","title":"Delete Observations","signature":"com:qa:nal::diagnostictests.java::diagnostictests::deleteobs::33","testopsId":33,"execution":{"startTime":1752241064884,"status":"PASSED","endTime":1752241069267,"duration":4383},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="navigateToSelfServiceDiagnostics" classname="com.qa.nal.DiagnosticTests" time="6.397">
+    <system-out><![CDATA[19:07:49.568 [main] INFO  com.qa.nal.DiagnosticTests - Sidebar hovered
+19:07:52.759 [main] INFO  com.qa.nal.DiagnosticTests - Self Service Diagnostics clicked
+19:07:55.665 [main] INFO  com.qa.nal.DiagnosticTests - Navigated to Self Service Diagnostics page
+19:07:55.665 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"c739e1e8-924f-4dc4-a237-e074fee5b991","title":"Navigate To Self Service Diagnostics","signature":"com:qa:nal::diagnostictests.java::diagnostictests::navigatetoselfservicediagnostics::34","testopsId":34,"execution":{"startTime":1752241069271,"status":"PASSED","endTime":1752241075665,"duration":6394},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="uploadFileInSSD" classname="com.qa.nal.DiagnosticTests" time="5.336">
+    <system-out><![CDATA[19:07:55.912 [main] INFO  com.qa.nal.DiagnosticTests - Upload File Button Clicked
+19:07:56.065 [main] INFO  com.qa.nal.DiagnosticTests - File input hovered
+19:07:59.342 [main] INFO  com.qa.nal.DiagnosticTests - File uploaded successfully!
+19:08:00.997 [main] INFO  com.qa.nal.DiagnosticTests - Refresh Status button clicked
+19:08:01.008 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"67b6266a-70cf-4831-9f5d-6693d0b48d18","title":"Upload File in Self Service Diagnostics","signature":"com:qa:nal::diagnostictests.java::diagnostictests::uploadfileinssd::35","testopsId":35,"execution":{"startTime":1752241075675,"status":"PASSED","endTime":1752241081008,"duration":5333},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+  <testcase name="navigateToPredictions" classname="com.qa.nal.DiagnosticTests" time="2.204">
+    <system-out><![CDATA[19:08:01.186 [main] INFO  com.qa.nal.DiagnosticTests - Sidebar hovered
+19:08:03.211 [main] INFO  com.qa.nal.DiagnosticTests - prediction tab not found
+19:08:03.212 [main] INFO  i.q.commons.reporters.CoreReporter - Adding result: {"id":"8813d7f4-5089-497a-9c76-2d0cda3588c8","title":"Navigate to Predictions","signature":"com:qa:nal::diagnostictests.java::diagnostictests::navigatetopredictions::36","testopsId":36,"execution":{"startTime":1752241081012,"status":"PASSED","endTime":1752241083211,"duration":2199},"fields":{},"attachments":[],"steps":[],"params":{},"paramGroups":[],"relations":{"suite":{"data":[{"title":"com.qa.nal.DiagnosticTests","publicId":0}]}},"muted":false,"ignore":false}
+]]></system-out>
+  </testcase>
+</testsuite>

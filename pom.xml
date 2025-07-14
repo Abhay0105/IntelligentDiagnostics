@@ -109,12 +109,12 @@
             <!-- <QASE_ENVIRONMENT>dev6</QASE_ENVIRONMENT> -->
             <!-- <QASE_ENVIRONMENT>burroughs-dev</QASE_ENVIRONMENT> -->
             <!-- <QASE_ENVIRONMENT>tke-dev</QASE_ENVIRONMENT> -->
-            <!-- <QASE_ENVIRONMENT>daktronics-dev</QASE_ENVIRONMENT> -->
+            <QASE_ENVIRONMENT>daktronics-dev</QASE_ENVIRONMENT>
             <!-- <QASE_ENVIRONMENT>bsc-dev</QASE_ENVIRONMENT> -->
             <!-- <QASE_ENVIRONMENT>crane1-dev</QASE_ENVIRONMENT> -->
             <!-- <QASE_ENVIRONMENT>terumo-dev</QASE_ENVIRONMENT> -->
             <!-- <QASE_ENVIRONMENT>abbott-dev</QASE_ENVIRONMENT> -->
-            <QASE_ENVIRONMENT>dev-demo</QASE_ENVIRONMENT>
+            <!-- <QASE_ENVIRONMENT>dev-demo</QASE_ENVIRONMENT> -->
             <!-- <QASE_ENVIRONMENT>medtronic-dev</QASE_ENVIRONMENT> -->
             <!-- <QASE_ENVIRONMENT>keysight-dev</QASE_ENVIRONMENT> -->
             <!-- <QASE_ENVIRONMENT>accuray-dev</QASE_ENVIRONMENT> -->

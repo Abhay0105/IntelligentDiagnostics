@@ -20,8 +20,8 @@ public class DiagnosticTests extends BaseTest {
     Dotenv dotenv = Dotenv.load();
     private final String username = dotenv.get("APP_USERNAME");
     private final String password = dotenv.get("PASSWORD");
-    private final String loginUrl = dotenv.get("DEVDEMO_URL");
-    private final String environment = "dev-demo";
+    private final String loginUrl = dotenv.get("DAKTRONICS_DEV");
+    private final String environment = "daktronics-dev";
 
     private Locator findFirstVisibleLocator(List<Locator> locators) {
         for (Locator locator : locators) {
@@ -238,6 +238,7 @@ public class DiagnosticTests extends BaseTest {
     @QaseTitle("Create Service Request")
     public void createNewServiceRequest() {
         try {
+            boolean textAreaFound = false;
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("  Create New")).click();
             log.info("Create New button clicked");
 
@@ -255,6 +256,7 @@ public class DiagnosticTests extends BaseTest {
                     String context = input.locator("xpath=ancestor::ng-select").textContent().trim();
                     if (!context.contains("English") && !context.contains("Language")) {
                         visibleModel = input;
+                        textAreaFound = false;
                         break;
                     }
                 }
@@ -262,11 +264,12 @@ public class DiagnosticTests extends BaseTest {
 
             // Fallback: try textarea[type='text'] if ng-select input is not found
             if (visibleModel == null) {
-                Locator fallbackTextarea = page
-                        .locator("//div[contains(@class, 'form-group')]//textarea[@type='text']");
+                Locator fallbackTextarea = page.locator(
+                        "div.form-group textarea[type='text']:not([name='ALARM']):not([name='MAKE']):not([name='TYPE']):not([name='DESCRIPTION'])");
                 if (fallbackTextarea.isVisible()) {
                     visibleModel = fallbackTextarea;
                     log.info("Fallback: textarea[type='text'] used for picklist");
+                    textAreaFound = true;
                 }
             }
 
@@ -300,35 +303,52 @@ public class DiagnosticTests extends BaseTest {
 
             page.waitForTimeout(1500);
 
-            page.waitForSelector(
-                    "//ng-dropdown-panel//div[@role='option']",
-                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+            if (!textAreaFound) {
+                page.waitForSelector(
+                        "//ng-dropdown-panel//div[@role='option']",
+                        new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
 
-            List<Locator> options = page.locator("//ng-dropdown-panel//div[@role='option']").all();
-            log.info("Options found: {}", options.size());
+                List<Locator> options = page.locator("//ng-dropdown-panel//div[@role='option']").all();
+                log.info("Options found: {}", options.size());
 
-            if (!options.isEmpty()) {
-                int randomIndex = new Random().nextInt(options.size());
-                String selectedText = options.get(randomIndex).textContent().trim();
-                options.get(randomIndex).click();
-                log.info("Option selected: {}", selectedText);
+                if (!options.isEmpty()) {
+                    int randomIndex = new Random().nextInt(options.size());
+                    String selectedText = options.get(randomIndex).textContent().trim();
+                    options.get(randomIndex).click();
+                    log.info("Option selected: {}", selectedText);
+                } else {
+                    log.error("No options found in the picklist");
+                    Assertions.fail("No options found in the picklist");
+                }
             } else {
-                log.error("No options found in the picklist");
-                Assertions.fail("No options found in the picklist");
+                log.info("Using textarea for picklist selection, no options to select");
+            }
+            // --- Description field handling with fallback ---
+            Locator visibleDescription = null;
+
+            // Try modern/structured textarea first
+            Locator structuredDescription = page.locator(
+                    "div.form-group div.custom-textarea-wrapper textarea.text-area[type='text']:not([name='ALARM']):not([name='MAKE']):not([name='TYPE']):not([name='MODEL'])");
+            if (structuredDescription.isVisible()) {
+                visibleDescription = structuredDescription;
+                log.info("Using structured textarea (.custom-textarea-wrapper) for description");
             }
 
-            // --- Description field handling ---
-            List<Locator> allPossibleDescriptions = Arrays.asList(
-                    page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Description")),
-                    page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("What Is The Issue? *")),
-                    page.getByRole(AriaRole.TEXTBOX));
+            // Fallback to simple textarea
+            if (visibleDescription == null) {
+                Locator simpleDescription = page.locator(
+                        "div.form-group textarea[type='text']:not([name='ALARM']):not([name='MAKE']):not([name='TYPE']):not([name='MODEL'])");
+                if (simpleDescription.isVisible()) {
+                    visibleDescription = simpleDescription;
+                    log.info("Fallback: using simple textarea for description");
+                }
+            }
 
-            Locator visibleDescription = findFirstVisibleLocator(allPossibleDescriptions);
             Assertions.assertNotNull(visibleDescription, "No visible description field found");
-            log.info("Visible description field found");
 
             List<String> descriptions = ExcelReader.readDescriptionsFromExcel(
-                    "src/test/resources/srDescriptions.xlsx", "devdemo");
+                    "src/test/resources/srDescriptions.xlsx",
+                    "devdemo");
             log.info("Descriptions List size: {}", descriptions.size());
 
             int randomIndex = new Random().nextInt(descriptions.size());
@@ -338,7 +358,7 @@ public class DiagnosticTests extends BaseTest {
             log.info("Description field filled with: {}", selectedDescription);
 
             // --- Type field (optional) ---
-            Locator typeField = page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("TYPE"));
+            Locator typeField = page.locator("div.form-group textarea[type='text'][name='TYPE']");
 
             if (typeField.isVisible()) {
                 typeField.fill("OBS");
@@ -346,6 +366,28 @@ public class DiagnosticTests extends BaseTest {
                 log.info("Filled Type field");
             } else {
                 log.info("No Type field found (optional)");
+            }
+
+            // --- alarm field (optional) ---
+            Locator alarmField = page.locator("div.form-group textarea[type='text'][name='ALARM']");
+
+            if (alarmField.isVisible()) {
+                alarmField.fill("Alarm");
+                alarmField.press("Tab");
+                log.info("Filled Alarm field");
+            } else {
+                log.info("No Alarm field found (optional)");
+            }
+
+            // --- make field (optional) ---
+            Locator makeField = page.locator("div.form-group textarea[type='text'][name='MAKE']");
+
+            if (makeField.isVisible()) {
+                makeField.fill("Make");
+                makeField.press("Tab");
+                log.info("Filled Make field");
+            } else {
+                log.info("No Make field found (optional)");
             }
 
             // --- Finalize and Submit ---
@@ -359,59 +401,11 @@ public class DiagnosticTests extends BaseTest {
                     new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
             page.waitForLoadState(LoadState.NETWORKIDLE);
             log.info("SR created and navigated to predictions page");
-
         } catch (Exception e) {
             log.error("Test Failed: {}", e.getMessage());
             Assertions.fail("Test Failed: " + e.getMessage());
         }
     }
-
-    // private Boolean checkObs() {
-    // Boolean obsFound = false;
-
-    // try {
-    // page.waitForSelector(
-    // ".loading-screen-wrapper",
-    // new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-    // );
-
-    // page.waitForLoadState(LoadState.NETWORKIDLE);
-
-    // page.waitForSelector(
-    // ".loading-screen-wrapper",
-    // new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN)
-    // );
-
-    // page.waitForTimeout(3000);
-
-    // page.waitForSelector(".observation-card", new
-    // Page.WaitForSelectorOptions().setTimeout(15000));
-    // log.info("Observation card found");
-
-    // page.waitForTimeout(5000);
-
-    // page.waitForLoadState(LoadState.NETWORKIDLE);
-
-    // List<Locator> problemList = page.locator(".observation-card").all();
-    // log.info("Problem List size: {}", problemList.size());
-
-    // String problemText = problemList.get(0).textContent().trim();
-
-    // if (!problemText.contains("Are you seeing something else?")) {
-    // obsFound = true;
-    // log.info("Observation card found: {}", problemText);
-    // } else {
-    // obsFound = false;
-    // log.info("Observation card not found");
-    // }
-
-    // return obsFound;
-    // } catch (Exception e) {
-    // log.error("Observation card not found: {}", e.getMessage());
-    // Assertions.fail("Observation card not found: " + e.getMessage());
-    // return obsFound;
-    // }
-    // }
 
     private Boolean checkObs() {
         boolean obsFound = false;
@@ -570,6 +564,11 @@ public class DiagnosticTests extends BaseTest {
 
             if (checkBoxCount == 0) {
                 log.info("No checkboxes found, creating new Inference");
+                page
+                        .getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Do you want to resolve with"))
+                        .click();
+                log.info("New Solution clicked");
+
                 newInf();
                 return;
             }
@@ -605,15 +604,20 @@ public class DiagnosticTests extends BaseTest {
             List<String> InferencesList = ExcelReader.readDescriptionsFromExcel(
                     "src/test/resources/InfObsNames.xlsx",
                     "Inferences");
-            log.info("Observation List size: " + InferencesList.size());
+            log.info("Inference List size: " + InferencesList.size());
 
             Random random = new Random();
             int randomIndex = random.nextInt(InferencesList.size());
             String inferenceName = InferencesList.get(randomIndex);
 
-            page.locator("mat-drawer-content").getByRole(AriaRole.COMBOBOX).fill(inferenceName);
+            List<Locator> inputInfList = Arrays.asList(page.locator(
+                    "div ng-select div.ng-select-container div.ng-value-container div.ng-input input[type=\"text\"]"));
+
+            Locator visibleInputInf = findFirstVisibleLocator(inputInfList);
+
+            visibleInputInf.fill(inferenceName);
+            log.info("Inference field filled with: {}", inferenceName);
             // using excel pending
-            log.info("Solution field filled");
 
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create New")).click();
             log.info("Solution created");
@@ -650,7 +654,16 @@ public class DiagnosticTests extends BaseTest {
                     ".loading-screen-wrapper",
                     new Page.WaitForSelectorOptions().setState(WaitForSelectorState.HIDDEN));
 
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Copy")).click();
+            page.waitForTimeout(3500);
+
+            Locator copyButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Copy"));
+            if (copyButton.isVisible()) {
+                log.info("Copy button found");
+                copyButton.click();
+                log.info("Copy button clicked");
+            } else {
+                log.error("Copy button not found");
+            }
 
             page.waitForSelector(
                     ".loading-screen-wrapper",
@@ -670,12 +683,33 @@ public class DiagnosticTests extends BaseTest {
             log.info("Create New modal opened");
 
             // selecting manufacturer
-            page
-                    .locator("div")
-                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
-                    .nth(1)
-                    .click();
-            log.info("Manufacturer field clicked");
+            // page
+            // .locator("div")
+            // .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer
+            // \\*$")))
+            // .nth(1)
+            // .click();
+
+            // --- Picklist input selection with fallback ---
+            Locator visibleModel = null;
+
+            // First try ng-select input (excluding English/Language)
+            List<Locator> modelPickList = Arrays.asList(
+                    page.locator(
+                            "div.form-group ng-select div.ng-select-container div.ng-value-container div.ng-input input[type='text']")
+                            .nth(1),
+                    page.locator("div.form-group textarea[type='text']").nth(1));
+
+            visibleModel = findFirstVisibleLocator(modelPickList);
+
+            if (visibleModel.first().isVisible()) {
+                visibleModel.first().click();
+                log.info("Manufacturer field clicked");
+
+            } else {
+                log.error("No visible model input found");
+                Assertions.fail("No visible model input found");
+            }
 
             page.waitForTimeout(2000);
 
@@ -734,7 +768,7 @@ public class DiagnosticTests extends BaseTest {
             List<String> InferencesList = ExcelReader.readDescriptionsFromExcel(
                     "src/test/resources/InfObsNames.xlsx",
                     "Inferences");
-            log.info("Observation List size: " + InferencesList.size());
+            log.info("Inference List size: " + InferencesList.size());
 
             int randomIndexInf = random.nextInt(InferencesList.size());
             String inferenceName = InferencesList.get(randomIndexInf);
@@ -815,9 +849,14 @@ public class DiagnosticTests extends BaseTest {
 
             page.waitForTimeout(1500);
 
-            page.waitForSelector(
-                    "div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items",
-                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+            List<Locator> listBoxList = Arrays.asList(
+                    page.locator("div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items"),
+                    page.locator("div.ng-dropdown-panel-items"));
+
+            Locator visibleListBox = findFirstVisibleLocator(listBoxList);
+
+            visibleListBox
+                    .waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
             log.info("Type Ahead listbox found");
 
             page.waitForSelector(
@@ -865,14 +904,24 @@ public class DiagnosticTests extends BaseTest {
             char randomChar = alphabets[index];
             log.info("Random character generated: {}", randomChar);
 
-            page.locator("mat-drawer-content").getByRole(AriaRole.COMBOBOX).fill("" + randomChar);
+            List<Locator> inputInfList = Arrays.asList(page.locator(
+                    "div ng-select div.ng-select-container div.ng-value-container div.ng-input input[type=\"text\"]"));
+
+            Locator visibleInputInf = findFirstVisibleLocator(inputInfList);
+
+            visibleInputInf.fill("" + randomChar);
             log.info("Solution field filled");
 
             page.waitForTimeout(1500);
 
-            page.waitForSelector(
-                    "div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items",
-                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+            List<Locator> listBoxList = Arrays.asList(
+                    page.locator("div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items"),
+                    page.locator("div.ng-dropdown-panel-items"));
+
+            Locator visibleListBox = findFirstVisibleLocator(listBoxList);
+
+            visibleListBox
+                    .waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
             log.info("Type Ahead listbox found");
 
             page.waitForSelector(
@@ -915,13 +964,26 @@ public class DiagnosticTests extends BaseTest {
             page.waitForSelector("#modalCenter > div > div", new Page.WaitForSelectorOptions().setTimeout(45000));
             log.info("Create New modal opened");
 
-            // selecting manufacturer
-            page
-                    .locator("div")
-                    .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^Manufacturer \\*$")))
-                    .nth(1)
-                    .click();
-            log.info("Manufacturer field clicked");
+            // --- Picklist input selection with fallback ---
+            Locator visibleModel = null;
+
+            // First try ng-select input (excluding English/Language)
+            List<Locator> modelPickList = Arrays.asList(
+                    page.locator(
+                            "div.form-group ng-select div.ng-select-container div.ng-value-container div.ng-input input[type='text']")
+                            .nth(1),
+                    page.locator("div.form-group textarea[type='text']").nth(1));
+
+            visibleModel = findFirstVisibleLocator(modelPickList);
+
+            if (visibleModel.first().isVisible()) {
+                visibleModel.first().click();
+                log.info("Manufacturer field clicked");
+
+            } else {
+                log.error("No visible model input found");
+                Assertions.fail("No visible model input found");
+            }
 
             page.waitForTimeout(2000);
 
@@ -979,9 +1041,14 @@ public class DiagnosticTests extends BaseTest {
 
             page.waitForTimeout(1500);
 
-            page.waitForSelector(
-                    "div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items",
-                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+            List<Locator> listBoxList = Arrays.asList(
+                    page.locator("div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items"),
+                    page.locator("div.ng-dropdown-panel-items"));
+
+            Locator visibleListBox = findFirstVisibleLocator(listBoxList);
+
+            visibleListBox
+                    .waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
             log.info("Type Ahead listbox found");
 
             page.waitForSelector(
@@ -1070,9 +1137,14 @@ public class DiagnosticTests extends BaseTest {
 
             page.waitForTimeout(1500);
 
-            page.waitForSelector(
-                    "div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items",
-                    new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+            List<Locator> listBoxList = Arrays.asList(
+                    page.locator("div[role='listbox'][aria-label='Options List'].ng-dropdown-panel-items"),
+                    page.locator("div.ng-dropdown-panel-items"));
+
+            Locator visibleListBox = findFirstVisibleLocator(listBoxList);
+
+            visibleListBox
+                    .waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
             log.info("Type Ahead listbox found");
 
             page.waitForSelector(
@@ -1662,7 +1734,7 @@ public class DiagnosticTests extends BaseTest {
                 List<String> InferencesList = ExcelReader.readDescriptionsFromExcel(
                         "src/test/resources/InfObsNames.xlsx",
                         "Inferences");
-                log.info("Observation List size: " + InferencesList.size());
+                log.info("Inference List size: " + InferencesList.size());
 
                 Random random = new Random();
                 int randomIndex = random.nextInt(InferencesList.size());
@@ -1776,17 +1848,22 @@ public class DiagnosticTests extends BaseTest {
             fileInput.setInputFiles(filePath.toAbsolutePath());
 
             page.waitForTimeout(1000);
-            page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags")).click();
+            page
+                    .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
+                    .first()
+                    .click();
 
             page.waitForTimeout(1000);
             page
                     .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
+                    .first()
                     .fill("Demo Image 1");
             // using excel pending
 
             page.waitForTimeout(1000);
             page
                     .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
+                    .first()
                     .press("Enter");
 
             // page.getByRole(AriaRole.BUTTON, new
@@ -1829,17 +1906,22 @@ public class DiagnosticTests extends BaseTest {
             fileInput.setInputFiles(filePath.toAbsolutePath());
             page.waitForTimeout(1000);
 
-            page.getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags")).click();
+            page
+                    .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
+                    .first()
+                    .click();
             page.waitForTimeout(1000);
 
             page
                     .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
+                    .first()
                     .fill("Demo Image 2");
             // using excel pending
             page.waitForTimeout(1000);
 
             page
                     .getByRole(AriaRole.TEXTBOX, new Page.GetByRoleOptions().setName("Please Enter Asset Tags"))
+                    .first()
                     .press("Tab");
 
             page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Update File")).click();
@@ -2180,7 +2262,7 @@ public class DiagnosticTests extends BaseTest {
             List<String> InferencesList = ExcelReader.readDescriptionsFromExcel(
                     "src/test/resources/InfObsNames.xlsx",
                     "Inferences");
-            log.info("Observation List size: " + InferencesList.size());
+            log.info("Inference List size: " + InferencesList.size());
 
             Random random = new Random();
             int randomIndex = random.nextInt(InferencesList.size());
