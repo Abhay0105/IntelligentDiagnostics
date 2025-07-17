@@ -62,6 +62,7 @@
       <version>2.0.12</version>
     </dependency>
 
+
     <!-- Apache POI Excel -->
     <dependency>
       <groupId>org.apache.poi</groupId>
@@ -72,6 +73,13 @@
       <groupId>org.apache.poi</groupId>
       <artifactId>poi-ooxml</artifactId>
       <version>5.2.5</version>
+    </dependency>
+
+    <!-- JSON -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20240303</version>
     </dependency>
   </dependencies>
 
@@ -109,8 +117,8 @@
             <!-- <QASE_ENVIRONMENT>dev6</QASE_ENVIRONMENT> -->
             <!-- <QASE_ENVIRONMENT>burroughs-dev</QASE_ENVIRONMENT> -->
             <!-- <QASE_ENVIRONMENT>tke-dev</QASE_ENVIRONMENT> -->
-            <QASE_ENVIRONMENT>daktronics-dev</QASE_ENVIRONMENT>
-            <!-- <QASE_ENVIRONMENT>bsc-dev</QASE_ENVIRONMENT> -->
+            <!-- <QASE_ENVIRONMENT>daktronics-dev</QASE_ENVIRONMENT> -->
+            <QASE_ENVIRONMENT>bsc-dev</QASE_ENVIRONMENT>
             <!-- <QASE_ENVIRONMENT>crane1-dev</QASE_ENVIRONMENT> -->
             <!-- <QASE_ENVIRONMENT>terumo-dev</QASE_ENVIRONMENT> -->
             <!-- <QASE_ENVIRONMENT>abbott-dev</QASE_ENVIRONMENT> -->
@@ -137,7 +145,7 @@
         <dependencies>
           <dependency>
             <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
+            <artifactId>  </artifactId>
             <version>${aspectj.version}</version>
           </dependency>
         </dependencies>

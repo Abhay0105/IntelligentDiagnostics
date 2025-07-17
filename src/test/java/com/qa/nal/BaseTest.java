@@ -10,7 +10,8 @@ public abstract class BaseTest {
     protected Browser browser;
     protected BrowserContext context;
     protected Page page;
-    
+
+    protected APIRequestContext apiRequest; // ✅ API context
 
     @BeforeAll
     void initAll() {
@@ -20,13 +21,19 @@ public abstract class BaseTest {
         page = context.newPage();
 
         page.setDefaultTimeout(45000);
-
-        // auto-accept JS dialogs
         page.onDialog(Dialog::accept);
+
+        // ✅ Create shared API request context
+        apiRequest = pw.request().newContext();
     }
 
     @AfterAll
     void tearDownAll() {
+        // ✅ Dispose API context first
+        if (apiRequest != null) {
+            apiRequest.dispose();
+        }
+
         browser.close();
         pw.close();
     }
